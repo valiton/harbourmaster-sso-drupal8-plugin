@@ -1,0 +1,6 @@
+name: HMS Module
+description: This is a HMS module.
+package: Custom
+
+type: module
+core: 8.x
