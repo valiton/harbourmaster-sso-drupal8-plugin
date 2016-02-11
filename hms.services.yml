@@ -1,0 +1,17 @@
+services:
+  hms.authentication.token:
+    class: Drupal\hms\Authentication\Provider\Token
+    arguments: ['@database', '%hms.token.cache.ttl%', '%hms.token.name%']
+    tags:
+      - { name: authentication_provider, provider_id: 'hms_token', priority: 0, global: TRUE }
+
+  hms.client:
+    class: Drupal\hms\Client
+
+parameters:
+  hms.token.cache.ttl: 60
+  hms.token.name: token
+  hms.api.tenant: msg
+  hms.api.server: harbourmaster.sso-service.dev
+  hms.api.port: 49090
+  hms.api.insecure: true
