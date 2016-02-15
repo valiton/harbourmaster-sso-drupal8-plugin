@@ -1,12 +1,20 @@
 services:
   hms.authentication.token:
     class: Drupal\hms\Authentication\Provider\Token
-    arguments: ['@database', '%hms.token.cache.ttl%', '%hms.token.name%']
+    arguments: ['@database', '@cache.hms', '@hms.client', '%hms.token.cache.ttl%', '%hms.token.name%']
     tags:
       - { name: authentication_provider, provider_id: 'hms_token', priority: 0, global: TRUE }
 
   hms.client:
-    class: Drupal\hms\Client
+    class: Drupal\hms\Client\Harbourmaster
+    arguments: ['@http_client', '%hms.api.tenant%', '%hms.api.server%', '%hms.api.port%', '%hms.api.insecure%']
+
+  cache.hms:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+    - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: ['hms']
 
 parameters:
   hms.token.cache.ttl: 60
