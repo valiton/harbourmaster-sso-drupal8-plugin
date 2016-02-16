@@ -7,7 +7,7 @@ services:
 
   hms.client:
     class: Drupal\hms\Client\Harbourmaster
-    arguments: ['@http_client', '%hms.api.tenant%', '%hms.api.server%', '%hms.api.port%', '%hms.api.insecure%']
+    arguments: ['@http_client', '@config.factory']
 
   cache.hms:
     class: Drupal\Core\Cache\CacheBackendInterface
@@ -20,6 +20,6 @@ parameters:
   hms.token.cache.ttl: 60
   hms.token.name: token
   hms.api.tenant: msg
-  hms.api.server: harbourmaster.sso-service.dev
-  hms.api.port: 49090
+  hms.api.server: harbourmaster
+  hms.api.port: 80
   hms.api.insecure: true

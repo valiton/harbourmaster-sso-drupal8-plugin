@@ -65,7 +65,7 @@ class Token extends Cookie {
 
     if ($user = $this->cache->get($token)) {
       // return userdate from cache
-    } else if ($hmsSession = $this->hmsClient->setToken($token)->getSession()) {
+    } else if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
 
     }
 

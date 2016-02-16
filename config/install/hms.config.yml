@@ -1,0 +1,6 @@
+server: harbourmaster
+port: 80
+tenant: msg
+insecure: true
+token_ttl: 60
+token_name: token
