@@ -1,16 +1,17 @@
 <?php
 
-namespace hms\src\Authentication\Provider;
+namespace Drupal\hms\Authentication\Provider;
 
+use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
-use Drupal\user\Authentication\Provider\Cookie;
-use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Logger\LoggerChannel;
 use Symfony\Component\HttpFoundation\Request;
-use drupal\hms\Client\Harbourmaster as HarbourmasterClient;
+use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 use Drupal\Core\Session\UserSession;
 
-class Token extends Cookie {
+class Token implements AuthenticationProviderInterface {
 
   /**
    * @var int
@@ -33,24 +34,31 @@ class Token extends Cookie {
   protected $hmsClient;
 
   /**
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $connection;
+
+  /**
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * Constructs a new token authentication provider.
    *
-   * @param Connection $connection
-   *   The database connection.
-   * @param CacheBackendInterface $cache
-   * @param HarbourmasterClient $hmsClient
-   * @param int $cache_ttl
-   *   TTL during which token auth is cached
-   * @param string $token_cookie_name
-   *   Name of the cookie that contains the token
-   *
+   * @param \Drupal\Core\Database\Connection $connection
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   * @param \Drupal\hms\Client\Harbourmaster $hmsClient
+   * @param \Drupal\Core\Config\Config $config
+   * @param \Drupal\Core\Logger\LoggerChannel $logger
    */
-  public function __construct(Connection $connection, CacheBackendInterface $cache, HarbourmasterClient $hmsClient, $cache_ttl, $token_cookie_name) {
+  public function __construct(Connection $connection, CacheBackendInterface $cache, HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger) {
     $this->connection = $connection;
-    $this->cacheTtl = $cache_ttl;
-    $this->tokenCookieName = $token_cookie_name;
+    $this->cacheTtl = $config->get('token_ttl');
+    $this->tokenCookieName = $config->get('token_name');
     $this->cache = $cache;
     $this->hmsClient = $hmsClient;
+    $this->logger = $logger;
   }
 
   /**
@@ -60,40 +68,27 @@ class Token extends Cookie {
     return $request->cookies->has($this->tokenCookieName);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function authenticate(Request $request) {
     $token = $request->cookies->get($this->tokenCookieName);
-
-    if ($user = $this->cache->get($token)) {
-      // return userdate from cache
-    } else if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
-
+    if (!$token) {
+      return null;
     }
 
-    return $this->getUserFromSession($request->getSession());
-  }
-
-  protected function getUserFromSession(SessionInterface $session) {
-    if ($uid = $session->get('uid')) {
-      // @todo Load the User entity in SessionHandler so we don't need queries.
-      // @see https://www.drupal.org/node/2345611
-      $values = $this->connection
-        ->query('SELECT * FROM {users_field_data} u WHERE u.uid = :uid AND u.default_langcode = 1', [':uid' => $uid])
-        ->fetchAssoc();
-
-      // Check if the user data was found and the user is active.
-      if (!empty($values) && $values['status'] == 1) {
-        // Add the user's roles.
-        $rids = $this->connection
-          ->query('SELECT roles_target_id FROM {user__roles} WHERE entity_id = :uid', [':uid' => $values['uid']])
-          ->fetchCol();
-        $values['roles'] = array_merge([AccountInterface::AUTHENTICATED_ROLE], $rids);
-
-        return new UserSession($values);
-      }
+    $cid = 'hmsdata:' . $token;
+    if ($data = $this->cache->get($cid)) {
+      $this->logger->debug('Login from cached');
+      $this->logger->debug('{data}', ['data' => $data]);
+    } else if ($data = $this->hmsClient->setToken($token)->getSession()) {
+      $this->logger->debug('Login from HMS');
+      $this->logger->debug('{data}', ['data' => $data]);
+      $this->cache->set($cid, $data, time() + $this->cacheTtl);
+    } else {
+      $this->logger->debug('No such session');
     }
 
-    // This is an anonymous session.
-    return NULL;
   }
 
 }

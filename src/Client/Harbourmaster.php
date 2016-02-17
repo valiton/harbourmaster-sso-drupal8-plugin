@@ -1,7 +1,8 @@
 <?php
 
-namespace drupal\hms\Client;
+namespace Drupal\hms\Client;
 
+use Drupal\Core\Config\Config;
 use GuzzleHttp\ClientInterface;
 
 
@@ -40,17 +41,14 @@ class Harbourmaster {
   /**
    * Harbourmaster constructor.
    *
-   * @param \GuzzleHttp\ClientInterface $client
-   * @param $tenant
-   * @param $server
-   * @param $port
-   * @param $insecure
+   * @param ClientInterface $client
+   * @param Config $config
    */
-  public function __construct(ClientInterface $client, $tenant, $server, $port, $insecure) {
-    $this->tenant = $tenant;
-    $this->server = $server;
-    $this->port = $port;
-    $this->insecure = $insecure;
+  public function __construct(ClientInterface $client, Config $config) {
+    $this->tenant = $config->get('tenant');
+    $this->server = $config->get('server');
+    $this->port   = $config->get('port');
+    $this->insecure = $config->get('insecure');
     $this->client = $client;
   }
 
