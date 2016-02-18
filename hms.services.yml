@@ -2,19 +2,28 @@ services:
   hms.authentication.token:
     class: Drupal\hms\Authentication\Provider\Token
     arguments:
-      - '@database'
-      - '@cache.hms'
       - '@hms.client'
       - '@hms.settings'
       - '@hms.logger'
+      - '@cache.hms'
+      - '@user.data'
+      - '@entity_type.manager'
+      - '@session_configuration'
     tags:
       - { name: authentication_provider, provider_id: 'hms_token', priority: 100, global: TRUE }
 
   hms.client:
     class: Drupal\hms\Client\Harbourmaster
     arguments:
-      - '@http_client'
+      - '@hms.http_client'
       - '@hms.settings'
+
+  # disable http status exceptions b/c they are excepted and handled via status code
+  hms.http_client:
+    class: GuzzleHttp\ClientInterface
+    factory: http_client_factory:fromOptions
+    arguments:
+      - { http_errors: false }
 
   hms.logger:
     parent: logger.channel_base
@@ -34,3 +43,12 @@ services:
     factory: cache_factory:get
     arguments:
       - hms
+
+  hms.page_cache_request_policy.disallow_token_requests:
+    class: Drupal\hms\PageCache\DisallowTokenRequests
+    public: false
+    tags:
+      - { name: page_cache_request_policy }
+    arguments:
+      - '@hms.settings'
+

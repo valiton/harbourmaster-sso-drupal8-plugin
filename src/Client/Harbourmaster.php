@@ -4,6 +4,7 @@ namespace Drupal\hms\Client;
 
 use Drupal\Core\Config\Config;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
 
 
 class Harbourmaster {
@@ -78,19 +79,26 @@ class Harbourmaster {
    * @return array|null
    */
   public function getSession() {
-    $response = $this->client->request(
-      'GET', $this->getApiPrefix() . 'sessions/mine', [
-        'headers' => [
-          'x-api-key' => $this->token,
-        ]
-      ]
-    );
 
-    if ($response->getStatusCode() === 401) {
+    try {
+      $response = $this->client->request(
+        'GET', $this->getApiPrefix() . 'sessions/mine', [
+          'headers' => [
+            'x-api-key' => $this->token,
+          ]
+        ]
+      );
+    } catch (ClientException $e) {
       return null;
     }
 
-    return json_decode($response->getBody(), true);
+    switch ($response->getStatusCode()) {
+      case 401:
+      case 409:
+        return null;
+    }
+
+    return json_decode($response->getBody(), true)['data'];
 
   }
 
