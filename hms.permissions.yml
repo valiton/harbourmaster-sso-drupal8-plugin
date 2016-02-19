@@ -1,0 +1,5 @@
+administer hms settings:
+  title: 'Administer Harbourmaster settings'
+  description: 'Configure Harbourmaster settings like API endpoint and cacheability.'
+  restrict access: true
+
