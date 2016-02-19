@@ -1,7 +1,7 @@
-hms_config_page:
-  path: 'admin/config/people/hms'
+hms.config_page:
+  path: admin/config/people/hms
   defaults:
-    _controller: '\Drupal\hms\Controller\PageExampleController::description'
-    _title: 'Harbourmaster settings'
+    _form: Drupal\hms\Form\Settings
+    _title: Harbourmaster settings
   requirements:
-    _permission: 'administer hms settings'
+    _permission: administer hms settings

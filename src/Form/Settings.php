@@ -20,6 +20,29 @@
 namespace Drupal\hms\Form;
 
 
-class Settings {
+use Drupal\Core\Form\ConfigFormBase;
+
+class Settings extends ConfigFormBase {
+
+  /**
+   * Gets the configuration names that will be editable.
+   *
+   * @return array
+   *   An array of configuration object names that are editable if called in
+   *   conjunction with the trait's config() method.
+   */
+  protected function getEditableConfigNames() {
+    return ['hms.settings'];
+  }
+
+  /**
+   * Returns a unique string identifying the form.
+   *
+   * @return string
+   *   The unique string identifying the form.
+   */
+  public function getFormId() {
+    return 'hms.config_page_form';
+  }
 
 }
