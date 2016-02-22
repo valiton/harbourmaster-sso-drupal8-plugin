@@ -1,0 +1,1 @@
+TODO maybe check for $settings['omit_vary_cookie']
