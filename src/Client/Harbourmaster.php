@@ -32,22 +32,13 @@ class Harbourmaster {
   /**
    * @var string
    */
+  protected $apiEndpointUrl;
+
+  /**
+   * @var string
+   */
   protected $tenant;
 
-  /**
-   * @var string
-   */
-  protected $server;
-
-  /**
-   * @var string
-   */
-  protected $port;
-
-  /**
-   * @var bool
-   */
-  protected $insecure;
 
   /**
    * @var string
@@ -63,10 +54,8 @@ class Harbourmaster {
    * @param Config $config
    */
   public function __construct(ClientInterface $client, Config $config) {
-    $this->tenant = $config->get('tenant');
-    $this->server = $config->get('server');
-    $this->port   = $config->get('port');
-    $this->insecure = $config->get('insecure');
+    $this->apiEndpointUrl = $config->get('hms_api_url');
+    $this->tenant = $config->get('hms_api_tenant');
     $this->client = $client;
   }
 
@@ -75,10 +64,7 @@ class Harbourmaster {
    */
   protected function getApiPrefix() {
     return implode('', [
-      $this->insecure ? 'http://' : 'https://',
-      $this->server,
-      ':',
-      $this->port,
+      $this->apiEndpointUrl,
       '/',
       self::version,
       '/',

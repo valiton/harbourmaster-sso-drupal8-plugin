@@ -2,21 +2,18 @@ hms.settings:
   type: config_object
   label: Harbourmaster Configuration
   mapping:
-    server:
+    hms_api_url:
       type: uri
-      label: HMS URI
-    port:
-      type: integer
-      label: HMS Port
-    tenant:
+      label: HMS URL
+    hms_api_tenant:
       type: string
       label: HMS Tenant
-    insecure:
-      type: boolean
-      label: use insecure transport (non-SSL)
     token_ttl:
       type: integer
       label: Token TTL
     token_name:
       type: string
       label: Token Cookie Name
+    user_manager_url:
+      type: uri
+      label: User manager URL

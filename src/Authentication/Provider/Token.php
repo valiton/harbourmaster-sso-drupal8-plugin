@@ -46,6 +46,13 @@ class Token implements AuthenticationProviderInterface {
   protected $cacheTtl = 60;
 
   /**
+   * Set to true in __construct if $cacheTtl > 0
+   *
+   * @var bool
+   */
+  protected $cacheActive;
+
+  /**
    * Name of the HMS SSO cookie in the request. Defaults to "token".
    *
    * @var string
@@ -102,6 +109,7 @@ class Token implements AuthenticationProviderInterface {
   public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, CacheBackendInterface $cache, UserDataInterface $userDataService, EntityTypeManager $entityTypeManager, SessionConfigurationInterface $sessionConfiguration) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('token_ttl');
+    $this->cacheActive = $this->cacheTtl > 0;
     $this->tokenCookieName = $config->get('token_name');
     $this->logger = $logger;
     $this->cache = $cache;
@@ -144,7 +152,6 @@ class Token implements AuthenticationProviderInterface {
   /**
    * {@inheritdoc}
    *
-   * TODO enable caching
    * TODO what happens with user data when the hms module is uninstalled?
    * TODO handle errors
    */
@@ -155,14 +162,15 @@ class Token implements AuthenticationProviderInterface {
     // no need to get too fancy with the cache id, this is our own cache bin
     $cid = 'hmsdata:' . $token;
 
-   /* if ($data = $this->cache->get($cid)) {
+    if ($this->cacheActive && ($data = $this->cache->get($cid))) {
       $this->logger->debug('Login from cached');
       $this->logger->debug('{data}', ['data' => var_export($data, true)]);
-    } else */if ($data = $this->hmsClient->setToken($token)->getSession()) {
+    } else if ($data = $this->hmsClient->setToken($token)->getSession()) {
       $this->logger->debug('Login from HMS');
       $this->logger->debug('{data}', ['data' => var_export($data, true)]);
-
-      $this->cache->set($cid, $data, time() + $this->cacheTtl);
+      if ($this->cacheActive) {
+        $this->cache->set($cid, $data, time() + $this->cacheTtl);
+      }
     } else {
       $this->logger->debug('No such session');
     }
