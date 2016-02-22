@@ -135,6 +135,7 @@ class Settings extends ConfigFormBase {
       $form_state->setErrorByName('hms_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', ['%endpoint' => $form_state->getValue('hms_api_url'), '@protocols' => join(', ', ['http', 'https'])]));
     }
 
+    // TODO Validate this is a valid subdomain of the Drupal domain and try connecting
     if (($value = $form_state->getValue('user_manager_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
       $form_state->setErrorByName('user_manager_url', $this->t('Usermanager URL %endpoint must be an absolute URL (allowed protocols: @protocols)', ['%endpoint' => $form_state->getValue('user_manager_url'), '@protocols' => join(', ', ['http', 'https'])]));
     }
