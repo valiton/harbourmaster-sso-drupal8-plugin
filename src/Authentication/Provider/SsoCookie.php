@@ -26,6 +26,7 @@ use Drupal\Core\Config\Config;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
+use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
 use Drupal\user\Entity\User;
 use Drupal\user\UserDataInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +36,7 @@ use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 /**
  * Implements an authorization provider for Harbourmaster (HMS) SSO authorization.
  */
-class Token implements AuthenticationProviderInterface {
+class SsoCookie implements AuthenticationProviderInterface {
 
   /**
    * Time that an authorization will be cached after looking it up in HMS.
@@ -94,6 +95,13 @@ class Token implements AuthenticationProviderInterface {
   protected $entityTypeManager;
 
   /**
+   * A kernel.response subscriber that can be triggered to clear our cookie
+   *
+   * @var \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie
+   */
+  protected $responseSubscriber;
+
+  /**
    * Constructs a new token authentication provider.
    *
    * TODO do we need to inject the whole EntityTypeManager or can we inject the UserStorage only?
@@ -101,17 +109,19 @@ class Token implements AuthenticationProviderInterface {
    * @param \Drupal\hms\Client\Harbourmaster $hmsClient
    * @param \Drupal\Core\Config\Config $config
    * @param \Drupal\Core\Logger\LoggerChannel $logger
+   * @param \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie $responseSubscriber
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    * @param \Drupal\user\UserDataInterface $userDataService
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, CacheBackendInterface $cache, UserDataInterface $userDataService, EntityTypeManager $entityTypeManager, SessionConfigurationInterface $sessionConfiguration) {
+  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, UserDataInterface $userDataService, EntityTypeManager $entityTypeManager, SessionConfigurationInterface $sessionConfiguration) {
     $this->hmsClient = $hmsClient;
-    $this->cacheTtl = $config->get('token_ttl');
+    $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
-    $this->tokenCookieName = $config->get('token_name');
+    $this->tokenCookieName = $config->get('sso_cookie_name');
     $this->logger = $logger;
+    $this->responseSubscriber = $responseSubscriber;
     $this->cache = $cache;
     $this->userDataService = $userDataService;
     $this->entityTypeManager = $entityTypeManager;
@@ -172,7 +182,9 @@ class Token implements AuthenticationProviderInterface {
         $this->cache->set($cid, $data, time() + $this->cacheTtl);
       }
     } else {
-      $this->logger->debug('No such session');
+      $this->responseSubscriber->triggerClearCookie();
+      $this->logger->debug('No such session, triggering clear cookie');
+
     }
 
     if ($data) {

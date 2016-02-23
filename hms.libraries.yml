@@ -1,0 +1,5 @@
+usermanager.launcher:
+  js:
+    js/loginLauncher.js: { }
+  dependencies:
+    - hms/usermanager.app

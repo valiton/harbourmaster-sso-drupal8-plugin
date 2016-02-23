@@ -76,6 +76,14 @@ class Settings extends ConfigFormBase {
       '#description' => $this->t('May only contain %allowed.', ['%allowed' => 'a-z A-Z 0-9 .-_.']),
     ];
 
+    $form['hms_endpoint']['hms_lookup_ttl'] = [
+      '#type' => 'number',
+      '#title' => $this->t('HMS lookup cache TTL'),
+      '#default_value' => $hmsConfig->get('hms_lookup_ttl'),
+      '#required' => TRUE,
+      '#description' => $this->t('Duration during which the HMS session lookup is cached.'),
+    ];
+
     $form['usermanager_url'] = [
       '#type' => 'details',
       '#title' => $this->t('Usermanager Configuration'),
@@ -90,26 +98,26 @@ class Settings extends ConfigFormBase {
       '#description' => $this->t('This includes protocol and domain (optionally port and/or path prefix).'),
     ];
 
-    $form['hms_token'] = [
+    $form['sso_cookie'] = [
       '#type' => 'details',
       '#title' => $this->t('HMS Token Configuration'),
       '#open' => TRUE,
     ];
 
-    $form['hms_token']['token_name'] = [
+    $form['sso_cookie']['sso_cookie_name'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Token cookie name'),
-      '#default_value' => $hmsConfig->get('token_name'),
+      '#title' => $this->t('SSO cookie name'),
+      '#default_value' => $hmsConfig->get('sso_cookie_name'),
       '#required' => TRUE,
       '#description' => $this->t('Name of the cookie that contains the HMS token (usually "%default"). May only contain %allowed.', ['%default' => 'token', '%allowed' => 'a-z A-Z 0-9 .-_.']),
     ];
 
-    $form['hms_token']['token_ttl'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Token cache TTL'),
-      '#default_value' => $hmsConfig->get('token_ttl'),
+    $form['sso_cookie']['sso_cookie_domain'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('SSO cookie domain'),
+      '#default_value' => $hmsConfig->get('sso_cookie_domain'),
       '#required' => TRUE,
-      '#description' => $this->t('Duration during which the HMS session lookup is cached.'),
+      '#description' => $this->t('Name of the domain which the SSO cookie is set on.'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -121,8 +129,8 @@ class Settings extends ConfigFormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
 
 
-    if (($value = $form_state->getValue('token_name')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
-      $form_state->setErrorByName('token_name', $this->t('Token cookie name %token_name contains invalid characters ', ['%token_name' => $value]));
+    if (($value = $form_state->getValue('sso_cookie_name')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
+      $form_state->setErrorByName('sso_cookie_name', $this->t('SSO cookie name %cookie_name contains invalid characters ', ['%cookie_name' => $value]));
     }
 
     if (($value = $form_state->getValue('hms_api_tenant')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {

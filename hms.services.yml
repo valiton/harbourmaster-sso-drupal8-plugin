@@ -1,10 +1,11 @@
 services:
   hms.authentication.token:
-    class: Drupal\hms\Authentication\Provider\Token
+    class: Drupal\hms\Authentication\Provider\SsoCookie
     arguments:
       - @hms.client
       - @hms.settings
       - @hms.logger
+      - @hms.response_subscriber.clear_invalid_cookie
       - @cache.hms
       - @user.data
       - @entity_type.manager
@@ -55,3 +56,9 @@ services:
     arguments:
       - @hms.settings
 
+  hms.response_subscriber.clear_invalid_cookie:
+    class: Drupal\hms\EventSubscriber\ClearInvalidTokenCookie
+    arguments:
+      - @hms.settings
+    tags:
+      - { name: 'event_subscriber' }

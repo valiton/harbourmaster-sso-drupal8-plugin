@@ -1,4 +1,6 @@
+sso_cookie_domain: .thunder.dev
+sso_cookie_name: token
+hms_lookup_ttl: 60
 hms_api_url: http://harbourmaster:80
 hms_api_tenant: msg
-token_ttl: 60
-token_name: token
+user_manager_url: http://example.org

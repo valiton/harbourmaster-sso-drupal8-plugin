@@ -5,3 +5,9 @@ hms.config_page:
     _title: Harbourmaster settings
   requirements:
     _permission: administer hms settings
+
+hms.login_page:
+  path: hms/login
+  defaults:
+    _controller: \Drupal\hms\Controller\SsoController::login
+    _title: SSO Login
