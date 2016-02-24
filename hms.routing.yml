@@ -11,3 +11,5 @@ hms.login_page:
   defaults:
     _controller: \Drupal\hms\Controller\SsoController::login
     _title: SSO Login
+  requirements:
+    _role: anonymous

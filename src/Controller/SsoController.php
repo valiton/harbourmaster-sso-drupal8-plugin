@@ -24,7 +24,11 @@ use Drupal\Core\Controller\ControllerBase;
 
 class SsoController extends ControllerBase {
 
-  public function loginAction() {
+  public function login() {
+
+    return [
+      '#theme' => 'usermanager',
+    ];
 
   }
 

@@ -36,13 +36,30 @@ function hms_library_info_build() {
       'core/jquery',
     ],
     'js' => [
-      $url . '/libs.js' => [
+      $url . '/usermanager/prod/js/libs.js' => [
         'type' => 'external',
       ],
-      $url . '/app.js' => [
+      $url . '/usermanager/prod/js/app.js' => [
         'type' => 'external',
+      ],
+    ],
+    'css' => [
+      'module' => [
+        $url . '/styles/hms-widget.css' => [
+          'type' => 'external',
+        ],
       ],
     ],
   ];
   return $libraries;
+}
+
+function hms_theme() {
+
+  $theme['usermanager'] = [
+    'variables' => [],
+    'template' => 'usermanager',
+  ];
+
+  return $theme;
 }

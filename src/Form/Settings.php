@@ -155,6 +155,7 @@ class Settings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // TODO clear library discovery service cache
     $this->config('hms.settings')
       ->set('hms_api_url', rtrim($form_state->getValue('hms_api_url'), '/'))
       ->set('hms_api_tenant', $form_state->getValue('hms_api_tenant'))

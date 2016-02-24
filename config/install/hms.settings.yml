@@ -3,4 +3,4 @@ sso_cookie_name: token
 hms_lookup_ttl: 60
 hms_api_url: http://harbourmaster:80
 hms_api_tenant: msg
-user_manager_url: http://example.org
+user_manager_url: http://msg-usermanager.sso-service.dev:49090
