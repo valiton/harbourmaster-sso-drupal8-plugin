@@ -21,11 +21,34 @@ namespace Drupal\hms\Form;
 
 
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Asset\LibraryDiscovery;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 class Settings extends ConfigFormBase {
+
+  /**
+   * @var LibraryDiscovery
+   */
+  protected $libraryDiscovery;
+
+  public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscovery $libraryDiscovery)
+  {
+    $this->libraryDiscovery = $libraryDiscovery;
+    parent::__construct($config_factory);
+  }
+
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+        $container->get('config.factory'),
+        $container->get('library.discovery')
+    );
+  }
+
 
   /**
    * Gets the configuration names that will be editable.
@@ -155,6 +178,8 @@ class Settings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $oldUserManagerUrl = $this->config('hms.settings')->get('user_manager_url');
+
     // TODO clear library discovery service cache
     $this->config('hms.settings')
       ->set('hms_api_url', rtrim($form_state->getValue('hms_api_url'), '/'))
@@ -163,6 +188,10 @@ class Settings extends ConfigFormBase {
       ->set('token_name', $form_state->getValue('token_name'))
       ->set('user_manager_url', rtrim($form_state->getValue('user_manager_url'), '/'))
       ->save();
+
+    if ($this->config('hms.settings')->get('user_manager_url') !== $oldUserManagerUrl) {
+      $this->libraryDiscovery->clearCachedDefinitions();
+    }
 
     parent::submitForm($form, $form_state);
   }
