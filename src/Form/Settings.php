@@ -35,17 +35,15 @@ class Settings extends ConfigFormBase {
    */
   protected $libraryDiscovery;
 
-  public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscovery $libraryDiscovery)
-  {
+  public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscovery $libraryDiscovery) {
     $this->libraryDiscovery = $libraryDiscovery;
     parent::__construct($config_factory);
   }
 
-  public static function create(ContainerInterface $container)
-  {
+  public static function create(ContainerInterface $container) {
     return new static(
-        $container->get('config.factory'),
-        $container->get('library.discovery')
+      $container->get('config.factory'),
+      $container->get('library.discovery')
     );
   }
 
@@ -71,7 +69,7 @@ class Settings extends ConfigFormBase {
     return 'hms.config_page_form';
   }
 
-    /**
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
@@ -132,7 +130,10 @@ class Settings extends ConfigFormBase {
       '#title' => $this->t('SSO cookie name'),
       '#default_value' => $hmsConfig->get('sso_cookie_name'),
       '#required' => TRUE,
-      '#description' => $this->t('Name of the cookie that contains the HMS token (usually "%default"). May only contain %allowed.', ['%default' => 'token', '%allowed' => 'a-z A-Z 0-9 .-_.']),
+      '#description' => $this->t('Name of the cookie that contains the HMS token (usually "%default"). May only contain %allowed.', [
+        '%default' => 'token',
+        '%allowed' => 'a-z A-Z 0-9 .-_.'
+      ]),
     ];
 
     $form['sso_cookie']['sso_cookie_domain'] = [
@@ -163,12 +164,18 @@ class Settings extends ConfigFormBase {
     // TODO Try connecting to configured HMS endpoint here
     // UrlHelper::allowedProtocols seems to depend on some global state? Better use Regex instead of settings that...
     if (($value = $form_state->getValue('hms_api_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
-      $form_state->setErrorByName('hms_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', ['%endpoint' => $form_state->getValue('hms_api_url'), '@protocols' => join(', ', ['http', 'https'])]));
+      $form_state->setErrorByName('hms_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', [
+        '%endpoint' => $form_state->getValue('hms_api_url'),
+        '@protocols' => join(', ', ['http', 'https'])
+      ]));
     }
 
     // TODO Validate this is a valid subdomain of the Drupal domain and try connecting
     if (($value = $form_state->getValue('user_manager_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
-      $form_state->setErrorByName('user_manager_url', $this->t('Usermanager URL %endpoint must be an absolute URL (allowed protocols: @protocols)', ['%endpoint' => $form_state->getValue('user_manager_url'), '@protocols' => join(', ', ['http', 'https'])]));
+      $form_state->setErrorByName('user_manager_url', $this->t('Usermanager URL %endpoint must be an absolute URL (allowed protocols: @protocols)', [
+        '%endpoint' => $form_state->getValue('user_manager_url'),
+        '@protocols' => join(', ', ['http', 'https'])
+      ]));
     }
 
     parent::validateForm($form, $form_state);
@@ -189,7 +196,9 @@ class Settings extends ConfigFormBase {
       ->set('user_manager_url', rtrim($form_state->getValue('user_manager_url'), '/'))
       ->save();
 
-    if ($this->config('hms.settings')->get('user_manager_url') !== $oldUserManagerUrl) {
+    if ($this->config('hms.settings')
+        ->get('user_manager_url') !== $oldUserManagerUrl
+    ) {
       $this->libraryDiscovery->clearCachedDefinitions();
     }
 

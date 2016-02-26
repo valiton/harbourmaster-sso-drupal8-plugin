@@ -41,7 +41,7 @@ class DisallowTokenRequests implements RequestPolicyInterface {
     if ($request->cookies->has($this->tokenName)) {
       return self::DENY;
     }
-    return null;
+    return NULL;
   }
 
 }

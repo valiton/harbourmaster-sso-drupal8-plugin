@@ -6,15 +6,20 @@ services:
       - @hms.settings
       - @hms.logger
       - @hms.response_subscriber.clear_invalid_cookie
+      - @hms.userhelper
       - @cache.hms
-      - @user.data
-      - @entity_type.manager
       - @session_configuration
     tags:
       - name: authentication_provider
         provider_id: hms_token
         priority: 100
         global: true
+
+  hms.userhelper:
+    class: Drupal\hms\User\Helper
+    arguments:
+      - @user.data
+      - @entity_type.manager
 
   hms.client:
     class: Drupal\hms\Client\Harbourmaster

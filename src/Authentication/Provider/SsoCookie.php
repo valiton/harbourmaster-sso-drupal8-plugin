@@ -23,12 +23,11 @@ use Drupal\Component\Utility\Random;
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Config;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
+use Drupal\hms\User\Helper as HmsUserHelper;
 use Drupal\user\Entity\User;
-use Drupal\user\UserDataInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 
@@ -75,24 +74,19 @@ class SsoCookie implements AuthenticationProviderInterface {
   protected $hmsClient;
 
   /**
+   * @var \Drupal\hms\User\Helper
+   */
+  protected $hmsUserHelper;
+
+  /**
    * @var \Psr\Log\LoggerInterface
    */
   protected $logger;
 
   /**
-   * @var \Drupal\user\UserDataInterface
-   */
-  protected $userDataService;
-
-  /**
    * @var \Drupal\Core\Session\SessionConfigurationInterface
    */
   protected $sessionConfiguration;
-
-  /**
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected $entityTypeManager;
 
   /**
    * A kernel.response subscriber that can be triggered to clear our cookie
@@ -109,22 +103,20 @@ class SsoCookie implements AuthenticationProviderInterface {
    * @param \Drupal\hms\Client\Harbourmaster $hmsClient
    * @param \Drupal\Core\Config\Config $config
    * @param \Drupal\Core\Logger\LoggerChannel $logger
+   * @param \Drupal\hms\User\Helper $hmsUserHelper
    * @param \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie $responseSubscriber
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   * @param \Drupal\user\UserDataInterface $userDataService
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, UserDataInterface $userDataService, EntityTypeManager $entityTypeManager, SessionConfigurationInterface $sessionConfiguration) {
+  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserHelper $hmsUserHelper, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
     $this->tokenCookieName = $config->get('sso_cookie_name');
+    $this->hmsUserHelper = $hmsUserHelper;
     $this->logger = $logger;
     $this->responseSubscriber = $responseSubscriber;
     $this->cache = $cache;
-    $this->userDataService = $userDataService;
-    $this->entityTypeManager = $entityTypeManager;
     $this->sessionConfiguration = $sessionConfiguration;
   }
 
@@ -174,75 +166,34 @@ class SsoCookie implements AuthenticationProviderInterface {
 
     if ($this->cacheActive && ($data = $this->cache->get($cid))) {
       $this->logger->debug('Login from cached');
-      $this->logger->debug('{data}', ['data' => var_export($data, true)]);
-    } else if ($data = $this->hmsClient->setToken($token)->getSession()) {
-      $this->logger->debug('Login from HMS');
-      $this->logger->debug('{data}', ['data' => var_export($data, true)]);
-      if ($this->cacheActive) {
-        $this->cache->set($cid, $data, time() + $this->cacheTtl);
+      $this->logger->debug('{data}', ['data' => var_export($data, TRUE)]);
+    }
+    else {
+      if ($data = $this->hmsClient->setToken($token)->getSession()) {
+        $this->logger->debug('Login from HMS');
+        $this->logger->debug('{data}', ['data' => var_export($data, TRUE)]);
+        if ($this->cacheActive) {
+          $this->cache->set($cid, $data, time() + $this->cacheTtl);
+        }
       }
-    } else {
-      $this->responseSubscriber->triggerClearCookie();
-      $this->logger->debug('No such session, triggering clear cookie');
+      else {
+        $this->responseSubscriber->triggerClearCookie();
+        $this->logger->debug('No such session, triggering clear cookie');
 
+      }
     }
 
     if ($data) {
-      // look for a uid that is associated with the HMS user key
-      $uid = $this->findUidForHmsUserKey($data['userKey']);
-      if (!$uid) {
-        $user = $this->createDrupalUser($data);
-        // associate uid with userKey
-        $this->userDataService->set('hms', $user->id(), 'userKey', $data['userKey']);
-      } else {
-        $user = $this->entityTypeManager->getStorage('user')->load($uid);
+      // look for a user that is associated with the HMS user key
+      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($data['userKey']))) {
+        $user = $this->hmsUserHelper->createDrupalUserFromHmsStruct(($data));
       }
 
       return $user;
     }
 
-    return null;
+    return NULL;
 
-  }
-
-  /**
-   * Fetches a Drupal uid for a given HMS userKey.
-   *
-   * @param string $userKey HMS userKey
-   *
-   * @return string|null
-   */
-  protected function findUidForHmsUserKey($userKey) {
-    // return an array of the form $uid => $userKey
-    $userKeysByUid = $this->userDataService->get('hms', null, 'userKey');
-    $uidsByUserKey = array_flip($userKeysByUid);
-    return isset($uidsByUserKey[$userKey]) ? $uidsByUserKey[$userKey] : null;
-  }
-
-  /**
-   * Creates a Drupal user from HMS data struct.
-   *
-   * TODO maybe make this an extra adapter class
-   *
-   * @param array $hmsUserData
-   *
-   * @return \Drupal\user\Entity\User
-   */
-  protected function createDrupalUser(array $hmsUserData) {
-    $r = new Random();
-
-    /**
-     * @var $user User
-     */
-    $user = $this->entityTypeManager->getStorage('user')->create();
-    $user->setPassword($r->string(32));
-    $user->enforceIsNew();
-    $user->setEmail($hmsUserData['email']);
-    // TODO handle username collision?
-    $user->setUsername($hmsUserData['user']['login']);
-    $user->activate();
-    $user->save();
-    return $user;
   }
 
 }

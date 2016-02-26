@@ -92,16 +92,16 @@ class Harbourmaster {
         ]
       );
     } catch (ClientException $e) {
-      return null;
+      return NULL;
     }
 
     switch ($response->getStatusCode()) {
       case 401:
       case 409:
-        return null;
+        return NULL;
     }
 
-    return json_decode($response->getBody(), true)['data'];
+    return json_decode($response->getBody(), TRUE)['data'];
 
   }
 

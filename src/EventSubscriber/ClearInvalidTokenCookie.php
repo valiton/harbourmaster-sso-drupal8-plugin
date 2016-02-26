@@ -49,7 +49,7 @@ class ClearInvalidTokenCookie implements EventSubscriberInterface {
    * @param \Drupal\Core\Config\Config $config
    */
   public function __construct(Config $config) {
-    $this->ssoCookieName   = $config->get('sso_cookie_name');
+    $this->ssoCookieName = $config->get('sso_cookie_name');
     $this->ssoCookieDomain = $config->get('sso_cookie_domain');
   }
 
