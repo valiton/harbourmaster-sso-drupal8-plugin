@@ -1,8 +1,16 @@
-hms.config_page:
+hms.admin_config_page:
   path: admin/config/people/hms
   defaults:
     _form: Drupal\hms\Form\Settings
     _title: Harbourmaster settings
+  requirements:
+    _permission: administer hms settings
+
+hms.admin_status_page:
+  path: admin/config/people/hms/status
+  defaults:
+    _controller: \Drupal\hms\Controller\StatusPageController::status
+    _title: Harbourmaster status
   requirements:
     _permission: administer hms settings
 
@@ -12,4 +20,12 @@ hms.login_page:
     _controller: \Drupal\hms\Controller\SsoController::login
     _title: SSO Login
   requirements:
-    _role: anonymous
+    _access: 'TRUE'
+
+hms.logout:
+  path: hms/logout
+  defaults:
+    _controller: \Drupal\hms\Controller\SsoController::logout
+    _title: SSO Login
+  requirements:
+    _role: authenticated

@@ -20,3 +20,6 @@ hms.settings:
     user_manager_url:
       type: uri
       label: User manager URL
+    version:
+      type: string
+      label: API Version

@@ -1,0 +1,8 @@
+hms.admin_config_page:
+  title: 'Configure'
+  route_name: hms.admin_config_page
+  base_route: hms.admin_config_page
+hms.admin_status_page:
+  title: 'Status'
+  route_name: hms.admin_status_page
+  base_route: hms.admin_config_page

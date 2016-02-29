@@ -21,7 +21,7 @@ namespace Drupal\hms\Form;
 
 
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Asset\LibraryDiscovery;
+use Drupal\Core\Asset\LibraryDiscoveryInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -31,11 +31,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Settings extends ConfigFormBase {
 
   /**
-   * @var LibraryDiscovery
+   * @var LibraryDiscoveryInterface
    */
   protected $libraryDiscovery;
 
-  public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscovery $libraryDiscovery) {
+  public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscoveryInterface $libraryDiscovery) {
     $this->libraryDiscovery = $libraryDiscovery;
     parent::__construct($config_factory);
   }
@@ -46,7 +46,6 @@ class Settings extends ConfigFormBase {
       $container->get('library.discovery')
     );
   }
-
 
   /**
    * Gets the configuration names that will be editable.
@@ -66,7 +65,7 @@ class Settings extends ConfigFormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'hms.config_page_form';
+    return 'hms.admin_config_page_form';
   }
 
   /**
@@ -161,7 +160,6 @@ class Settings extends ConfigFormBase {
       $form_state->setErrorByName('hms_api_tenant', $this->t('API Tenant %tenant contains invalid characters ', ['%tenant' => $value]));
     }
 
-    // TODO Try connecting to configured HMS endpoint here
     // UrlHelper::allowedProtocols seems to depend on some global state? Better use Regex instead of settings that...
     if (($value = $form_state->getValue('hms_api_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
       $form_state->setErrorByName('hms_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', [
@@ -170,7 +168,6 @@ class Settings extends ConfigFormBase {
       ]));
     }
 
-    // TODO Validate this is a valid subdomain of the Drupal domain and try connecting
     if (($value = $form_state->getValue('user_manager_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
       $form_state->setErrorByName('user_manager_url', $this->t('Usermanager URL %endpoint must be an absolute URL (allowed protocols: @protocols)', [
         '%endpoint' => $form_state->getValue('user_manager_url'),
@@ -187,7 +184,7 @@ class Settings extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $oldUserManagerUrl = $this->config('hms.settings')->get('user_manager_url');
 
-    // TODO clear library discovery service cache
+    // FIXME libraryDiscovery->clearCachedDefinitions() does not work as expected
     $this->config('hms.settings')
       ->set('hms_api_url', rtrim($form_state->getValue('hms_api_url'), '/'))
       ->set('hms_api_tenant', $form_state->getValue('hms_api_tenant'))

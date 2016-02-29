@@ -19,17 +19,32 @@
 
 namespace Drupal\hms\Controller;
 
-
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Url;
+
 
 class SsoController extends ControllerBase {
 
   public function login() {
-
+    if ($this->currentUser()->isAuthenticated()) {
+      return $this->redirect('user.page');
+    }
     return [
       '#theme' => 'usermanager',
     ];
+  }
 
+  public function logout() {
+    $userManagerUrl = $this->config('hms.settings')->get('user_manager_url');
+    // TODO why is this considered a "weak" route?
+    $queryString = http_build_query([
+      'logout_redirect' => Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(TRUE)->getGeneratedUrl(),
+    ]);
+
+    return new TrustedRedirectResponse(
+      $userManagerUrl . '/signout?' . $queryString
+    );
   }
 
 }

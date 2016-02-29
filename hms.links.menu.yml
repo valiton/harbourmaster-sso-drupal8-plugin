@@ -1,6 +1,6 @@
 hms.admin_config_page:
   title: HMS
-  route_name: hms.config_page
+  route_name: hms.admin_config_page
   parent: user.admin_index
   description: 'Configure Harbourmaster integration.'
   position: left

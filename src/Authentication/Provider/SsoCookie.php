@@ -19,7 +19,6 @@
 
 namespace Drupal\hms\Authentication\Provider;
 
-use Drupal\Component\Utility\Random;
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Config;
@@ -27,7 +26,6 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
 use Drupal\hms\User\Helper as HmsUserHelper;
-use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 
@@ -164,7 +162,8 @@ class SsoCookie implements AuthenticationProviderInterface {
     // no need to get too fancy with the cache id, this is our own cache bin
     $cid = 'hmsdata:' . $token;
 
-    if ($this->cacheActive && ($data = $this->cache->get($cid))) {
+    if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
+      $data = $cached->data;
       $this->logger->debug('Login from cached');
       $this->logger->debug('{data}', ['data' => var_export($data, TRUE)]);
     }
@@ -188,7 +187,7 @@ class SsoCookie implements AuthenticationProviderInterface {
       if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($data['userKey']))) {
         $user = $this->hmsUserHelper->createDrupalUserFromHmsStruct(($data));
       }
-
+      $user->addRole('hms_user');
       return $user;
     }
 

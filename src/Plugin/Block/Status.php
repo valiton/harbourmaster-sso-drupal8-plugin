@@ -39,7 +39,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Status extends BlockBase implements ContainerFactoryPluginInterface {
 
 
-
   /**
    * @var \Drupal\hms\User\Helper
    */
@@ -50,32 +49,14 @@ class Status extends BlockBase implements ContainerFactoryPluginInterface {
    */
   protected $currentUser;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AccountInterface $currentUser, HmsUserHelper $hmsUserHelper) {
+  public function __construct(
+    array $configuration, $plugin_id, $plugin_definition,
+    AccountInterface $currentUser, HmsUserHelper $hmsUserHelper) {
+
     $this->hmsUserHelper = $hmsUserHelper;
     $this->currentUser = $currentUser;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
 
-  /**
-   * @inheritdoc
-   */
-  public function build() {
-
-    if ($this->currentUser->isAnonymous()) {
-      $markup = $this->t('not logged in');
-    } else {
-      $markup = $this->t('Hello :name', [ ':name' => $this->currentUser->getDisplayName()]);
-      $userKey = $this->hmsUserHelper->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $markup .= ' (' . $this->t('logged in via HMS #:userkey', [':userkey' => $userKey])  . ')';
-      } else {
-        $markup .= ' (' . $this->t('logged in via another method')  . ')';
-      }
-    }
-
-    return [
-      '#markup' => $markup,
-    ];
   }
 
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -88,5 +69,34 @@ class Status extends BlockBase implements ContainerFactoryPluginInterface {
     );
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function build() {
+
+    $render = [
+      '#theme' => 'status',
+//      '#cache' => [
+//        'contexts' => ['user'],
+//      ],
+      '#cache' => [
+        'max-age' => 0,
+      ],
+      '#currentUser' => $this->currentUser,
+      '#currentUserRoles' => $this->currentUser->getRoles(),
+    ];
+
+    if ($this->currentUser->isAuthenticated()) {
+      $userKey = $this->hmsUserHelper->findHmsUserKeyForUid($this->currentUser->id());
+      if ($userKey) {
+        $render += [
+          '#hmsUserKey' => $userKey,
+        ];
+      }
+    }
+
+    return $render;
+
+  }
 
 }
