@@ -60,20 +60,22 @@ class Status extends BlockBase implements ContainerFactoryPluginInterface {
    * @inheritdoc
    */
   public function build() {
-    $markup = '';
 
     if ($this->currentUser->isAnonymous()) {
       $markup = $this->t('not logged in');
     } else {
       $markup = $this->t('Hello :name', [ ':name' => $this->currentUser->getDisplayName()]);
       $userKey = $this->hmsUserHelper->findHmsUserKeyForUid($this->currentUser->id());
-      compiler error;
+      if ($userKey) {
+        $markup .= ' (' . $this->t('logged in via HMS #:userkey', [':userkey' => $userKey])  . ')';
+      } else {
+        $markup .= ' (' . $this->t('logged in via another method')  . ')';
+      }
     }
 
-
-    return array(
-      '#markup' => $this->t('Hello @name!', array('@name' => $name)),
-    );
+    return [
+      '#markup' => $markup,
+    ];
   }
 
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {

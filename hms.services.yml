@@ -5,8 +5,8 @@ services:
       - @hms.client
       - @hms.settings
       - @hms.logger
-      - @hms.response_subscriber.clear_invalid_cookie
       - @hms.userhelper
+      - @hms.response_subscriber.clear_invalid_cookie
       - @cache.hms
       - @session_configuration
     tags:
