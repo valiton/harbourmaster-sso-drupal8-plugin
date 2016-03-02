@@ -23,43 +23,22 @@ namespace Drupal\hms\Plugin\Block;
 
 
 /**
- * Provides a 'Status' block.
+ * Provides a 'ResetPassword' block.
  *
  * @Block(
- *   id = "hms_status_block",
- *   admin_label = @Translation("HMS Status block"),
+ *   id = "hms_reset_password_block",
+ *   admin_label = @Translation("HMS ResetPassword block"),
  * )
  */
-class Status extends HmsAwareAbstractBlock {
+class ResetPassword extends HmsAwareAbstractBlock {
 
   /**
    * @inheritdoc
    */
   public function build() {
-
-    $render = [
-      '#theme' => 'status',
-      '#cache' => [
-        'contexts' => ['user'],
-      ],
-//      '#cache' => [
-//        'max-age' => 0,
-//      ],
-      '#currentUser' => $this->currentUser,
-      '#currentUserRoles' => $this->currentUser->getRoles(),
+    return [
+      '#theme' => 'usermanager.reset_password',
     ];
-
-    if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $render += [
-          '#hmsUserKey' => $userKey,
-        ];
-      }
-    }
-
-    return $render;
-
   }
 
 }

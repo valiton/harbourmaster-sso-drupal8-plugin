@@ -5,7 +5,7 @@ services:
       - @hms.client
       - @hms.settings
       - @hms.logger
-      - @hms.userhelper
+      - @hms.user_manager
       - @hms.response_subscriber.clear_invalid_cookie
       - @cache.hms
       - @session_configuration
@@ -15,11 +15,12 @@ services:
         priority: 100
         global: true
 
-  hms.userhelper:
-    class: Drupal\hms\User\Helper
+  hms.user_manager:
+    class: Drupal\hms\User\Manager
     arguments:
       - @user.data
       - @entity_type.manager
+      - %hms.adapter.service%
 
   hms.client:
     class: Drupal\hms\Client\Harbourmaster
@@ -67,3 +68,11 @@ services:
       - @hms.settings
     tags:
       - { name: 'event_subscriber' }
+
+  hms.default_user_adapter:
+    class: Drupal\hms\User\DefaultUserAdapter
+    arguments:
+    - @entity_type.manager
+
+parameters:
+  hms.adapter.service: @hms.default_user_adapter

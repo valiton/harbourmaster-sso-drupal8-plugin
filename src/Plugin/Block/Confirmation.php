@@ -21,45 +21,23 @@
 
 namespace Drupal\hms\Plugin\Block;
 
-
 /**
- * Provides a 'Status' block.
+ * Provides a 'Confirmation' block.
  *
  * @Block(
- *   id = "hms_status_block",
- *   admin_label = @Translation("HMS Status block"),
+ *   id = "hms_confirmation_block",
+ *   admin_label = @Translation("HMS Confirmation block"),
  * )
  */
-class Status extends HmsAwareAbstractBlock {
+class Confirmation extends HmsAwareAbstractBlock {
 
   /**
    * @inheritdoc
    */
   public function build() {
-
-    $render = [
-      '#theme' => 'status',
-      '#cache' => [
-        'contexts' => ['user'],
-      ],
-//      '#cache' => [
-//        'max-age' => 0,
-//      ],
-      '#currentUser' => $this->currentUser,
-      '#currentUserRoles' => $this->currentUser->getRoles(),
+    return [
+      '#theme' => 'usermanager.confirmation',
     ];
-
-    if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $render += [
-          '#hmsUserKey' => $userKey,
-        ];
-      }
-    }
-
-    return $render;
-
   }
 
 }

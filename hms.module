@@ -61,6 +61,36 @@ function hms_theme() {
     'template' => 'usermanager',
   ];
 
+  $theme['usermanager.confirmation'] = [
+    'variables' => [],
+    'template' => 'usermanager.confirmation',
+  ];
+
+  $theme['usermanager.password'] = [
+    'variables' => [],
+    'template' => 'usermanager.password',
+  ];
+
+  $theme['usermanager.profile'] = [
+    'variables' => [],
+    'template' => 'usermanager.profile',
+  ];
+
+  $theme['usermanager.reset_password'] = [
+    'variables' => [],
+    'template' => 'usermanager.reset_password',
+  ];
+
+  $theme['usermanager.signin'] = [
+    'variables' => [],
+    'template' => 'usermanager.signin',
+  ];
+
+  $theme['usermanager.signout'] = [
+    'variables' => [],
+    'template' => 'usermanager.signout',
+  ];
+
   $theme['status'] = [
     'variables' => [
       'currentUser' => NULL,

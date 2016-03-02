@@ -25,7 +25,7 @@ use Drupal\Core\Config\Config;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
-use Drupal\hms\User\Helper as HmsUserHelper;
+use Drupal\hms\User\Manager as HmsUserManager;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 
@@ -72,7 +72,7 @@ class SsoCookie implements AuthenticationProviderInterface {
   protected $hmsClient;
 
   /**
-   * @var \Drupal\hms\User\Helper
+   * @var \Drupal\hms\User\Manager
    */
   protected $hmsUserHelper;
 
@@ -101,17 +101,17 @@ class SsoCookie implements AuthenticationProviderInterface {
    * @param \Drupal\hms\Client\Harbourmaster $hmsClient
    * @param \Drupal\Core\Config\Config $config
    * @param \Drupal\Core\Logger\LoggerChannel $logger
-   * @param \Drupal\hms\User\Helper $hmsUserHelper
+   * @param \Drupal\hms\User\Manager $hmsUserManager
    * @param \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie $responseSubscriber
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserHelper $hmsUserHelper, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
+  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
     $this->tokenCookieName = $config->get('sso_cookie_name');
-    $this->hmsUserHelper = $hmsUserHelper;
+    $this->hmsUserHelper = $hmsUserManager;
     $this->logger = $logger;
     $this->responseSubscriber = $responseSubscriber;
     $this->cache = $cache;
@@ -161,31 +161,34 @@ class SsoCookie implements AuthenticationProviderInterface {
 
     // no need to get too fancy with the cache id, this is our own cache bin
     $cid = 'hmsdata:' . $token;
+    $fromCache = false;
 
     if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
-      $data = $cached->data;
+      $hmsSessionData = $cached->data;
+      $fromCache = true;
       $this->logger->debug('Login from cached');
-      $this->logger->debug('{data}', ['data' => var_export($data, TRUE)]);
+      $this->logger->debug('{data}', ['data' => var_export($hmsSessionData, TRUE)]);
     }
     else {
-      if ($data = $this->hmsClient->setToken($token)->getSession()) {
+      if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
         $this->logger->debug('Login from HMS');
-        $this->logger->debug('{data}', ['data' => var_export($data, TRUE)]);
+        $this->logger->debug('{data}', ['data' => var_export($hmsSessionData, TRUE)]);
         if ($this->cacheActive) {
-          $this->cache->set($cid, $data, time() + $this->cacheTtl);
+          $this->cache->set($cid, $hmsSessionData, time() + $this->cacheTtl);
         }
       }
       else {
         $this->responseSubscriber->triggerClearCookie();
         $this->logger->debug('No such session, triggering clear cookie');
-
       }
     }
 
-    if ($data) {
+    if ($hmsSessionData) {
       // look for a user that is associated with the HMS user key
-      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($data['userKey']))) {
-        $user = $this->hmsUserHelper->createDrupalUserFromHmsStruct(($data));
+      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey']))) {
+        $user = $this->hmsUserHelper->createAndAssociateUser($hmsSessionData);
+      } else if (!$fromCache) {
+        $user = $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
       }
       $user->addRole('hms_user');
       return $user;

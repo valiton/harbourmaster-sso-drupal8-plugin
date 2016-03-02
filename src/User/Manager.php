@@ -22,12 +22,12 @@
 namespace Drupal\hms\User;
 
 
-use Drupal\Component\Utility\Random;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\user\Entity\User;
 use Drupal\user\UserDataInterface;
+use Drupal\hms\User\AdapterInterface as HmsUserAdapter;
+use Drupal\user\UserInterface;
 
-class Helper {
+class Manager {
 
   /**
    * @var \Drupal\user\UserDataInterface
@@ -40,40 +40,36 @@ class Helper {
   protected $entityTypeManager;
 
   /**
-   * Helper constructor.
-   * @param \Drupal\user\UserDataInterface $userDataService
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   * @var \Drupal\hms\User\AdapterInterface
    */
-  public function __construct(UserDataInterface $userDataService, EntityTypeManagerInterface $entityTypeManager) {
+  protected $userAdapter;
+
+  public function __construct(UserDataInterface $userDataService, EntityTypeManagerInterface $entityTypeManager, HmsUserAdapter $userAdapter) {
     $this->userDataService = $userDataService;
     $this->entityTypeManager = $entityTypeManager;
+    $this->userAdapter = $userAdapter;
   }
 
   /**
    * Creates a Drupal user from HMS data struct.
    *
-   * TODO maybe make this an extra adapter class
+   * @param array $hmsSessionData
    *
-   * @param array $hmsUserData
-   *
-   * @return \Drupal\user\Entity\User
+   * @return \Drupal\user\UserInterface
    */
-  public function createDrupalUserFromHmsStruct(array $hmsUserData) {
-    $r = new Random();
-
-    /**
-     * @var $user User
-     */
-    $user = $this->entityTypeManager->getStorage('user')->create();
-    $user->setPassword($r->string(32));
-    $user->enforceIsNew();
-    $user->setEmail($hmsUserData['email']);
-    // TODO handle username collision and other errors
-    $user->setUsername($hmsUserData['user']['login']);
-    $user->activate();
-    $user->save();
-    $this->userDataService->set('hms', $user->id(), 'userKey', $hmsUserData['userKey']);
+  public function createAndAssociateUser(array $hmsSessionData) {
+    $user = $this->userAdapter->createUser($hmsSessionData);
+    $this->userDataService->set('hms', $user->id(), 'userKey', $hmsSessionData['userKey']);
     return $user;
+  }
+
+  /**
+   * @param array $hmsSessionData
+   * @param \Drupal\user\UserInterface $user
+   * @return \Drupal\user\UserInterface
+   */
+  public function updateAssociatedUser(array $hmsSessionData, UserInterface $user) {
+    return $this->userAdapter->updateUser($hmsSessionData, $user);
   }
 
   /**
@@ -103,7 +99,11 @@ class Helper {
   /**
    * @param $userKey HMS user key
    *
-   * @return \Drupal\Core\Entity\EntityInterface|null
+   * @return UserInterface|null
+   */
+  /**
+   * @param $userKey
+   * @return \Drupal\user\UserInterface
    */
   public function loadUserByHmsUserKey($userKey) {
     $uid = $this->findUidForHmsUserKey($userKey);

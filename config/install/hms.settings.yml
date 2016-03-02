@@ -4,4 +4,4 @@ hms_lookup_ttl: 60
 hms_api_url: http://harbourmaster.sso-service.dev:49090
 hms_api_tenant: msg
 hms_api_version: v1 #read-only
-user_manager_url: http://msg-usermanager.sso-service.dev:49088
+user_manager_url: http://msg-usermanager.sso-service.dev:49090

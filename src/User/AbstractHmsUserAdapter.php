@@ -19,47 +19,25 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\hms\User;
 
 
-/**
- * Provides a 'Status' block.
- *
- * @Block(
- *   id = "hms_status_block",
- *   admin_label = @Translation("HMS Status block"),
- * )
- */
-class Status extends HmsAwareAbstractBlock {
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\user\UserInterface;
+
+abstract class AbstractHmsUserAdapter implements AdapterInterface {
 
   /**
-   * @inheritdoc
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public function build() {
+  protected $entityTypeManager;
 
-    $render = [
-      '#theme' => 'status',
-      '#cache' => [
-        'contexts' => ['user'],
-      ],
-//      '#cache' => [
-//        'max-age' => 0,
-//      ],
-      '#currentUser' => $this->currentUser,
-      '#currentUserRoles' => $this->currentUser->getRoles(),
-    ];
-
-    if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $render += [
-          '#hmsUserKey' => $userKey,
-        ];
-      }
-    }
-
-    return $render;
-
+  /**
+   * AbstractHmsUserAdapter constructor.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   */
+  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+    $this->entityTypeManager = $entityTypeManager;
   }
 
 }

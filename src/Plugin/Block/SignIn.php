@@ -21,45 +21,23 @@
 
 namespace Drupal\hms\Plugin\Block;
 
-
 /**
- * Provides a 'Status' block.
+ * Provides a 'SignIn' block.
  *
  * @Block(
- *   id = "hms_status_block",
- *   admin_label = @Translation("HMS Status block"),
+ *   id = "hms_signin_block",
+ *   admin_label = @Translation("HMS SignIn block"),
  * )
  */
-class Status extends HmsAwareAbstractBlock {
+class SignIn extends HmsAwareAbstractBlock {
 
   /**
    * @inheritdoc
    */
   public function build() {
-
-    $render = [
-      '#theme' => 'status',
-      '#cache' => [
-        'contexts' => ['user'],
-      ],
-//      '#cache' => [
-//        'max-age' => 0,
-//      ],
-      '#currentUser' => $this->currentUser,
-      '#currentUserRoles' => $this->currentUser->getRoles(),
+    return [
+      '#theme' => 'usermanager.signin',
     ];
-
-    if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $render += [
-          '#hmsUserKey' => $userKey,
-        ];
-      }
-    }
-
-    return $render;
-
   }
 
 }

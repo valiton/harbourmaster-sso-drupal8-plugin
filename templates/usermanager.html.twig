@@ -2,46 +2,5 @@
 
 <h2>{{ title }}</h2>
 
-<div class="hms-widget">
-    <div class="onsite-hms-widget-container">
-
-        <!-- VALITON_MOD START  -->
-
-        <div id="hmsSigninContainer"></div>
-
-        <div id="hmsResetPasswordContainer"></div>
-
-        <div id="hmsProfileContainer"></div>
-
-        <!-- MODAL PANEL ENTITLEMENT -->
-        <div class="modal-panel" id="entitlementModal">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                        <div class="modal-panel-content">
-                            <span class="modal-close">&times;</span>
-                            <div id="hmsEntitlementContainer"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /MODAL PANEL ENTITLEMENT -->
-
-        <div id="hmsSubscriptionContainer"></div>
-
-        <!-- MODAL PANEL SIGN UP -->
-        <div class="modal-panel" id="signupModal">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                        <div class="modal-panel-content">
-                            <span class="modal-close">&times;</span>
-                            <div id="hmsSignupContainer"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /MODAL PANEL SIGN UP -->
-    </div>
-</div>
+{% block content %}
+{% endblock %}

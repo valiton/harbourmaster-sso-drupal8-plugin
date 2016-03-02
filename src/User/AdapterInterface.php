@@ -19,47 +19,23 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\hms\User;
 
+use Drupal\user\UserInterface;
 
-/**
- * Provides a 'Status' block.
- *
- * @Block(
- *   id = "hms_status_block",
- *   admin_label = @Translation("HMS Status block"),
- * )
- */
-class Status extends HmsAwareAbstractBlock {
+interface AdapterInterface {
 
   /**
-   * @inheritdoc
+   * @param array $hmsSessionData
+   * @return UserInterface
    */
-  public function build() {
+  public function createUser(array $hmsSessionData);
 
-    $render = [
-      '#theme' => 'status',
-      '#cache' => [
-        'contexts' => ['user'],
-      ],
-//      '#cache' => [
-//        'max-age' => 0,
-//      ],
-      '#currentUser' => $this->currentUser,
-      '#currentUserRoles' => $this->currentUser->getRoles(),
-    ];
-
-    if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      if ($userKey) {
-        $render += [
-          '#hmsUserKey' => $userKey,
-        ];
-      }
-    }
-
-    return $render;
-
-  }
+  /**
+   * @param array $hmsSessionData
+   * @param \Drupal\user\UserInterface $user
+   * @return UserInterface
+   */
+  public function updateUser(array $hmsSessionData, UserInterface $user);
 
 }
