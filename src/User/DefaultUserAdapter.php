@@ -24,6 +24,7 @@ namespace Drupal\hms\User;
 
 use Drupal\Component\Utility\Random;
 use Drupal\user\UserInterface;
+use Drupal\user\UserStorageInterface;
 
 class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
@@ -38,10 +39,20 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     $r = new Random();
 
     /**
+     * @var UserStorageInterface
+     */
+    $userStorage = $this->entityTypeManager->getStorage('user');
+    $users = $userStorage->loadByProperties(['name' => $hmsSessionData['user']['login']]);
+    if (count($users) > 0) {
+      $hmsSessionData['user']['login'] = $this->fixUserNameCollision($hmsSessionData['user']['login']);
+    }
+
+    /**
      * @var $user UserInterface
      */
-    $user = $this->entityTypeManager->getStorage('user')->create();
-    $user = static::setUserData($hmsSessionData, $user);
+    $user = $userStorage->create();
+
+    $user = $this->setUserData($hmsSessionData, $user);
 
     // random password so a user can never log in via Drupal
     $user->setPassword($r->string(32));
@@ -65,9 +76,13 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
       return $user;
     }
 
-    $user = static::setUserData($hmsSessionData, $user);
+    $user = $this->setUserData($hmsSessionData, $user);
     $user->save();
     return $user;
+  }
+
+  protected function fixUserNameCollision($name) {
+    return 'hms.' . $name;
   }
 
   /**
@@ -75,7 +90,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    * @param \Drupal\user\UserInterface $user
    * @return \Drupal\user\UserInterface
    */
-  protected static function setUserData(array $hmsSessionData, UserInterface $user) {
+  protected function setUserData(array $hmsSessionData, UserInterface $user) {
     $user->setEmail($hmsSessionData['user']['email']);
     // TODO handle username collision and other errors
     $user->setUsername('hms.' . $hmsSessionData['user']['login']);

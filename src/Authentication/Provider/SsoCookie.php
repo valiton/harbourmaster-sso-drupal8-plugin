@@ -25,6 +25,7 @@ use Drupal\Core\Config\Config;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
+use Drupal\hms\Helper\CookieHelper;
 use Drupal\hms\User\Manager as HmsUserManager;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
@@ -58,6 +59,11 @@ class SsoCookie implements AuthenticationProviderInterface {
   protected $tokenCookieName = 'token';
 
   /**
+   * @var bool
+   */
+  protected $allowOverrideByDrupalLogin = false;
+
+  /**
    * Our own cache bin for caching HMS lookups during $cacheTtl.
    *
    * @var CacheBackendInterface
@@ -89,9 +95,9 @@ class SsoCookie implements AuthenticationProviderInterface {
   /**
    * A kernel.response subscriber that can be triggered to clear our cookie
    *
-   * @var \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie
+   * @var \Drupal\hms\Helper\CookieHelper
    */
-  protected $responseSubscriber;
+  protected $cookieHelper;
 
   /**
    * Constructs a new token authentication provider.
@@ -102,18 +108,18 @@ class SsoCookie implements AuthenticationProviderInterface {
    * @param \Drupal\Core\Config\Config $config
    * @param \Drupal\Core\Logger\LoggerChannel $logger
    * @param \Drupal\hms\User\Manager $hmsUserManager
-   * @param \Drupal\hms\EventSubscriber\ClearInvalidTokenCookie $responseSubscriber
+   * @param \Drupal\hms\Helper\CookieHelper $cookieHelper
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, ClearInvalidTokenCookie $responseSubscriber, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
+  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, CookieHelper $cookieHelper, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
     $this->tokenCookieName = $config->get('sso_cookie_name');
     $this->hmsUserHelper = $hmsUserManager;
     $this->logger = $logger;
-    $this->responseSubscriber = $responseSubscriber;
+    $this->cookieHelper = $cookieHelper;
     $this->cache = $cache;
     $this->sessionConfiguration = $sessionConfiguration;
   }
@@ -145,8 +151,8 @@ class SsoCookie implements AuthenticationProviderInterface {
   public function applies(Request $request) {
     $activeSession = $request->hasSession() && $this->sessionConfiguration->hasSession($request);
     $isLogin = preg_match('#^/user/login#', $request->getRequestUri());
-    $cookieExists = $request->cookies->has($this->tokenCookieName);
-    return !($activeSession || $isLogin) && $cookieExists;
+    $loginOverride = $this->allowOverrideByDrupalLogin && ($activeSession || $isLogin);
+    return !$loginOverride && $this->cookieHelper->hasValidSsoCookie($request);
   }
 
   /**
@@ -157,7 +163,7 @@ class SsoCookie implements AuthenticationProviderInterface {
    */
   public function authenticate(Request $request) {
 
-    $token = $request->cookies->get($this->tokenCookieName);
+    $token = $this->cookieHelper->getValidSsoCookie($request);
 
     // no need to get too fancy with the cache id, this is our own cache bin
     $cid = 'hmsdata:' . $token;
@@ -178,7 +184,7 @@ class SsoCookie implements AuthenticationProviderInterface {
         }
       }
       else {
-        $this->responseSubscriber->triggerClearCookie();
+        $this->cookieHelper->triggerClearSsoCookie();
         $this->logger->debug('No such session, triggering clear cookie');
       }
     }

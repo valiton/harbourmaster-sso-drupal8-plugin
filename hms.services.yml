@@ -1,3 +1,5 @@
+# TODO mark private services
+
 services:
   hms.authentication.token:
     class: Drupal\hms\Authentication\Provider\SsoCookie
@@ -6,7 +8,7 @@ services:
       - @hms.settings
       - @hms.logger
       - @hms.user_manager
-      - @hms.response_subscriber.clear_invalid_cookie
+      - @hms.cookie_helper
       - @cache.hms
       - @session_configuration
     tags:
@@ -62,17 +64,18 @@ services:
     arguments:
       - @hms.settings
 
-  hms.response_subscriber.clear_invalid_cookie:
-    class: Drupal\hms\EventSubscriber\ClearInvalidTokenCookie
+  hms.default_user_adapter:
+    class: Drupal\hms\User\DefaultUserAdapter
+    arguments:
+      - @entity_type.manager
+
+  hms.cookie_helper:
+    class: Drupal\hms\Helper\CookieHelper
     arguments:
       - @hms.settings
     tags:
       - { name: 'event_subscriber' }
 
-  hms.default_user_adapter:
-    class: Drupal\hms\User\DefaultUserAdapter
-    arguments:
-    - @entity_type.manager
 
 parameters:
   hms.adapter.service: @hms.default_user_adapter

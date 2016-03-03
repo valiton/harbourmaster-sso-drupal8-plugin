@@ -38,7 +38,7 @@ class DisallowTokenRequests implements RequestPolicyInterface {
    * {@inheritdoc}
    */
   public function check(Request $request) {
-    if ($request->cookies->has($this->tokenName)) {
+    if ($request->cookies->has($this->tokenName) && !preg_match('/^err/', $request->cookies->get($this->tokenName))) {
       return self::DENY;
     }
     return NULL;
