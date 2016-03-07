@@ -49,7 +49,7 @@ class SsoCookie implements AuthenticationProviderInterface {
    *
    * @var bool
    */
-  protected $cacheActive;
+  protected $cacheActive = false;
 
   /**
    * Name of the HMS SSO cookie in the request. Defaults to "token".

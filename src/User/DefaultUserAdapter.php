@@ -23,6 +23,7 @@ namespace Drupal\hms\User;
 
 
 use Drupal\Component\Utility\Random;
+use Drupal\file\FileInterface;
 use Drupal\user\UserInterface;
 use Drupal\user\UserStorageInterface;
 
@@ -67,7 +68,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    * @param array $hmsSessionData
    *    The HMS data struct for the current session
    * @param \Drupal\user\UserInterface $user
-   *    The user associated with the current session userkey
+   *    The user associated with the current session userKey
    * @return \Drupal\user\UserInterface
    *    The updated and saved User entity
    */
@@ -92,8 +93,20 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    */
   protected function setUserData(array $hmsSessionData, UserInterface $user) {
     $user->setEmail($hmsSessionData['user']['email']);
-    // TODO handle username collision and other errors
-    $user->setUsername('hms.' . $hmsSessionData['user']['login']);
+    $user->setUsername($hmsSessionData['user']['login']);
+    // TODO replace with usermanager url
+    if (user_picture_enabled()) {
+      $dir = 'public://hms_pictures';
+      if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+        /**
+         * @var FileInterface
+         */
+        if ($file = system_retrieve_file('http://www.hubertburda.de/hubertburda_aus_gb_2004.jpg', $dir . '/' . $hmsSessionData['userKey'] . '.jpg', TRUE, FILE_EXISTS_REPLACE)) {
+          $user->set('user_picture', $file->id());
+        }
+      }
+    }
+
     // TODO find out whether this actually works
     $user->setChangedTime(intval($hmsSessionData['user']['modifiedAt'] / 1000));
     return $user;
