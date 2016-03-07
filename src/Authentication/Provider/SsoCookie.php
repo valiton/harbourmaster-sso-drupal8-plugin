@@ -199,7 +199,7 @@ class SsoCookie extends Cookie {
       if ($user->isBlocked()) {
         return NULL;
       }
-
+      // TODO inject these
       \Drupal::service('session')->migrate();
       \Drupal::service('session')->set('uid', $user->id());
       \Drupal::service('session')->set('sso_token', $token);
@@ -211,6 +211,7 @@ class SsoCookie extends Cookie {
   }
 
   protected function logout() {
+    // TODO inject these
     \Drupal::service('session_manager')->destroy();
     return NULL;
   }
