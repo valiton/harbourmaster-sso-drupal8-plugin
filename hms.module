@@ -91,6 +91,11 @@ function hms_theme() {
     'template' => 'usermanager.signout',
   ];
 
+  $theme['usermanager.login_page'] = [
+    'variables' => [],
+    'template' => 'usermanager.login_page',
+  ];
+
   $theme['status'] = [
     'variables' => [
       'currentUser' => NULL,
