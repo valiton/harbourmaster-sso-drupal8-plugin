@@ -31,7 +31,7 @@ class SsoController extends ControllerBase {
       return $this->redirect('user.page');
     }
     return [
-      '#theme' => 'usermanager',
+      '#theme' => 'usermanager.signin',
     ];
   }
 

@@ -18,7 +18,7 @@
  */
 
 $(document).ready(function () {
-    hmsOpenSigninModal();
-    $('#loginModal').addClass('active');
-    $('html').addClass('modal-active');
+    //hmsOpenSigninModal();
+    //$('#loginModal').addClass('active');
+    //$('html').addClass('modal-active');
 });
