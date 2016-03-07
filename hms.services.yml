@@ -11,6 +11,7 @@ services:
       - @hms.cookie_helper
       - @cache.hms
       - @session_configuration
+      - @database
     tags:
       - name: authentication_provider
         provider_id: hms_token

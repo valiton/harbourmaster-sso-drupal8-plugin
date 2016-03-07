@@ -34,8 +34,8 @@ interface AdapterInterface {
   /**
    * @param array $hmsSessionData
    * @param \Drupal\user\UserInterface $user
-   * @return UserInterface
+   * @return bool
    */
-  public function updateUser(array $hmsSessionData, UserInterface $user);
+  public function updateUser(array $hmsSessionData, UserInterface &$user);
 
 }

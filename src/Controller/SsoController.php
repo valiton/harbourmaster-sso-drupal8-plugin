@@ -48,3 +48,4 @@ class SsoController extends ControllerBase {
   }
 
 }
+

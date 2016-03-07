@@ -22,19 +22,21 @@ namespace Drupal\hms\Authentication\Provider;
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Config;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
-use Drupal\hms\EventSubscriber\ClearInvalidTokenCookie;
 use Drupal\hms\Helper\CookieHelper;
 use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\user\Authentication\Provider\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 /**
  * Implements an authorization provider for Harbourmaster (HMS) SSO authorization.
  */
-class SsoCookie implements AuthenticationProviderInterface {
+class SsoCookie extends Cookie {
 
   /**
    * Time that an authorization will be cached after looking it up in HMS.
@@ -111,8 +113,9 @@ class SsoCookie implements AuthenticationProviderInterface {
    * @param \Drupal\hms\Helper\CookieHelper $cookieHelper
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
+   * @param \Drupal\Core\Database\Connection $connection
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, CookieHelper $cookieHelper, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration) {
+  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, CookieHelper $cookieHelper, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration, Connection $connection) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
@@ -121,7 +124,7 @@ class SsoCookie implements AuthenticationProviderInterface {
     $this->logger = $logger;
     $this->cookieHelper = $cookieHelper;
     $this->cache = $cache;
-    $this->sessionConfiguration = $sessionConfiguration;
+    parent::__construct($sessionConfiguration, $connection);
   }
 
   /**
@@ -149,10 +152,7 @@ class SsoCookie implements AuthenticationProviderInterface {
    *   request, FALSE otherwise.
    */
   public function applies(Request $request) {
-    $activeSession = $request->hasSession() && $this->sessionConfiguration->hasSession($request);
-    $isLogin = preg_match('#^/user/login#', $request->getRequestUri());
-    $loginOverride = $this->allowOverrideByDrupalLogin && ($activeSession || $isLogin);
-    return !$loginOverride && $this->cookieHelper->hasValidSsoCookie($request);
+    return $this->cookieHelper->hasValidSsoCookie($request) || parent::applies($request);
   }
 
   /**
@@ -165,41 +165,73 @@ class SsoCookie implements AuthenticationProviderInterface {
 
     $token = $this->cookieHelper->getValidSsoCookie($request);
 
-    // no need to get too fancy with the cache id, this is our own cache bin
-    $cid = 'hmsdata:' . $token;
-    $fromCache = false;
+    // a session is already running
+    if (parent::applies($request)) {
+      if (!$request->getSession()->has('sso_token')) {
+        return parent::authenticate($request);
+      }
+      $currentSessionUid = $request->getSession()->get('uid');
+      $currentSessionSsoToken = $request->getSession()->get('sso_token');
+      if ($token != $currentSessionSsoToken) {
+        return $this->logout();
+      }
+      $hmsSessionData = $this->lookupHmsUser($token);
+      if (!$hmsSessionData) {
+        return $this->logout();
+      }
+      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey'])) || $user->id() != $currentSessionUid || $user->isBlocked()) {
+        return $this->logout();
+      }
 
-    if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
-      $hmsSessionData = $cached->data;
-      $fromCache = true;
-      $this->logger->debug('Login from cached');
-      $this->logger->debug('{data}', ['data' => var_export($hmsSessionData, TRUE)]);
-    }
-    else {
-      if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
-        $this->logger->debug('Login from HMS');
-        $this->logger->debug('{data}', ['data' => var_export($hmsSessionData, TRUE)]);
-        if ($this->cacheActive) {
-          $this->cache->set($cid, $hmsSessionData, time() + $this->cacheTtl);
-        }
-      }
-      else {
-        $this->cookieHelper->triggerClearSsoCookie();
-        $this->logger->debug('No such session, triggering clear cookie');
-      }
-    }
-
-    if ($hmsSessionData) {
-      // look for a user that is associated with the HMS user key
-      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey']))) {
-        $user = $this->hmsUserHelper->createAndAssociateUser($hmsSessionData);
-      } else if (!$fromCache) {
-        $user = $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
-      }
+      $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
       $user->addRole('hms_user');
       return $user;
     }
 
+    // no session running, "login" user
+    if ($hmsSessionData = $this->lookupHmsUser($token)) {
+      // look for a user that is associated with the HMS user key
+      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey']))) {
+        $user = $this->hmsUserHelper->createAndAssociateUser($hmsSessionData);
+      } else {
+        $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+      }
+      if ($user->isBlocked()) {
+        return NULL;
+      }
+
+      \Drupal::service('session')->migrate();
+      \Drupal::service('session')->set('uid', $user->id());
+      \Drupal::service('session')->set('sso_token', $token);
+      $user->addRole('hms_user');
+      return $user;
+    }
+
+    return NULL;
+  }
+
+  protected function logout() {
+    \Drupal::service('session_manager')->destroy();
+    return NULL;
+  }
+
+  protected function lookupHmsUser($token) {
+
+    // no need to get too fancy with the cache id, this is our own cache bin
+    $cid = 'hmsdata:' . $token;
+
+    if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
+      return $cached->data;
+    }
+
+    if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
+      if ($this->cacheActive) {
+        $this->cache->set($cid, $hmsSessionData, time() + $this->cacheTtl);
+      }
+      return $hmsSessionData;
+    }
+
+    $this->cookieHelper->triggerClearSsoCookie();
     return NULL;
 
   }

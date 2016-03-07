@@ -69,17 +69,17 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    *    The HMS data struct for the current session
    * @param \Drupal\user\UserInterface $user
    *    The user associated with the current session userKey
-   * @return \Drupal\user\UserInterface
-   *    The updated and saved User entity
+   * @return bool
+   *    Whether the user was updated
    */
-  public function updateUser(array $hmsSessionData, UserInterface $user) {
+  public function updateUser(array $hmsSessionData, UserInterface &$user) {
     if ($user->getChangedTime() >= intval($hmsSessionData['user']['modifiedAt'] / 1000)) {
-      return $user;
+      return FALSE;
     }
 
     $user = $this->setUserData($hmsSessionData, $user);
     $user->save();
-    return $user;
+    return TRUE;
   }
 
   protected function fixUserNameCollision($name) {
