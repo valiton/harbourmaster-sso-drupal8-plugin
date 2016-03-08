@@ -10,7 +10,9 @@ services:
       - @hms.user_manager
       - @hms.cookie_helper
       - @cache.hms
+      - @session
       - @session_configuration
+      - @session_manager
       - @database
     tags:
       - name: authentication_provider

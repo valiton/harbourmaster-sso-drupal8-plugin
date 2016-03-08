@@ -19,22 +19,25 @@
 
 namespace Drupal\hms\Authentication\Provider;
 
-use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
+use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\hms\Helper\CookieHelper;
 use Drupal\hms\User\Manager as HmsUserManager;
 use Drupal\user\Authentication\Provider\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 /**
  * Implements an authorization provider for Harbourmaster (HMS) SSO authorization.
+ *
+ * TODO composition might be better than inheritance here
  */
 class SsoCookie extends Cookie {
 
@@ -96,15 +99,32 @@ class SsoCookie extends Cookie {
 
   /**
    * A kernel.response subscriber that can be triggered to clear our cookie
+   * (and has some helper methods for convenience)
    *
    * @var \Drupal\hms\Helper\CookieHelper
    */
   protected $cookieHelper;
 
   /**
+   * The current session
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+   */
+  protected $session;
+
+  /**
+   * @var \Drupal\Core\Session\SessionManagerInterface
+   */
+  protected $sessionManager;
+
+  /**
    * Constructs a new token authentication provider.
    *
-   * TODO do we need to inject the whole EntityTypeManager or can we inject the UserStorage only?
+   * TODO I'm not quite clear yet about how Session, SessionManager and
+   * TODO SessionConfiguration interact with each other. Might be possible to
+   * TODO replace some of them with each other.
+   *
+   * TODO Too many dependencies?
    *
    * @param \Drupal\hms\Client\Harbourmaster $hmsClient
    * @param \Drupal\Core\Config\Config $config
@@ -112,10 +132,23 @@ class SsoCookie extends Cookie {
    * @param \Drupal\hms\User\Manager $hmsUserManager
    * @param \Drupal\hms\Helper\CookieHelper $cookieHelper
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
    * @param \Drupal\Core\Session\SessionConfigurationInterface $sessionConfiguration
+   * @param \Drupal\Core\Session\SessionManagerInterface $sessionManager
    * @param \Drupal\Core\Database\Connection $connection
    */
-  public function __construct(HarbourmasterClient $hmsClient, Config $config, LoggerChannel $logger, HmsUserManager $hmsUserManager, CookieHelper $cookieHelper, CacheBackendInterface $cache, SessionConfigurationInterface $sessionConfiguration, Connection $connection) {
+  public function __construct(
+    HarbourmasterClient $hmsClient,
+    Config $config,
+    LoggerChannel $logger,
+    HmsUserManager $hmsUserManager,
+    CookieHelper $cookieHelper,
+    CacheBackendInterface $cache,
+    SessionInterface $session,
+    SessionConfigurationInterface $sessionConfiguration,
+    SessionManagerInterface $sessionManager,
+    Connection $connection
+  ) {
     $this->hmsClient = $hmsClient;
     $this->cacheTtl = $config->get('hms_lookup_ttl');
     $this->cacheActive = $this->cacheTtl > 0;
@@ -124,25 +157,16 @@ class SsoCookie extends Cookie {
     $this->logger = $logger;
     $this->cookieHelper = $cookieHelper;
     $this->cache = $cache;
+    $this->session = $session;
+    $this->sessionManager = $sessionManager;
     parent::__construct($sessionConfiguration, $connection);
   }
 
   /**
-   * Checks whether suitable authentication credentials are on the request.
+   * {@inheritdoc}
    *
-   * Note that this handler only applies if
-   * - there is no active Drupal session
-   * - the current request is not against the login url
-   * - and naturally, our cookie exists on the request
-   *
-   * The first two requirements make it possible to have a Drupal login "override"
-   * our HMS login. Returning NULL in {@see authenticate()} wouldn't help as only
-   * one provider can apply on any given request (they don't "chain" so the Cookie-Provider
-   * would never get a chance).
-   *
-   * TODO There might be more URLs that need to be excluded
-   * TODO Looking up in router should work better than just matching the URI
-   * TODO What to do with anonymous sessions?
+   * As we have to use the same session that Drupal would use, we have to
+   * "firewall" the standard Cookie auth with our provider in both our methods.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object.
@@ -158,8 +182,12 @@ class SsoCookie extends Cookie {
   /**
    * {@inheritdoc}
    *
+   * As we have to use the same session that Drupal would use, we have to
+   * "firewall" the standard Cookie auth with our provider in both our methods.
+   *
    * TODO what happens with user data when the hms module is uninstalled?
-   * TODO handle errors
+   *
+   * TODO error handling
    */
   public function authenticate(Request $request) {
 
@@ -168,41 +196,47 @@ class SsoCookie extends Cookie {
     // a session is already running
     if (parent::applies($request)) {
       if (!$request->getSession()->has('sso_token')) {
+        // a running session without out token can be handled by Drupal's Cookie auth
         return parent::authenticate($request);
       }
       $currentSessionUid = $request->getSession()->get('uid');
       $currentSessionSsoToken = $request->getSession()->get('sso_token');
       if ($token != $currentSessionSsoToken) {
+        // we COULD migrate the session to another token, but for now,
+        // this is more secure
+        // TODO is sso_token migration a use case to be handled?
         return $this->logout();
       }
       $hmsSessionData = $this->lookupHmsUser($token);
       if (!$hmsSessionData) {
+        // if the user is logged out via sso, logout here too
         return $this->logout();
       }
-      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey'])) || $user->id() != $currentSessionUid || $user->isBlocked()) {
+      if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey'])) || $user->id() != $currentSessionUid) {
+        // if there is a token on a running session, but no associated user
+        // exists, something's wrong
+        // TODO is sso_token migration a use case to be handled?
         return $this->logout();
       }
 
       $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+
+      // special role similar to "authenticated"
       $user->addRole('hms_user');
       return $user;
     }
 
-    // no session running, "login" user
+    // no session running, need to "login" user
     if ($hmsSessionData = $this->lookupHmsUser($token)) {
-      // look for a user that is associated with the HMS user key
+      // look for a user that is associated with the HMS user key, create if needed
       if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey']))) {
         $user = $this->hmsUserHelper->createAndAssociateUser($hmsSessionData);
       } else {
         $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
       }
-      if ($user->isBlocked()) {
-        return NULL;
-      }
-      // TODO inject these
-      \Drupal::service('session')->migrate();
-      \Drupal::service('session')->set('uid', $user->id());
-      \Drupal::service('session')->set('sso_token', $token);
+      $this->session->migrate();
+      $this->session->set('uid', $user->id());
+      $this->session->set('sso_token', $token);
       $user->addRole('hms_user');
       return $user;
     }
@@ -211,8 +245,7 @@ class SsoCookie extends Cookie {
   }
 
   protected function logout() {
-    // TODO inject these
-    \Drupal::service('session_manager')->destroy();
+    $this->sessionManager->destroy();
     return NULL;
   }
 

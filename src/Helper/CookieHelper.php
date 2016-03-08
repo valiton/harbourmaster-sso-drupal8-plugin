@@ -93,14 +93,26 @@ class CookieHelper implements EventSubscriberInterface {
     return (NULL !== $this->getValidSsoCookie($request));
   }
 
+  /**
+   * Extracts a "valid" SSO cookie
+   *
+   * valid <=> exists ∧ ¬anonymous
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   * @return string|null
+   */
   public function getValidSsoCookie(Request $request) {
     if (!$request->cookies->has($this->ssoCookieName)) {
       return NULL;
     }
 
     $cookie = $request->cookies->get($this->ssoCookieName);
-    // ignore fallback cookies that begin with "err"
-    return preg_match('/^err/', $cookie) ? NULL : $cookie;
+    /*
+     * ignore anonymous / fallback cookies:
+     *   old version: starts with "err"
+     *   new version: starts with "a" + 64 hexdec chars
+     */
+    return preg_match('/^(?:err|a[0-9a-f]{64}$)/', $cookie) ? NULL : $cookie;
   }
 
   public function triggerClearSsoCookie() {
