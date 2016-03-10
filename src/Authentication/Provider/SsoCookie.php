@@ -30,7 +30,6 @@ use Drupal\hms\User\Manager as HmsUserManager;
 use Drupal\user\Authentication\Provider\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
