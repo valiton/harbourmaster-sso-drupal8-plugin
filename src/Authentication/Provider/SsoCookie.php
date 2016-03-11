@@ -28,6 +28,7 @@ use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\hms\Helper\CookieHelper;
 use Drupal\hms\User\Manager as HmsUserManager;
 use Drupal\user\Authentication\Provider\Cookie;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\hms\Client\Harbourmaster as HarbourmasterClient;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -39,6 +40,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * TODO composition might be better than inheritance here
  */
 class SsoCookie extends Cookie {
+
+  use LoggerAwareTrait;
 
   /**
    * Time that an authorization will be cached after looking it up in HMS.
@@ -85,11 +88,6 @@ class SsoCookie extends Cookie {
    * @var \Drupal\hms\User\Manager
    */
   protected $hmsUserHelper;
-
-  /**
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
 
   /**
    * @var \Drupal\Core\Session\SessionConfigurationInterface
@@ -139,7 +137,6 @@ class SsoCookie extends Cookie {
   public function __construct(
     HarbourmasterClient $hmsClient,
     Config $config,
-    LoggerChannel $logger,
     HmsUserManager $hmsUserManager,
     CookieHelper $cookieHelper,
     CacheBackendInterface $cache,
@@ -153,7 +150,6 @@ class SsoCookie extends Cookie {
     $this->cacheActive = $this->cacheTtl > 0;
     $this->tokenCookieName = $config->get('sso_cookie_name');
     $this->hmsUserHelper = $hmsUserManager;
-    $this->logger = $logger;
     $this->cookieHelper = $cookieHelper;
     $this->cache = $cache;
     $this->session = $session;

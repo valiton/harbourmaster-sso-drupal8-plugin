@@ -6,7 +6,6 @@ services:
     arguments:
       - @hms.client
       - @hms.settings
-      - @hms.logger
       - @hms.user_manager
       - @hms.cookie_helper
       - @cache.hms
@@ -14,6 +13,8 @@ services:
       - @session_configuration
       - @session_manager
       - @database
+    calls:
+      - ['setLogger', [%hms.logger.service%]]
     tags:
       - name: authentication_provider
         provider_id: hms_token
@@ -26,6 +27,8 @@ services:
       - @user.data
       - @entity_type.manager
       - %hms.adapter.service%
+    calls:
+      - ['setLogger', [%hms.logger.service%]]
 
   hms.client:
     class: Drupal\hms\Client\Harbourmaster
@@ -68,17 +71,21 @@ services:
       - @hms.settings
 
   hms.default_user_adapter:
+    public: false
     class: Drupal\hms\User\DefaultUserAdapter
     arguments:
       - @entity_type.manager
+    calls:
+      - ['setLogger', [%hms.logger.service%]]
 
   hms.cookie_helper:
+    public: false
     class: Drupal\hms\Helper\CookieHelper
     arguments:
       - @hms.settings
     tags:
       - { name: 'event_subscriber' }
 
-
 parameters:
   hms.adapter.service: @hms.default_user_adapter
+  hms.logger.service: @hms.logger

@@ -95,13 +95,14 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     $user->setEmail($hmsSessionData['user']['email']);
     $user->setUsername($hmsSessionData['user']['login']);
     // TODO replace with usermanager url
-    if (user_picture_enabled()) {
+    if (user_picture_enabled() && ($avatar = $hmsSessionData['user']['avatarImage'])) {
+      $avatar = preg_replace('#/75x75\.jpg$#', '/150x150.jpg', $avatar);
       $dir = 'public://hms_pictures';
       if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
         /**
          * @var FileInterface
          */
-        if ($file = system_retrieve_file('http://www.hubertburda.de/hubertburda_aus_gb_2004.jpg', $dir . '/' . $hmsSessionData['userKey'] . '.jpg', TRUE, FILE_EXISTS_REPLACE)) {
+        if ($file = system_retrieve_file($avatar, $dir . '/' . $hmsSessionData['userKey'] . '.jpg', TRUE, FILE_EXISTS_REPLACE)) {
           $user->set('user_picture', $file->id());
         }
       }
