@@ -93,6 +93,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   protected function setUserData(array $hmsSessionData, UserInterface $user) {
     $user->setEmail($hmsSessionData['user']['email']);
     $user->setUsername($hmsSessionData['user']['login']);
+
     if (user_picture_enabled()) {
       $avatar = $hmsSessionData['user']['avatarImage'];
       if (!empty($avatar)) {
@@ -105,11 +106,14 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
       $dir = 'public://hms_pictures';
 
       if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+        $path = $dir . '/' . $hmsSessionData['userKey'] . '.jpg';
         /**
-         * @var FileInterface
+         * @var FileInterface $file
          */
-        if ($file = system_retrieve_file($avatar, $dir . '/' . $hmsSessionData['userKey'] . '.jpg', TRUE, FILE_EXISTS_REPLACE)) {
+        if ($file = system_retrieve_file($avatar, $path, TRUE, FILE_EXISTS_REPLACE)) {
+          // TODO this very optimal. NOT!
           $user->set('user_picture', $file->id());
+          image_path_flush($path);
         }
       }
     }

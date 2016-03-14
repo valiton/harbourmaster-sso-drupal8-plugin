@@ -104,6 +104,6 @@ Known Bugs and ToDos:
 - conflict resolution for unique username is very basic
 - Drupal user functions (password reset, profile edit, user canceling)
   still need to be blocked for HMS SSO authenticated users.
-- 
+- user image update is currently very simple
 - user manager application has some bugs (but this is out of this
   module's scope)
