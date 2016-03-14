@@ -26,8 +26,11 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\UserDataInterface;
 use Drupal\hms\User\AdapterInterface as HmsUserAdapter;
 use Drupal\user\UserInterface;
+use Psr\Log\LoggerAwareTrait;
 
 class Manager {
+
+  use LoggerAwareTrait;
 
   /**
    * @var \Drupal\user\UserDataInterface
@@ -97,7 +100,7 @@ class Manager {
   }
 
   /**
-   * @param $userKey HMS user key
+   * @param string $userKey HMS user key
    *
    * @return UserInterface|null
    */

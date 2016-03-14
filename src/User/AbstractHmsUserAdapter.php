@@ -24,8 +24,11 @@ namespace Drupal\hms\User;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\UserInterface;
+use Psr\Log\LoggerAwareTrait;
 
 abstract class AbstractHmsUserAdapter implements AdapterInterface {
+
+  use LoggerAwareTrait;
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
