@@ -22,8 +22,8 @@
 namespace Drupal\hms\User;
 
 
+use Drupal\Core\Config\Config;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\user\UserInterface;
 use Psr\Log\LoggerAwareTrait;
 
 abstract class AbstractHmsUserAdapter implements AdapterInterface {
@@ -31,15 +31,22 @@ abstract class AbstractHmsUserAdapter implements AdapterInterface {
   use LoggerAwareTrait;
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
-   * AbstractHmsUserAdapter constructor.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   * @var Config
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+  protected $hmsSettings;
+
+  /**
+   * AbstractHmsUserAdapter constructor.
+   * @param Config $hmsSettings
+   * @param EntityTypeManagerInterface $entityTypeManager
+   */
+  public function __construct(Config $hmsSettings, EntityTypeManagerInterface $entityTypeManager) {
+    $this->hmsSettings = $hmsSettings;
     $this->entityTypeManager = $entityTypeManager;
   }
 

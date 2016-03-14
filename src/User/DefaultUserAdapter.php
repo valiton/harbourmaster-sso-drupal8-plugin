@@ -29,7 +29,6 @@ use Drupal\user\UserStorageInterface;
 
 class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
-
   /**
    * @param array $hmsSessionData
    *    The HMS data struct for the current session
@@ -94,10 +93,17 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   protected function setUserData(array $hmsSessionData, UserInterface $user) {
     $user->setEmail($hmsSessionData['user']['email']);
     $user->setUsername($hmsSessionData['user']['login']);
-    // TODO replace with usermanager url
-    if (user_picture_enabled() && ($avatar = $hmsSessionData['user']['avatarImage'])) {
-      $avatar = preg_replace('#/75x75\.jpg$#', '/150x150.jpg', $avatar);
+    if (user_picture_enabled()) {
+      $avatar = $hmsSessionData['user']['avatarImage'];
+      if (!empty($avatar)) {
+        $avatar = preg_replace('#/75x75\.jpg$#', '/150x150.jpg', $avatar);
+      } else {
+        // TODO concatenating is unsafe
+        $avatar = $this->hmsSettings->get('user_manager_url') . '/usermanager/avatar/150x150/' . $hmsSessionData['user']['login'] . '.jpg';
+      }
+
       $dir = 'public://hms_pictures';
+
       if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
         /**
          * @var FileInterface

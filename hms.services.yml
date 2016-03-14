@@ -36,7 +36,7 @@ services:
       - @hms.http_client
       - @hms.settings
 
-  # disable http status exceptions b/c they are excepted and handled via status code
+  # disable http status exceptions b/c they are expected and handled via status code
   hms.http_client:
     class: GuzzleHttp\ClientInterface
     factory: http_client_factory:fromOptions
@@ -71,9 +71,9 @@ services:
       - @hms.settings
 
   hms.default_user_adapter:
-    public: false
     class: Drupal\hms\User\DefaultUserAdapter
     arguments:
+      - @hms.settings
       - @entity_type.manager
     calls:
       - ['setLogger', [%hms.logger.service%]]
