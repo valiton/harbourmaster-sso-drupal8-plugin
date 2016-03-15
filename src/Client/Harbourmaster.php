@@ -22,9 +22,12 @@ namespace Drupal\hms\Client;
 use Drupal\Core\Config\Config;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use Psr\Log\LoggerAwareTrait;
 
 
 class Harbourmaster {
+
+  use LoggerAwareTrait;
 
   /** @var  ClientInterface */
   protected $client;
@@ -38,7 +41,6 @@ class Harbourmaster {
    * @var string
    */
   protected $tenant;
-
 
   /**
    * @var string
@@ -83,6 +85,8 @@ class Harbourmaster {
    */
   public function getSession() {
 
+    $this->logger->debug('HMS API call: looking up session for token @token', [ '@token' => $this->token ]);
+
     try {
       $response = $this->client->request(
         'GET', $this->getApiPrefix() . 'sessions/mine', [
@@ -92,14 +96,18 @@ class Harbourmaster {
         ]
       );
     } catch (ClientException $e) {
+      $this->logger->debug('HMS API call: exception while looking up session for token @token, message @message', [ '@token' => $this->token, '@message' => $e->getMessage() ]);
       return NULL;
     }
 
     switch ($response->getStatusCode()) {
       case 401:
       case 409:
+        $this->logger->debug('HMS API call: session lookup denied with status code @code for token @token', [ '@token' => $this->token, '@code' => $response->getStatusCode() ]);
         return NULL;
     }
+
+    $this->logger->debug('HMS API call: session lookup success with status code @code for token @token', [ '@token' => $this->token, '@code' => $response->getStatusCode() ]);
 
     return json_decode($response->getBody(), TRUE)['data'];
 

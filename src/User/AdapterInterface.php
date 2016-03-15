@@ -34,7 +34,7 @@ interface AdapterInterface {
   /**
    * @param array $hmsSessionData
    * @param \Drupal\user\UserInterface $user
-   * @return bool
+   * @return bool whether the Drupal user was changed
    */
   public function updateUser(array $hmsSessionData, UserInterface &$user);
 

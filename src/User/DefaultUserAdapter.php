@@ -95,12 +95,14 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     $user->setUsername($hmsSessionData['user']['login']);
 
     if (user_picture_enabled()) {
-      $avatar = $hmsSessionData['user']['avatarImage'];
+      $avatar = isset($hmsSessionData['user']['avatarImage']) ? $hmsSessionData['user']['avatarImage'] : '';
       if (!empty($avatar)) {
         $avatar = preg_replace('#/75x75\.jpg$#', '/150x150.jpg', $avatar);
+        $this->logger->debug('Settings user data: custom picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       } else {
         // TODO concatenating is unsafe
         $avatar = $this->hmsSettings->get('user_manager_url') . '/usermanager/avatar/150x150/' . $hmsSessionData['user']['login'] . '.jpg';
+        $this->logger->debug('Settings user data: default picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       }
 
       $dir = 'public://hms_pictures';
@@ -111,9 +113,12 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
          * @var FileInterface $file
          */
         if ($file = system_retrieve_file($avatar, $path, TRUE, FILE_EXISTS_REPLACE)) {
+          $this->logger->debug('Settings user data: retrieved @uri', [ '@uri' => $avatar ]);
           // TODO this very optimal. NOT!
           $user->set('user_picture', $file->id());
           image_path_flush($path);
+        } else {
+          $this->logger->debug('Settings user data: error retrieving @uri', [ '@uri' => $avatar ]);
         }
       }
     }

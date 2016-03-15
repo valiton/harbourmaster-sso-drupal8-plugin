@@ -35,6 +35,8 @@ services:
     arguments:
       - @hms.http_client
       - @hms.settings
+    calls:
+      - ['setLogger', [%hms.logger.service%]]
 
   # disable http status exceptions b/c they are expected and handled via status code
   hms.http_client:

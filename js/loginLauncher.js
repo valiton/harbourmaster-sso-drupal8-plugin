@@ -17,8 +17,8 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$(document).ready(function () {
+//$(document).ready(function () {
     //hmsOpenSigninModal();
     //$('#loginModal').addClass('active');
     //$('html').addClass('modal-active');
-});
+//});

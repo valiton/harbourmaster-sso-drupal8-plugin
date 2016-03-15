@@ -188,33 +188,51 @@ class SsoCookie extends Cookie {
 
     $token = $this->cookieHelper->getValidSsoCookie($request);
 
+    $context = [
+      '@uri' => $request->getRequestUri(),
+      '@cookie_token' => $token,
+    ];
+
     // a session is already running
     if (parent::applies($request)) {
+      $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token', $context);
       if (!$request->getSession()->has('sso_token')) {
-        // a running session without out token can be handled by Drupal's Cookie auth
+        // a running session without token can be handled by Drupal's Cookie auth
+        $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: session has no associated SSO token, handing over to Drupal', $context);
         return parent::authenticate($request);
       }
       $currentSessionUid = $request->getSession()->get('uid');
       $currentSessionSsoToken = $request->getSession()->get('sso_token');
+      $context += [
+        '@uid' => $currentSessionUid,
+        '@session_token' => $currentSessionSsoToken,
+      ];
       if ($token != $currentSessionSsoToken) {
         // we COULD migrate the session to another token, but for now,
         // this is more secure
+        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: session token @session_token mismatched, logging out user @uid', $context);
         // TODO is sso_token migration a use case to be handled?
         return $this->logout();
       }
       $hmsSessionData = $this->lookupHmsUser($token);
       if (!$hmsSessionData) {
         // if the user is logged out via sso, logout here too
+        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: session expired, logging out user @uid', $context);
         return $this->logout();
       }
       if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey'])) || $user->id() != $currentSessionUid) {
         // if there is a token on a running session, but no associated user
         // exists, something's wrong
         // TODO is sso_token migration a use case to be handled?
+        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: user has no associated HMS user key, logging out user @uid', $context);
         return $this->logout();
       }
 
-      $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+      $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: success for user @uid', $context);
+      $changed = $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+      if ($changed) {
+        $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: updated user @uid', $context);
+      }
 
       // special role similar to "authenticated"
       $user->addRole('hms_user');
@@ -223,18 +241,30 @@ class SsoCookie extends Cookie {
 
     // no session running, need to "login" user
     if ($hmsSessionData = $this->lookupHmsUser($token)) {
+      $context += [ '@user_key' => $hmsSessionData['userKey']];
+      $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: HMS session found with userKey @user_key', $context);
       // look for a user that is associated with the HMS user key, create if needed
       if (NULL === ($user = $this->hmsUserHelper->loadUserByHmsUserKey($hmsSessionData['userKey']))) {
         $user = $this->hmsUserHelper->createAndAssociateUser($hmsSessionData);
+        $context += [ '@uid' => $user->id() ];
+        $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: Created new Drupal user @uid for userKey @user_key', $context);
       } else {
-        $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+        $changed = $this->hmsUserHelper->updateAssociatedUser($hmsSessionData, $user);
+        $context += [
+          '@uid' => $user->id(),
+          '@changes' => $changed ? 'update' : 'no update',
+        ];
+        $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: Found existing Drupal user for userKey @user_key, @changes required', $context);
       }
+      $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: session opened for @uid', $context);
       $this->session->migrate();
       $this->session->set('uid', $user->id());
       $this->session->set('sso_token', $token);
       $user->addRole('hms_user');
       return $user;
     }
+
+    $this->logger->debug('Authenticating request on @uri with token @cookie_token: no Drupal session, valid token or HMS session found', $context);
 
     return NULL;
   }
@@ -250,16 +280,19 @@ class SsoCookie extends Cookie {
     $cid = 'hmsdata:' . $token;
 
     if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
+      $this->logger->debug('HMS session lookup: cache HIT for token @token', [ '@token' => $token ]);
       return $cached->data;
     }
 
     if ($hmsSessionData = $this->hmsClient->setToken($token)->getSession()) {
+      $this->logger->debug('HMS session lookup: HMS lookup succeeded for token @token', [ '@token' => $token ]);
       if ($this->cacheActive) {
         $this->cache->set($cid, $hmsSessionData, time() + $this->cacheTtl);
       }
       return $hmsSessionData;
     }
 
+    $this->logger->debug('HMS session lookup: failed for token @token, triggered cookie deletion', [ '@token' => $token ]);
     $this->cookieHelper->triggerClearSsoCookie();
     return NULL;
 
