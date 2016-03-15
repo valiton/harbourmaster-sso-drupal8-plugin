@@ -95,13 +95,15 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     $user->setUsername($hmsSessionData['user']['login']);
 
     if (user_picture_enabled()) {
+      // TODO this should not be done on every login. maybe.
       $avatar = isset($hmsSessionData['user']['avatarImage']) ? $hmsSessionData['user']['avatarImage'] : '';
       if (!empty($avatar)) {
+        // HMS always returns the 75px derivate, we want a bigger one
         $avatar = preg_replace('#/75x75\.jpg$#', '/150x150.jpg', $avatar);
         $this->logger->debug('Settings user data: custom picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       } else {
-        // TODO concatenating is unsafe
-        $avatar = $this->hmsSettings->get('user_manager_url') . '/usermanager/avatar/150x150/' . $hmsSessionData['user']['login'] . '.jpg';
+        // build default URL
+        $avatar = $this->hmsSettings->get('user_manager_url') . '/usermanager/avatar/150x150/' . urlencode($hmsSessionData['user']['login']) . '.jpg';
         $this->logger->debug('Settings user data: default picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       }
 
@@ -114,7 +116,6 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
          */
         if ($file = system_retrieve_file($avatar, $path, TRUE, FILE_EXISTS_REPLACE)) {
           $this->logger->debug('Settings user data: retrieved @uri', [ '@uri' => $avatar ]);
-          // TODO this very optimal. NOT!
           $user->set('user_picture', $file->id());
           image_path_flush($path);
         } else {
