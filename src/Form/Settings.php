@@ -188,8 +188,9 @@ class Settings extends ConfigFormBase {
     $this->config('hms.settings')
       ->set('hms_api_url', rtrim($form_state->getValue('hms_api_url'), '/'))
       ->set('hms_api_tenant', $form_state->getValue('hms_api_tenant'))
-      ->set('token_ttl', $form_state->getValue('token_ttl'))
-      ->set('token_name', $form_state->getValue('token_name'))
+      ->set('hms_lookup_ttl', $form_state->getValue('hms_lookup_ttl'))
+      ->set('sso_cookie_name', $form_state->getValue('sso_cookie_name'))
+      ->set('sso_cookie_domain', $form_state->getValue('sso_cookie_domain'))
       ->set('user_manager_url', rtrim($form_state->getValue('user_manager_url'), '/'))
       ->save();
 
