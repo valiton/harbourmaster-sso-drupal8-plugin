@@ -36,13 +36,13 @@ class StatusPageController extends ControllerBase {
 
   public function __construct(ConfigFactoryInterface $config_factory, HttpClientInterface $httpClient) {
     $this->httpClient = $httpClient;
-//    $this->configFactory = $config_factory;
+    $this->configFactory = $config_factory;
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('config.factory'),
-      $container->get('http_client')
+      $container->get('http_client'),
+      $container->get('config.factory')
     );
   }
 
