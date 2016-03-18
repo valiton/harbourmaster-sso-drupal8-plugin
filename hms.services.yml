@@ -92,6 +92,12 @@ services:
     tags:
       - { name: 'event_subscriber' }
 
+  hms.foo:
+    public: false
+    class: Drupal\hms\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
 parameters:
   hms.adapter.service: @hms.default_user_adapter
   hms.logger.service: @hms.logger_null
