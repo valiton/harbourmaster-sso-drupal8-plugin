@@ -44,6 +44,7 @@ services:
     factory: http_client_factory:fromOptions
     arguments:
       - http_errors: false
+        verify: false
 
   hms.logger:
     parent: logger.channel_base
