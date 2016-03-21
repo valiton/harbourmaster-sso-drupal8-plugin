@@ -17,15 +17,7 @@ hms.admin_status_page:
 hms.login_page:
   path: hms/login
   defaults:
-    _controller: \Drupal\hms\Controller\SsoController::login
+    _controller: \Drupal\hms\Controller\UserController::hmsLoginPage
     _title: SSO Login
   requirements:
     _access: 'TRUE'
-
-hms.logout:
-  path: hms/logout
-  defaults:
-    _controller: \Drupal\hms\Controller\SsoController::logout
-    _title: SSO Login
-  requirements:
-    _role: authenticated

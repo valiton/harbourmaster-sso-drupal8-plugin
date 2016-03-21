@@ -56,8 +56,7 @@ class LoginLogoutMenuLink extends DrupalLoginLogoutMenuLink {
    */
   public function getRouteName() {
     if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
-      return (NULL === $userKey) ? 'user.logout' : 'hms.logout';
+      return 'user.logout';
     }
     else {
       return 'hms.login_page';

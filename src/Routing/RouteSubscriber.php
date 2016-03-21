@@ -29,25 +29,37 @@ class RouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   public function alterRoutes(RouteCollection $collection) {
+
+    // These routes pass the request to an extension of the original form/controller
+    // which decides whether to handle the action itself (when handling a HMS user)
+    // or pass it to its parent function otherwise
+
     // form for requesting pw reset
     if ($route = $collection->get('user.pass')) {
       $route->setDefaults(['_form' => '\Drupal\hms\Form\UserPasswordForm']);
     }
-    if ($route = $collection->get('user.logout')) {
-      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserRouteProxyController::logout']);
-    }
-    if ($route = $collection->get('user.reset')) {
-      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserRouteProxyController::password']);
-    }
+    // user profile page
     if ($route = $collection->get('user.page')) {
-      $route->
-//      $route->setRequirement('_access', 'FALSE');
-      $route->setDefaults(['_controller' => '\Drupal\gp_blogs_login\Controller\RedirectUserPagesController::redirectUser']);
+      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserController::userPage']);
     }
-    if ($route = $collection->get('user.pass')) {
-//      $route->setRequirement('_access', 'FALSE');
-      $route->setDefaults(['_controller' => '\Drupal\gp_blogs_login\Controller\RedirectUserPagesController::redirectUser']);
+    // logout
+    if ($route = $collection->get('user.logout')) {
+      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserController::logout']);
     }
+
+
+    // These checks deny some standard functionality to HMS users
+    // TODO could this be done in a better way? (redirects or similar) - where could the logic be attached to?
+    if ($route = $collection->get('entity.user.canonical')) {
+      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+    }
+    if ($route = $collection->get('entity.user.edit_form')) {
+      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+    }
+    if ($route = $collection->get('entity.user.cancel_form')) {
+      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+    }
+
   }
 
 }

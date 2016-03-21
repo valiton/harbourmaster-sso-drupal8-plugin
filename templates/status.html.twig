@@ -3,7 +3,7 @@
     Login via <a href="{{ url('hms.login_page') }}">{{ 'HMS'|t }}</a> or <a href="{{ url('user.login') }}">{{ 'Drupal'|t }}</a>.
 {% else %}
     {% if 'hms_user' in currentUserRoles and hmsUserKey is defined %}
-        You are logged in via HMS. <a href="{{ url('hms.logout') }}">{{ 'Logout'|t }}</a> <!-- or <a href="{{ url('user.login') }}">{{ 'Login via Drupal'|t }}</a> -->.
+        You are logged in via HMS. <a href="{{ url('user.logout') }}">{{ 'Logout'|t }}</a> <!-- or <a href="{{ url('user.login') }}">{{ 'Login via Drupal'|t }}</a> -->.
     {% else %}
         You are logged in via Drupal. <a href="{{ url('user.logout') }}">{{ 'Logout'|t }}</a>.
     {% endif %}

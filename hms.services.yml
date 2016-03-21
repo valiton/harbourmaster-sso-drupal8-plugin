@@ -93,10 +93,16 @@ services:
       - { name: 'event_subscriber' }
 
   hms.foo:
-    public: false
     class: Drupal\hms\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+
+  access_check.hms.login_status:
+    class: Drupal\hms\Access\LoginStatusCheck
+    arguments:
+      - @hms.user_manager
+    tags:
+      - { name: access_check, applies_to: _hms_user_is_logged_in }
 
 parameters:
   hms.adapter.service: @hms.default_user_adapter
