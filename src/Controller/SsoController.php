@@ -27,9 +27,9 @@ use Drupal\Core\Url;
 class SsoController extends ControllerBase {
 
   public function login() {
-    if ($this->currentUser()->isAuthenticated()) {
-      return $this->redirect('user.page');
-    }
+//    if ($this->currentUser()->isAuthenticated()) {
+//      return $this->redirect('user.page');
+//    }
     return [
       '#theme' => 'usermanager.login_page',
     ];
