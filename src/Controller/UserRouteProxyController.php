@@ -25,8 +25,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 
-
-class FooController extends ControllerBase {
+class UserRouteProxyController extends ControllerBase {
 
   public function login() {
     if ($this->currentUser()->isAuthenticated()) {
