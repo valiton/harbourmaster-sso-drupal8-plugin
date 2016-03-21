@@ -51,6 +51,9 @@ services:
     arguments:
       - hms
 
+  hms.logger_null:
+    class: Psr\Log\NullLogger
+
   hms.settings:
     class: Drupal\Core\Config\ImmutableConfig
     factory: config.factory:get
@@ -91,4 +94,4 @@ services:
 
 parameters:
   hms.adapter.service: @hms.default_user_adapter
-  hms.logger.service: @hms.logger
+  hms.logger.service: @hms.logger_null
