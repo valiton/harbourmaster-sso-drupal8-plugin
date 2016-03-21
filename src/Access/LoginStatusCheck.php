@@ -54,8 +54,8 @@ class LoginStatusCheck implements AccessInterface {
   public function access(AccountInterface $account, Route $route) {
     $required_status = filter_var($route->getRequirement('_hms_user_is_logged_in'), FILTER_VALIDATE_BOOLEAN);
     $actual_status = $account->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($account->id()));
-    // TODO this should be enough?
-    return AccessResult::allowedIf($required_status === $actual_status)->addCacheContexts(['user.roles:authenticated']);
+    // TODO maybe add own cache contexts?
+    return AccessResult::allowedIf($required_status === $actual_status)->addCacheContexts(['user']);
   }
 
 }
