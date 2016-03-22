@@ -21,3 +21,5 @@ hms.login_page:
     _title: SSO Login
   requirements:
     _access: 'TRUE'
+  options:
+    no_cache: TRUE
