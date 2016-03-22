@@ -45,6 +45,7 @@ class RouteSubscriber extends RouteSubscriberBase {
     // logout
     if ($route = $collection->get('user.logout')) {
       $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserController::logout']);
+      $route->addOptions(['no_cache' => TRUE]);
     }
 
 

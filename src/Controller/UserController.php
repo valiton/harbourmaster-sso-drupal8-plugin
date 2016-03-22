@@ -67,7 +67,7 @@ class UserController extends DrupalUserController {
   }
 
   public function userPage() {
-    if ($this->currentUser()->isAuthenticated() && $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id())) {
+    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
       return [
         '#theme' => 'usermanager.profile_page',
       ];
@@ -77,7 +77,7 @@ class UserController extends DrupalUserController {
   }
 
   public function logout() {
-    if ($this->currentUser()->isAuthenticated() && $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id())) {
+    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
       $userManagerUrl = $this->config('hms.settings')->get('user_manager_url');
       // TODO why is this considered a "weak" route?
       $queryString = http_build_query([
