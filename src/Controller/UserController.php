@@ -93,7 +93,7 @@ class UserController extends DrupalUserController {
 
   public function hmsLoginPage() {
     if ($this->currentUser()->isAuthenticated()) {
-      drupal_set_message(t('You have been logged in.'));
+//      drupal_set_message(t('You have been logged in.'));
       return $this->redirect('<front>');
     }
     return [
