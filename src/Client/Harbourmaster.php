@@ -21,7 +21,7 @@ namespace Drupal\hms\Client;
 
 use Drupal\Core\Config\Config;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerAwareTrait;
 
 
@@ -95,7 +95,7 @@ class Harbourmaster {
           ]
         ]
       );
-    } catch (ClientException $e) {
+    } catch (GuzzleException $e) {
       $this->logger->debug('HMS API call: exception while looking up session for token @token, message @message', [ '@token' => $this->token, '@message' => $e->getMessage() ]);
       return NULL;
     }
