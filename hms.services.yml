@@ -106,4 +106,4 @@ services:
 
 parameters:
   hms.adapter.service: @hms.default_user_adapter
-  hms.logger.service: @hms.logger
+  hms.logger.service: @hms.logger_null
