@@ -99,7 +99,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
       $avatar = isset($hmsSessionData['user']['avatarImage']) ? $hmsSessionData['user']['avatarImage'] : '';
       if (!empty($avatar)) {
         // HMS always returns the 75px derivate, we want a bigger one
-        $avatar = preg_replace('#/75([x_])75\.jpg$#', '/150\${1}150.jpg', $avatar);
+        $avatar = preg_replace('#/75_75\.jpg$#', '/150_150.jpg', $avatar);
         $this->logger->debug('Settings user data: custom picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       } else {
         // build default URL
