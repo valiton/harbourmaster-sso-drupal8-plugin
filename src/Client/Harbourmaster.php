@@ -96,7 +96,7 @@ class Harbourmaster {
         ]
       );
     } catch (GuzzleException $e) {
-      $this->logger->debug('HMS API call: exception while looking up session for token @token, message @message', [ '@token' => $this->token, '@message' => $e->getMessage() ]);
+      $this->logger->warning('HMS API call: exception while looking up session for token @token, message @message', [ '@token' => $this->token, '@message' => $e->getMessage() ]);
       return NULL;
     }
 

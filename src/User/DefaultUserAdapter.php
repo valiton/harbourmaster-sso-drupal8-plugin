@@ -119,7 +119,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
           $user->set('user_picture', $file->id());
           image_path_flush($path);
         } else {
-          $this->logger->debug('Settings user data: error retrieving @uri', [ '@uri' => $avatar ]);
+          $this->logger->warning('Settings user data: error retrieving @uri', [ '@uri' => $avatar ]);
         }
       }
     }

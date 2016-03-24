@@ -224,7 +224,7 @@ class SsoCookie extends Cookie {
         // if there is a token on a running session, but no associated user
         // exists, something's wrong
         // TODO is sso_token migration a use case to be handled?
-        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: user has no associated HMS user key, logging out user @uid', $context);
+        $this->logger->warning('Failed authenticating request on @uri for existing session with token @cookie_token: user has no associated HMS user key, logging out user @uid', $context);
         return $this->logout();
       }
 
@@ -256,7 +256,7 @@ class SsoCookie extends Cookie {
         ];
         $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: Found existing Drupal user for userKey @user_key, @changes required', $context);
       }
-      $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: session opened for @uid', $context);
+      $this->logger->info('Authenticating request on @uri for new session with token @cookie_token: session opened for @uid', $context);
       $this->session->migrate();
       $this->session->set('uid', $user->id());
       $this->session->set('sso_token', $token);
