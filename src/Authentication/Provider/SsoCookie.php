@@ -22,7 +22,6 @@ namespace Drupal\hms\Authentication\Provider;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\SessionConfigurationInterface;
 use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\hms\Helper\CookieHelper;
@@ -234,7 +233,7 @@ class SsoCookie extends Cookie {
         $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: updated user @uid', $context);
       }
 
-      // special role similar to "authenticated"
+      // special role similar to "authenticated" ("locaked role")
       $user->addRole('hms_user');
       return $user;
     }

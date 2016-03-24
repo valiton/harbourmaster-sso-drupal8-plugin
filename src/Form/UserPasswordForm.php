@@ -50,8 +50,7 @@ class UserPasswordForm extends DrupalUserPasswordForm {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $user = $this->currentUser();
-    if ($user->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($user->id()))) {
+    if ($this->currentUser()->isAuthenticated() && HmsUserManager::isHmsAccount($this->currentUser())) {
       // parent::buildForm would allow for a logged in user to request a pw reset, override for HMS user
       return $this->redirect('hms.login_page');
     }
@@ -71,9 +70,10 @@ class UserPasswordForm extends DrupalUserPasswordForm {
       // No success, try to load by name.
       $users = $this->userStorage->loadByProperties(array('name' => $name));
     }
-    $account = reset($users);
-    if ($account && $account->id()) {
-      if (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($account->id())) {
+    $user = reset($users);
+    if ($user && $user->id()) {
+      // this checks a "locked" role on a loaded entity so we cannot use HmsUserManager::isHmsAccount()
+      if (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($user->id())) {
         $form_state->setErrorByName(
           'name',
           $this->t('%name is externally registered via HMS. Please use the :link to request your password reset.', array('%name' => $name, ':link' => Link::createFromRoute('appropriate page', 'hms.login_page'))));

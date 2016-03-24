@@ -23,6 +23,7 @@ namespace Drupal\hms\User;
 
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\user\UserDataInterface;
 use Drupal\hms\User\AdapterInterface as HmsUserAdapter;
 use Drupal\user\UserInterface;
@@ -111,6 +112,10 @@ class Manager {
   public function loadUserByHmsUserKey($userKey) {
     $uid = $this->findUidForHmsUserKey($userKey);
     return ($uid === NULL ? NULL : $this->entityTypeManager->getStorage('user')->load($uid));
+  }
+
+  public static function isHmsAccount(AccountInterface $account) {
+    return in_array('hms_user', $account->getRoles(), TRUE);
   }
 
 }
