@@ -1,4 +1,7 @@
 usermanager.launcher:
+  css:
+    theme:
+      css/white-label-static.css: {}
   js:
     js/loginLauncher.js: { }
   dependencies:

@@ -1,0 +1,61 @@
+
+/*
+  defaults
+*/
+/*
+.hms-widget * {
+  font-family: "courier new", monospace;
+  font-size: 14px;
+  color: #222;
+}
+*/
+
+/*  
+  block headlines
+*/
+.hms-widget h2 {
+  background-color: #8E9300;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 4px;
+}
+
+/*
+  form field labels
+*/
+.hms-widget label {
+  font-weight: 700;
+  margin-bottom: 5px;
+  max-width: 100%;
+}
+
+/*
+  form input fields
+*/
+.hms-widget .form-control, 
+.hms-widget .selectbox span.value {
+  border-color: #c3c3c3;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #e8e4e4;
+  border-radius: 4px;
+  color: #555555;
+  display: block;
+  font-size: 18px;
+  height: 39px;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  width: 100%;  
+}
+/*
+  form input fields, on focus
+*/
+.hms-widget .form-control:focus {
+  border-color: #000;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0, 0.6);
+}
