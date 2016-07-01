@@ -1,0 +1,801 @@
+# Harbourmater SSO Widgets POT File
+#
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2016-06-10 18:05+0200\n"
+"PO-Revision-Date: 2016-06-10 18:05+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+
+msgid "hms-widget.confirmation.title.confirmed"
+msgstr ""
+
+msgid "hms-widget.confirmation.title.invalidToken"
+msgstr ""
+
+msgid "hms-widget.resetPassword.title.invalidToken"
+msgstr ""
+
+msgid "hms-widget.resetPassword.title.questions"
+msgstr ""
+
+msgid "hms-widget.resetPassword.title.success"
+msgstr ""
+
+msgid "hms-widget.resetPassword.title.passwordreset"
+msgstr ""
+
+msgid "hms-widget.resetPassword.label.new_password"
+msgstr ""
+
+msgid "hms-widget.resetPassword.label.username"
+msgstr ""
+
+msgid "hms-widget.resetPassword.placeholder.new_password"
+msgstr ""
+
+msgid "hms-widget.resetPassword.placeholder.validation_password"
+msgstr ""
+
+msgid "hms-widget.resetPassword.placeholder.username"
+msgstr ""
+
+msgid "hms-widget.resetPassword.description.success_message"
+msgstr ""
+
+msgid "hms-widget.resetPassword.description.set_password"
+msgstr ""
+
+msgid "hms-widget.resetPassword.button.passwordreset"
+msgstr ""
+
+msgid "hms-widget.resetPassword.button.set_password"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.required"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.string"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.error"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.credentials"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.regex"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.AccountHasNoEmailAddress"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.NoSuchUser"
+msgstr ""
+
+msgid "hms-widget.resetPassword.error.username.ConfirmationEmailSent"
+msgstr ""
+
+msgid "hms-widget.resetPassword.flash.success"
+msgstr ""
+
+msgid "hms-widget.resetPassword.flash.error"
+msgstr ""
+
+msgid "hms-widget.resetPassword.flash.passwordreset.error"
+msgstr ""
+
+msgid "hms-widget.resetPassword.intro.text"
+msgstr ""
+
+msgid "hms-widget.profile.title.profile"
+msgstr ""
+
+msgid "hms-widget.profile.title.member"
+msgstr ""
+
+msgid "hms-widget.profile.title.password"
+msgstr ""
+
+msgid "hms-widget.profile.title.securityQuestions"
+msgstr ""
+
+msgid "hms-widget.profile.title.memberAdvertisement"
+msgstr ""
+
+msgid "hms-widget.profile.label.day"
+msgstr ""
+
+msgid "hms-widget.profile.label.month"
+msgstr ""
+
+msgid "hms-widget.profile.label.year"
+msgstr ""
+
+msgid "hms-widget.profile.label.address"
+msgstr ""
+
+msgid "hms-widget.profile.label.oldPassword"
+msgstr ""
+
+msgid "hms-widget.profile.label.password"
+msgstr ""
+
+msgid "hms-widget.profile.label.protectProfile"
+msgstr ""
+
+msgid "hms-widget.profile.label.avatar"
+msgstr ""
+
+msgid "hms-widget.profile.label.avatarEdit"
+msgstr ""
+
+msgid "hms-widget.profile.label.displayName"
+msgstr ""
+
+msgid "hms-widget.profile.label.name"
+msgstr ""
+
+msgid "hms-widget.profile.label.email"
+msgstr ""
+
+msgid "hms-widget.profile.label.securityQuestion"
+msgstr ""
+
+msgid "hms-widget.profile.label.answer"
+msgstr ""
+
+msgid "hms-widget.profile.label.community"
+msgstr ""
+
+msgid "hms-widget.profile.instruction.avatar"
+msgstr ""
+
+msgid "hms-widget.profile.instruction.displayName"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.oldPassword"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.password"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.verifyPassword"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.displayName"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.firstname"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.lastname"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.email_address"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.answer"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.phone"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.company"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.street"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.streetNumber"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.postcode"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.city"
+msgstr ""
+
+msgid "hms-widget.profile.placeholder.address.country"
+msgstr ""
+
+msgid "hms-widget.profile.select.salutation.mr"
+msgstr ""
+
+msgid "hms-widget.profile.select.salutation.mrs"
+msgstr ""
+
+msgid "hms-widget.profile.select.salutation.none"
+msgstr ""
+
+msgid "hms-widget.profile.checkbox.subscription.advertising"
+msgstr ""
+
+msgid "hms-widget.profile.checkbox.subscription.newsletter"
+msgstr ""
+
+msgid "hms-widget.profile.tab.profile"
+msgstr ""
+
+msgid "hms-widget.profile.tab.entitlements"
+msgstr ""
+
+msgid "hms-widget.profile.button.upload"
+msgstr ""
+
+msgid "hms-widget.profile.button.change_password"
+msgstr ""
+
+msgid "hms-widget.profile.button.security_question"
+msgstr ""
+
+msgid "hms-widget.profile.button.memberAdvertisement"
+msgstr ""
+
+msgid "hms-widget.profile.button.post_entitlement"
+msgstr ""
+
+msgid "hms-widget.profile.button.entitelement_post_entitlement"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.maxLength"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.minLength"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.DisplayNameAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.DisplayNameIsRequired"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.regex"
+msgstr ""
+
+msgid "hms-widget.profile.error.displayName.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.regex"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.fakeemail"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.LoginAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.EmailAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.ArgLoginIsRequired"
+msgstr ""
+
+msgid "hms-widget.profile.error.email.LoginCannotBeEmpty"
+msgstr ""
+
+msgid "hms-widget.profile.error.oldPassword.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.oldPassword.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.oldPassword.IncorrectOldPassword"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.minLength"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.regex"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.ArgPasswordIsInvalid"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.NoNumbers"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.NoLowerCaseLetters"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.NoUpperCaseLetters"
+msgstr ""
+
+msgid "hms-widget.profile.error.password.NotMinEigth"
+msgstr ""
+
+msgid "hms-widget.profile.error.verifyPassword.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.verifyPassword.passwordEqual"
+msgstr ""
+
+msgid "hms-widget.profile.error.verifyPassword.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.verifyPassword.PasswordsDoNotMatch"
+msgstr ""
+
+msgid "hms-widget.profile.error.salutation.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.salutation.in"
+msgstr ""
+
+msgid "hms-widget.profile.error.salutation.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.firstname.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.firstname.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.lastname.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.lastname.required"
+msgstr ""
+
+msgid "hms-widget.profile.error.securityQuestions.string"
+msgstr ""
+
+msgid "hms-widget.profile.error.securityQuestions.required"
+msgstr ""
+
+msgid "hms-widget.profile.info.password"
+msgstr ""
+
+msgid "hms-widget.profile.flash.success"
+msgstr ""
+
+msgid "hms-widget.profile.flash.error"
+msgstr ""
+
+msgid "hms-widget.signup.title.signup"
+msgstr ""
+
+msgid "hms-widget.signup.title.error"
+msgstr ""
+
+msgid "hms-widget.signup.title.success"
+msgstr ""
+
+msgid "hms-widget.signup.label.displayName"
+msgstr ""
+
+msgid "hms-widget.signup.label.email"
+msgstr ""
+
+msgid "hms-widget.signup.label.password"
+msgstr ""
+
+msgid "hms-widget.signup.label.name"
+msgstr ""
+
+msgid "hms-widget.signup.label.error"
+msgstr ""
+
+msgid "hms-widget.signup.label.firstname"
+msgstr ""
+
+msgid "hms-widget.signup.label.lastname"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.displayName"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.email"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.password"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.verifyPassword"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.firstname"
+msgstr ""
+
+msgid "hms-widget.signup.placeholder.lastname"
+msgstr ""
+
+msgid "hms-widget.signup.select.salutation.none"
+msgstr ""
+
+msgid "hms-widget.signup.select.salutation.mr"
+msgstr ""
+
+msgid "hms-widget.signup.select.salutation.mrs"
+msgstr ""
+
+msgid "hms-widget.signup.checkbox.terms_and_policy"
+msgstr ""
+
+msgid "hms-widget.signup.checkbox.subscription.advertising"
+msgstr ""
+
+msgid "hms-widget.signup.checkbox.subscription.newsletter"
+msgstr ""
+
+msgid "hms-widget.signup.button.signup"
+msgstr ""
+
+msgid "hms-widget.signup.button.signin"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.maxLength"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.minLength"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.LoginAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.DisplayNameAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.DisplayNameIsRequired"
+msgstr ""
+
+msgid "hms-widget.signup.error.displayName.regex"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.regex"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.fakeemail"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.LoginAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.EmailAlreadyExists"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.ArgLoginIsRequired"
+msgstr ""
+
+msgid "hms-widget.signup.error.email.LoginCannotBeEmpty"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.minLength"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.regex"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.ArgPasswordIsInvalid"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.NoNumbers"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.NoLowerCaseLetters"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.NoUpperCaseLetters"
+msgstr ""
+
+msgid "hms-widget.signup.error.password.NotMinEigth"
+msgstr ""
+
+msgid "hms-widget.signup.error.verifyPassword.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.verifyPassword.passwordEqual"
+msgstr ""
+
+msgid "hms-widget.signup.error.verifyPassword.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.verifyPassword.PasswordsDoNotMatch"
+msgstr ""
+
+msgid "hms-widget.signup.error.salutation.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.salutation.in"
+msgstr ""
+
+msgid "hms-widget.signup.error.salutation.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.firstname.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.firstname.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.lastname.string"
+msgstr ""
+
+msgid "hms-widget.signup.error.lastname.required"
+msgstr ""
+
+msgid "hms-widget.signup.error.terms.boolean"
+msgstr ""
+
+msgid "hms-widget.signup.error.terms.truthy"
+msgstr ""
+
+msgid "hms-widget.signup.intro.teaser"
+msgstr ""
+
+msgid "hms-widget.signup.intro.text"
+msgstr ""
+
+msgid "hms-widget.signup.info.password"
+msgstr ""
+
+msgid "hms-widget.signup.flash.error"
+msgstr ""
+
+msgid "hms-widget.signup.flash.success"
+msgstr ""
+
+msgid "hms-widget.signin.title.signin"
+msgstr ""
+
+msgid "hms-widget.signin.title.success"
+msgstr ""
+
+msgid "hms-widget.signin.title.passwordreset"
+msgstr ""
+
+msgid "hms-widget.signin.title.passwordresetinit"
+msgstr ""
+
+msgid "hms-widget.signin.title.unconfirmed"
+msgstr ""
+
+msgid "hms-widget.signin.label.username"
+msgstr ""
+
+msgid "hms-widget.signin.label.password"
+msgstr ""
+
+msgid "hms-widget.signin.placeholder.username"
+msgstr ""
+
+msgid "hms-widget.signin.placeholder.password"
+msgstr ""
+
+msgid "hms-widget.signin.button.signin"
+msgstr ""
+
+msgid "hms-widget.signin.button.signup"
+msgstr ""
+
+msgid "hms-widget.signin.button.passwordreset"
+msgstr ""
+
+msgid "hms-widget.signin.button.unconfirmed"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.required"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.string"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.error"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.credentials"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.regex"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.AccountHasNoEmailAddress"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.NoSuchUser"
+msgstr ""
+
+msgid "hms-widget.signin.error.username.UserNotConfirmed"
+msgstr ""
+
+msgid "hms-widget.signin.error.password.required"
+msgstr ""
+
+msgid "hms-widget.signin.error.password.error"
+msgstr ""
+
+msgid "hms-widget.signin.error.password.credentials"
+msgstr ""
+
+msgid "hms-widget.signin.error.requesttoken.LoginIsRequired"
+msgstr ""
+
+msgid "hms-widget.signin.error.requesttoken.AccountHasNoEmailAddress"
+msgstr ""
+
+msgid "hms-widget.signin.error.requesttoken.NoSuchUser"
+msgstr ""
+
+msgid "hms-widget.signin.message.unconfirmed"
+msgstr ""
+
+msgid "hms-widget.signin.message.unconfirmedresend"
+msgstr ""
+
+msgid "hms-widget.signin.message.passwordreset.email_sent"
+msgstr ""
+
+msgid "hms-widget.signin.link.passwordreset"
+msgstr ""
+
+msgid "hms-widget.signin.link.activate"
+msgstr ""
+
+msgid "hms-widget.signin.tooltip.twitter"
+msgstr ""
+
+msgid "hms-widget.signin.tooltip.facebook"
+msgstr ""
+
+msgid "hms-widget.signin.tooltip.google"
+msgstr ""
+
+msgid "hms-widget.signin.tooltip.linkedin"
+msgstr ""
+
+msgid "hms-widget.signin.tooltip.github"
+msgstr ""
+
+msgid "hms-widget.signin.flash.passwordreset.error"
+msgstr ""
+
+msgid "hms-widget.signin.flash.error"
+msgstr ""
+
+msgid "hms-widget.signin.alternate_login_methods"
+msgstr ""
+
+msgid "hms-widget.password.title.invalidToken"
+msgstr ""
+
+msgid "hms-widget.password.title.reset"
+msgstr ""
+
+msgid "hms-widget.password.title.securityQuestions"
+msgstr ""
+
+msgid "hms-widget.password.title.success"
+msgstr ""
+
+msgid "hms-widget.password.label.password"
+msgstr ""
+
+msgid "hms-widget.password.placeholder.answer"
+msgstr ""
+
+msgid "hms-widget.password.placeholder.password"
+msgstr ""
+
+msgid "hms-widget.password.placeholder.verifyPassword"
+msgstr ""
+
+msgid "hms-widget.password.button.changePassword"
+msgstr ""
+
+msgid "hms-widget.password.error.password.string"
+msgstr ""
+
+msgid "hms-widget.password.error.password.minLength"
+msgstr ""
+
+msgid "hms-widget.password.error.password.regex"
+msgstr ""
+
+msgid "hms-widget.password.error.password.required"
+msgstr ""
+
+msgid "hms-widget.password.error.password.ArgPasswordIsInvalid"
+msgstr ""
+
+msgid "hms-widget.password.error.password.NewPasswordRequired"
+msgstr ""
+
+msgid "hms-widget.password.error.password.NoNumbers"
+msgstr ""
+
+msgid "hms-widget.password.error.password.NoLowerCaseLetters"
+msgstr ""
+
+msgid "hms-widget.password.error.password.NoUpperCaseLetters"
+msgstr ""
+
+msgid "hms-widget.password.error.password.NotMinEigth"
+msgstr ""
+
+msgid "hms-widget.password.error.verifyPassword.string"
+msgstr ""
+
+msgid "hms-widget.password.error.verifyPassword.passwordEqual"
+msgstr ""
+
+msgid "hms-widget.password.error.verifyPassword.required"
+msgstr ""
+
+msgid "hms-widget.password.error.verifyPassword.PasswordsDoNotMatch"
+msgstr ""
+
+msgid "hms-widget.password.error.answer.string"
+msgstr ""
+
+msgid "hms-widget.password.error.answer.required"
+msgstr ""
+
+msgid "hms-widget.password.error.answer.CannotParseSecurityQuestions"
+msgstr ""
+
+msgid "hms-widget.password.error.answer.IncompleteSecurityQuestions"
+msgstr ""
+
+msgid "hms-widget.password.error.answer.WrongSecurityQuestionsAnswer"
+msgstr ""
+
+msgid "hms-widget.password.error.token.PasswordRecoveryTokenRequired"
+msgstr ""
+
+msgid "hms-widget.password.flash.error"
+msgstr ""
+
+msgid "hms-widget.password.intro.text"
+msgstr ""
+
+msgid "hms-widget.general.button.save"
+msgstr ""
+
+msgid "hms-widget.general.button.close"
+msgstr ""
+
+msgid "hms-widget.general.button.back"
+msgstr ""
+
+msgid "hms-widget.general.forbidden"
+msgstr ""
+
+msgid "hms-widget.general.error"
+msgstr ""
