@@ -1,0 +1,803 @@
+# German translation of Harbourmater SSO Widgets
+#
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2016-06-10 18:05+0200\n"
+"PO-Revision-Date: 2016-06-10 18:05+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# German translation of Harbourmater SSO Widgets
+
+
+msgid "hms-widget.confirmation.title.confirmed"
+msgstr "Ihre E-Mail-Adresse wurde erfolgreich bestätigt. Vielen Dank!"
+
+msgid "hms-widget.confirmation.title.invalidToken"
+msgstr "Der Link ist leider ungültig."
+
+msgid "hms-widget.resetPassword.title.invalidToken"
+msgstr "Unerlaubter Zugriff! Bitte registrieren Sie sich erneut oder melden Sie sich mit Ihrem Passwort an."
+
+msgid "hms-widget.resetPassword.title.questions"
+msgstr "Bitte beantworten Sie die Sicherheitsfrage"
+
+msgid "hms-widget.resetPassword.title.success"
+msgstr "Bitte überprüfen Sie Ihr Postfach"
+
+msgid "hms-widget.resetPassword.title.passwordreset"
+msgstr "Passwort vergessen?"
+
+msgid "hms-widget.resetPassword.label.new_password"
+msgstr "neues Passwort / neues Passwort wiederholen"
+
+msgid "hms-widget.resetPassword.label.username"
+msgstr "E-Mail-Adresse"
+
+msgid "hms-widget.resetPassword.placeholder.new_password"
+msgstr "neues Passwort"
+
+msgid "hms-widget.resetPassword.placeholder.validation_password"
+msgstr "neues Passwort wiederholen"
+
+msgid "hms-widget.resetPassword.placeholder.username"
+msgstr "E-Mail-Adresse"
+
+msgid "hms-widget.resetPassword.description.success_message"
+msgstr "Wir haben Ihnen soeben eine E-Mail mit einem Link zum Erstellen eines neuen Passwortes zugeschickt."
+
+msgid "hms-widget.resetPassword.description.set_password"
+msgstr "Bitte beantworten Sie jetzt die Sicherheitsfragen."
+
+msgid "hms-widget.resetPassword.button.passwordreset"
+msgstr "neues Passwort anfordern"
+
+msgid "hms-widget.resetPassword.button.set_password"
+msgstr "neues Passwort speichern"
+
+msgid "hms-widget.resetPassword.error.username.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.resetPassword.error.username.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.resetPassword.error.username.error"
+msgstr "unbekannter Fehler"
+
+msgid "hms-widget.resetPassword.error.username.credentials"
+msgstr "Zugangsdaten fehlerhaft"
+
+msgid "hms-widget.resetPassword.error.username.regex"
+msgstr "ungültiger Aufbau"
+
+msgid "hms-widget.resetPassword.error.username.AccountHasNoEmailAddress"
+msgstr "keine E-Mail-Adresse hinterlegt"
+
+msgid "hms-widget.resetPassword.error.username.NoSuchUser"
+msgstr "unbekannter Benutzer"
+
+msgid "hms-widget.resetPassword.error.username.ConfirmationEmailSent"
+msgstr "Ihr Account wurde noch nicht aktiviert. Wir haben Ihnen den Bestätigungslink noch einmal zugeschickt. Bitte überprüfen Sie Ihren Spam-Ordner, falls Sie die E-Mail nicht erhalten haben."
+
+msgid "hms-widget.resetPassword.flash.success"
+msgstr "Die Änderungen wurden erfolgreich gespeichert."
+
+msgid "hms-widget.resetPassword.flash.error"
+msgstr "Leider ist da etwas schiefgegangen!"
+
+msgid "hms-widget.resetPassword.flash.passwordreset.error"
+msgstr "Leider ist da etwas schiefgegangen!"
+
+msgid "hms-widget.resetPassword.intro.text"
+msgstr "Sie haben Ihr Passwort vergessen? Kein Problem: Befolgen Sie einfach die folgenden Anweisungen, um ein neues Passwort anzulegen."
+
+msgid "hms-widget.profile.title.profile"
+msgstr "Ihr Profil"
+
+msgid "hms-widget.profile.title.member"
+msgstr "Benutzername"
+
+msgid "hms-widget.profile.title.password"
+msgstr "Passwort"
+
+msgid "hms-widget.profile.title.securityQuestions"
+msgstr "Sicherheitsfrage"
+
+msgid "hms-widget.profile.title.memberAdvertisement"
+msgstr "Jetzt Mitglied werden..."
+
+msgid "hms-widget.profile.label.day"
+msgstr "Tag"
+
+msgid "hms-widget.profile.label.month"
+msgstr "Monat"
+
+msgid "hms-widget.profile.label.year"
+msgstr "Jahr"
+
+msgid "hms-widget.profile.label.address"
+msgstr "Adresse / Telefon"
+
+msgid "hms-widget.profile.label.oldPassword"
+msgstr "altes Passwort *"
+
+msgid "hms-widget.profile.label.password"
+msgstr "neues Passwort / Passwort wiederholen *"
+
+msgid "hms-widget.profile.label.protectProfile"
+msgstr "Mein Profil ist nur für registrierte Mitglieder öffentlich"
+
+msgid "hms-widget.profile.label.avatar"
+msgstr "Profilbild / Benutzername"
+
+msgid "hms-widget.profile.label.avatarEdit"
+msgstr "Profilbild"
+
+msgid "hms-widget.profile.label.displayName"
+msgstr "Benutzername *"
+
+msgid "hms-widget.profile.label.name"
+msgstr "Anrede / Vorname / Nachname / Geburtstag"
+
+msgid "hms-widget.profile.label.email"
+msgstr "E-Mail-Adresse"
+
+msgid "hms-widget.profile.label.securityQuestion"
+msgstr "Sicherheitsfrage *"
+
+msgid "hms-widget.profile.label.answer"
+msgstr "Antwort *"
+
+msgid "hms-widget.profile.label.community"
+msgstr "Foto-Community"
+
+msgid "hms-widget.profile.instruction.avatar"
+msgstr "Profilbild hochladen. Ideal ist ein quadratisches Bild im Format PNG, JPEG oder GIF. Die Bildgröße wird auf 75px angepasst."
+
+msgid "hms-widget.profile.instruction.displayName"
+msgstr "Ihr Benutzername wird anstatt des richtigen Namens bei den Kommentaren angezeigt."
+
+msgid "hms-widget.profile.placeholder.oldPassword"
+msgstr "altes Passwort"
+
+msgid "hms-widget.profile.placeholder.password"
+msgstr "neues Passwort"
+
+msgid "hms-widget.profile.placeholder.verifyPassword"
+msgstr "neues Passwort wiederholen"
+
+msgid "hms-widget.profile.placeholder.displayName"
+msgstr "Benutzername"
+
+msgid "hms-widget.profile.placeholder.firstname"
+msgstr "Vorname"
+
+msgid "hms-widget.profile.placeholder.lastname"
+msgstr "Nachname"
+
+msgid "hms-widget.profile.placeholder.email_address"
+msgstr "E-Mail-Adresse"
+
+msgid "hms-widget.profile.placeholder.answer"
+msgstr "Antwort"
+
+msgid "hms-widget.profile.placeholder.phone"
+msgstr "Telefonnummer"
+
+msgid "hms-widget.profile.placeholder.address.company"
+msgstr "Firma"
+
+msgid "hms-widget.profile.placeholder.address.street"
+msgstr "Straße"
+
+msgid "hms-widget.profile.placeholder.address.streetNumber"
+msgstr "Hausnummer"
+
+msgid "hms-widget.profile.placeholder.address.postcode"
+msgstr "PLZ"
+
+msgid "hms-widget.profile.placeholder.address.city"
+msgstr "Ort"
+
+msgid "hms-widget.profile.placeholder.address.country"
+msgstr "Land"
+
+msgid "hms-widget.profile.select.salutation.mr"
+msgstr "Herr"
+
+msgid "hms-widget.profile.select.salutation.mrs"
+msgstr "Frau"
+
+msgid "hms-widget.profile.select.salutation.none"
+msgstr ""
+
+msgid "hms-widget.profile.checkbox.subscription.advertising"
+msgstr "Ja, ich bin damit einverstanden, dass mich die MSG per E-Mail über Neuigkeiten und Angebote zu MSG Germany informiert. Dieses Einverständnis kann ich jederzeit widerrufen und der Verarbeitung oder Nutzung meiner Daten für Zwecke der Werbung bzw. der Markt- oder Meinungsforschung jederzeit bei der MSG widersprechen."
+
+msgid "hms-widget.profile.checkbox.subscription.newsletter"
+msgstr "Ja, ich möchte den kostenlosen MSG-Newsletter Daily Bits abonnieren: Morgens das Neueste aus Technologie, Kultur, Wissenschaft, Business und Design."
+
+msgid "hms-widget.profile.tab.profile"
+msgstr "Profil"
+
+msgid "hms-widget.profile.tab.entitlements"
+msgstr "Mitglied"
+
+msgid "hms-widget.profile.button.upload"
+msgstr "Profilbild hochladen"
+
+msgid "hms-widget.profile.button.change_password"
+msgstr "Passwort ändern"
+
+msgid "hms-widget.profile.button.security_question"
+msgstr "Sicherheitsfrage ändern"
+
+msgid "hms-widget.profile.button.memberAdvertisement"
+msgstr "Jetzt Mitglied werden!"
+
+msgid "hms-widget.profile.button.post_entitlement"
+msgstr "Sind Sie bereits Mitglied? Geben Sie hier Ihre Kundennummer ein."
+
+msgid "hms-widget.profile.button.entitelement_post_entitlement"
+msgstr "Weitere Kundennummer eingeben"
+
+msgid "hms-widget.profile.error.displayName.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.displayName.maxLength"
+msgstr "maximal 18 Zeichen eingeben"
+
+msgid "hms-widget.profile.error.displayName.minLength"
+msgstr "mindestens 3 Zeichen eingeben"
+
+msgid "hms-widget.profile.error.displayName.DisplayNameAlreadyExists"
+msgstr "Der Benutzername ist bereits vergeben"
+
+msgid "hms-widget.profile.error.displayName.DisplayNameIsRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.displayName.regex"
+msgstr "Im Nutzernamen sind nur folgende Zeichen erlaubt: Großbuchstaben, Kleinbuchstaben, Zahlen, Unterstriche, Bindestriche und Leerzeichen"
+
+msgid "hms-widget.profile.error.displayName.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.email.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.email.regex"
+msgstr "ungültige E-Mail-Adresse"
+
+msgid "hms-widget.profile.error.email.fakeemail"
+msgstr "bitte eine andere E-Mail-Adresse verwenden!"
+
+msgid "hms-widget.profile.error.email.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.email.LoginAlreadyExists"
+msgstr "Dieser Nutzername ist bereits registriert"
+
+msgid "hms-widget.profile.error.email.EmailAlreadyExists"
+msgstr "Diese E-Mail-Adresse ist bereits registriert"
+
+msgid "hms-widget.profile.error.email.ArgLoginIsRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.email.LoginCannotBeEmpty"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.oldPassword.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.oldPassword.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.oldPassword.IncorrectOldPassword"
+msgstr "Ungültiges altes Passwort"
+
+msgid "hms-widget.profile.error.password.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.password.minLength"
+msgstr "mindestens 8 Zeichen eingeben"
+
+msgid "hms-widget.profile.error.password.regex"
+msgstr "Ungültiges Passwort: bitte Zahlen, Groß- und Kleinbuchstaben verwenden."
+
+msgid "hms-widget.profile.error.password.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.password.ArgPasswordIsInvalid"
+msgstr "ungültiges Passwort"
+
+msgid "hms-widget.profile.error.password.NoNumbers"
+msgstr "Das Passwort muss Zahlen enthalten"
+
+msgid "hms-widget.profile.error.password.NoLowerCaseLetters"
+msgstr "Das Passwort muss Kleinbuchstaben enthalten"
+
+msgid "hms-widget.profile.error.password.NoUpperCaseLetters"
+msgstr "Das Passwort muss Großbuchstaben enthalten"
+
+msgid "hms-widget.profile.error.password.NotMinEigth"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
+
+msgid "hms-widget.profile.error.verifyPassword.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.verifyPassword.passwordEqual"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.profile.error.verifyPassword.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.verifyPassword.PasswordsDoNotMatch"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.profile.error.salutation.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.salutation.in"
+msgstr "Bitte auswählen"
+
+msgid "hms-widget.profile.error.salutation.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.firstname.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.firstname.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.lastname.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.lastname.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.error.securityQuestions.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.profile.error.securityQuestions.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.profile.info.password"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein und Zahlen, Groß- und Kleinbuchstaben enthalten."
+
+msgid "hms-widget.profile.flash.success"
+msgstr "Änderungen erfolgreich gespeichert"
+
+msgid "hms-widget.profile.flash.error"
+msgstr "Leider ist ein Fehler aufgetreten!"
+
+msgid "hms-widget.signup.title.signup"
+msgstr "Werden Sie Mitglied!"
+
+msgid "hms-widget.signup.title.error"
+msgstr "Leider ist ein Fehler aufgetreten."
+
+msgid "hms-widget.signup.title.success"
+msgstr "Herzlich willkommen!"
+
+msgid "hms-widget.signup.label.displayName"
+msgstr "Benutzername *"
+
+msgid "hms-widget.signup.label.email"
+msgstr "E-Mail-Adresse *"
+
+msgid "hms-widget.signup.label.password"
+msgstr "Passwort / Passwort wiederholen *"
+
+msgid "hms-widget.signup.label.name"
+msgstr "Anrede / Vorname / Nachname *"
+
+msgid "hms-widget.signup.label.error"
+msgstr "Das hat leider nicht funktioniert"
+
+msgid "hms-widget.signup.label.firstname"
+msgstr "Vorname *"
+
+msgid "hms-widget.signup.label.lastname"
+msgstr "Nachname *"
+
+msgid "hms-widget.signup.placeholder.displayName"
+msgstr "Benutzername *"
+
+msgid "hms-widget.signup.placeholder.email"
+msgstr "E-Mail-Adresse *"
+
+msgid "hms-widget.signup.placeholder.password"
+msgstr "Neues Passwort *"
+
+msgid "hms-widget.signup.placeholder.verifyPassword"
+msgstr "Neues Passwort wiederholen *"
+
+msgid "hms-widget.signup.placeholder.firstname"
+msgstr "Vorname *"
+
+msgid "hms-widget.signup.placeholder.lastname"
+msgstr "Nachname *"
+
+msgid "hms-widget.signup.select.salutation.none"
+msgstr "bitte auswählen"
+
+msgid "hms-widget.signup.select.salutation.mr"
+msgstr "Herr"
+
+msgid "hms-widget.signup.select.salutation.mrs"
+msgstr "Frau"
+
+msgid "hms-widget.signup.checkbox.terms_and_policy"
+msgstr "Ich akzeptiere die Nutzungsbedingungen *"
+
+msgid "hms-widget.signup.checkbox.subscription.advertising"
+msgstr "Ja, ich bin damit einverstanden, dass mich die MSG per E-Mail über Neuigkeiten und Angebote zu MSG Germany informiert. Dieses Einverständnis kann ich jederzeit widerrufen und der Verarbeitung oder Nutzung meiner Daten für Zwecke der Werbung bzw. der Markt- oder Meinungsforschung jederzeit bei der MSG widersprechen."
+
+msgid "hms-widget.signup.checkbox.subscription.newsletter"
+msgstr "Ja, ich möchte den kostenlosen MSG-Newsletter Daily Bits abonnieren: Morgens das Neueste aus Technologie, Kultur, Wissenschaft, Business und Design."
+
+msgid "hms-widget.signup.button.signup"
+msgstr "kostenlos registrieren"
+
+msgid "hms-widget.signup.button.signin"
+msgstr "zum Login"
+
+msgid "hms-widget.signup.error.displayName.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.displayName.maxLength"
+msgstr "maximal 18 Zeichen eingeben"
+
+msgid "hms-widget.signup.error.displayName.minLength"
+msgstr "mindestens 3 Zeichen eingeben"
+
+msgid "hms-widget.signup.error.displayName.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.displayName.LoginAlreadyExists"
+msgstr "Der gewünschte Benutzername ist bereits vergeben"
+
+msgid "hms-widget.signup.error.displayName.DisplayNameAlreadyExists"
+msgstr "Der gewünschte Benutzername ist bereits vergeben"
+
+msgid "hms-widget.signup.error.displayName.DisplayNameIsRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.displayName.regex"
+msgstr "Im Nutzernamen sind nur folgende Zeichen erlaubt: Großbuchstaben, Kleinbuchstaben, Zahlen, Unterstriche, Bindestriche und Leerzeichen"
+
+msgid "hms-widget.signup.error.email.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.email.regex"
+msgstr "ungültige E-Mail-Adresse"
+
+msgid "hms-widget.signup.error.email.fakeemail"
+msgstr "bitte eine andere E-Mail-Adresse verwenden!"
+
+msgid "hms-widget.signup.error.email.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.email.LoginAlreadyExists"
+msgstr "Dieser Nutzername ist bereits registriert"
+
+msgid "hms-widget.signup.error.email.EmailAlreadyExists"
+msgstr "Diese E-Mail-Adresse ist bereits registriert"
+
+msgid "hms-widget.signup.error.email.ArgLoginIsRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.email.LoginCannotBeEmpty"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.password.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.password.minLength"
+msgstr "mindestens 8 Zeichen eingeben"
+
+msgid "hms-widget.signup.error.password.regex"
+msgstr "Ungültiges Passwort: bitte Zahlen, Groß- und Kleinbuchstaben verwenden"
+
+msgid "hms-widget.signup.error.password.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.password.ArgPasswordIsInvalid"
+msgstr "ungültiges Passwort"
+
+msgid "hms-widget.signup.error.password.NoNumbers"
+msgstr "Das Passwort muss Zahlen enthalten"
+
+msgid "hms-widget.signup.error.password.NoLowerCaseLetters"
+msgstr "Das Passwort muss Kleinbuchstaben enthalten"
+
+msgid "hms-widget.signup.error.password.NoUpperCaseLetters"
+msgstr "Das Passwort muss Großbuchstaben enthalten"
+
+msgid "hms-widget.signup.error.password.NotMinEigth"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
+
+msgid "hms-widget.signup.error.verifyPassword.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.verifyPassword.passwordEqual"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.signup.error.verifyPassword.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.verifyPassword.PasswordsDoNotMatch"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.signup.error.salutation.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.salutation.in"
+msgstr "bitte auswählen"
+
+msgid "hms-widget.signup.error.salutation.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.firstname.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.firstname.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.lastname.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.lastname.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.error.terms.boolean"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signup.error.terms.truthy"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signup.intro.teaser"
+msgstr "es ist einfach"
+
+msgid "hms-widget.signup.intro.text"
+msgstr "In nur 2 Minuten zum eigenen Profil."
+
+msgid "hms-widget.signup.info.password"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein und Zahlen, Groß- und Kleinbuchstaben enthalten."
+
+msgid "hms-widget.signup.flash.error"
+msgstr "Leider ist ein Fehler aufgetreten."
+
+msgid "hms-widget.signup.flash.success"
+msgstr "Vielen Dank für Ihre Registrierung, bitte überprüfen Sie jetzt Ihr Postfach und bestätigen Sie Ihre Emailadresse"
+
+msgid "hms-widget.signin.title.signin"
+msgstr "anmelden"
+
+msgid "hms-widget.signin.title.success"
+msgstr "Anmeldung erfolgreich!"
+
+msgid "hms-widget.signin.title.passwordreset"
+msgstr "Passwort vergessen?"
+
+msgid "hms-widget.signin.title.passwordresetinit"
+msgstr "Die E-Mail zum Zurücksetzen Ihres Passworts wurde versendet."
+
+msgid "hms-widget.signin.title.unconfirmed"
+msgstr "Ihre E-Mail-Adresse ist noch nicht bestätigt"
+
+msgid "hms-widget.signin.label.username"
+msgstr "Benutzername / E-Mail-Adresse"
+
+msgid "hms-widget.signin.label.password"
+msgstr "Passwort"
+
+msgid "hms-widget.signin.placeholder.username"
+msgstr "Benutzername / E-Mail-Adresse"
+
+msgid "hms-widget.signin.placeholder.password"
+msgstr "Passwort"
+
+msgid "hms-widget.signin.button.signin"
+msgstr "Login"
+
+msgid "hms-widget.signin.button.signup"
+msgstr "Werden Sie Mitglied!"
+
+msgid "hms-widget.signin.button.passwordreset"
+msgstr "Neues Passwort anfordern"
+
+msgid "hms-widget.signin.button.unconfirmed"
+msgstr "Email noch einmal senden"
+
+msgid "hms-widget.signin.error.username.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signin.error.username.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.signin.error.username.error"
+msgstr "unbekannter Fehler"
+
+msgid "hms-widget.signin.error.username.credentials"
+msgstr "Zugangsdaten fehlerhaft"
+
+msgid "hms-widget.signin.error.username.regex"
+msgstr "ungültiger Aufbau"
+
+msgid "hms-widget.signin.error.username.AccountHasNoEmailAddress"
+msgstr "keine E-Mail-Adresse hinterlegt"
+
+msgid "hms-widget.signin.error.username.NoSuchUser"
+msgstr "unbekannter Benutzer"
+
+msgid "hms-widget.signin.error.username.UserNotConfirmed"
+msgstr "Ihr Account wurde noch nicht aktiviert"
+
+msgid "hms-widget.signin.error.password.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signin.error.password.error"
+msgstr "unbekannter Fehler"
+
+msgid "hms-widget.signin.error.password.credentials"
+msgstr "Zugangsdaten fehlerhaft"
+
+msgid "hms-widget.signin.error.requesttoken.LoginIsRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.signin.error.requesttoken.AccountHasNoEmailAddress"
+msgstr "falsche E-Mail-Adresse"
+
+msgid "hms-widget.signin.error.requesttoken.NoSuchUser"
+msgstr "falsche E-Mail-Adresse"
+
+msgid "hms-widget.signin.message.unconfirmed"
+msgstr "Ihr Account wurde noch nicht aktiviert. Wir haben Ihnen einen Bestätigungslink zugeschickt. Bitte überprüfen Sie Ihren Spam-Ordner, falls Sie die E-Mail nicht erhalten haben."
+
+msgid "hms-widget.signin.message.unconfirmedresend"
+msgstr "Wir haben Ihnen den Bestätigungslink noch einmal zugeschickt."
+
+msgid "hms-widget.signin.message.passwordreset.email_sent"
+msgstr "Die E-Mail zum Zurücksetzen Ihres Passworts wurde versendet."
+
+msgid "hms-widget.signin.link.passwordreset"
+msgstr "Brauchen Sie Hilfe bei der Anmeldung?"
+
+msgid "hms-widget.signin.link.activate"
+msgstr "Benutzerprofil aktivieren"
+
+msgid "hms-widget.signin.tooltip.twitter"
+msgstr "TWITTER"
+
+msgid "hms-widget.signin.tooltip.facebook"
+msgstr "FACEBOOK"
+
+msgid "hms-widget.signin.tooltip.google"
+msgstr "GOOGLE"
+
+msgid "hms-widget.signin.tooltip.linkedin"
+msgstr "LINKEDIN"
+
+msgid "hms-widget.signin.tooltip.github"
+msgstr "GITHUB"
+
+msgid "hms-widget.signin.flash.passwordreset.error"
+msgstr "Leider ist ein Fehler aufgetreten."
+
+msgid "hms-widget.signin.flash.error"
+msgstr "Leider ist ein Fehler aufgetreten."
+
+msgid "hms-widget.signin.alternate_login_methods"
+msgstr "Sie können sich auch hiermit anmelden:"
+
+msgid "hms-widget.password.title.invalidToken"
+msgstr "Der Link ist leider ungültig"
+
+msgid "hms-widget.password.title.reset"
+msgstr "Bitte geben Sie ein neues Passwort an."
+
+msgid "hms-widget.password.title.securityQuestions"
+msgstr "Bitte beantworten Sie die Sicherheitsfrage"
+
+msgid "hms-widget.password.title.success"
+msgstr "Ihr Password wurde erfolgreich geändert."
+
+msgid "hms-widget.password.label.password"
+msgstr "Neues Passwort / Neues Passwort wiederholen"
+
+msgid "hms-widget.password.placeholder.answer"
+msgstr "Sicherheitsantwort"
+
+msgid "hms-widget.password.placeholder.password"
+msgstr "neues Passwort"
+
+msgid "hms-widget.password.placeholder.verifyPassword"
+msgstr "neues Passwort wiederholen"
+
+msgid "hms-widget.password.button.changePassword"
+msgstr "neues Passwort festlegen"
+
+msgid "hms-widget.password.error.password.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.password.error.password.minLength"
+msgstr "mindestens 8 Zeichen eingeben"
+
+msgid "hms-widget.password.error.password.regex"
+msgstr "Ungültiges Passwort: bitte Zahlen, Groß- und Kleinbuchstaben verwenden"
+
+msgid "hms-widget.password.error.password.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.password.error.password.ArgPasswordIsInvalid"
+msgstr "ungültiges Passwort"
+
+msgid "hms-widget.password.error.password.NewPasswordRequired"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.password.error.password.NoNumbers"
+msgstr "Das Passwort muss Zahlen enthalten"
+
+msgid "hms-widget.password.error.password.NoLowerCaseLetters"
+msgstr "Das Passwort muss Kleinbuchstaben enthalten"
+
+msgid "hms-widget.password.error.password.NoUpperCaseLetters"
+msgstr "Das Passwort muss Großbuchstaben enthalten"
+
+msgid "hms-widget.password.error.password.NotMinEigth"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
+
+msgid "hms-widget.password.error.verifyPassword.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.password.error.verifyPassword.passwordEqual"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.password.error.verifyPassword.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.password.error.verifyPassword.PasswordsDoNotMatch"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "hms-widget.password.error.answer.string"
+msgstr "Eingabefehler"
+
+msgid "hms-widget.password.error.answer.required"
+msgstr "Pflichtfeld"
+
+msgid "hms-widget.password.error.answer.CannotParseSecurityQuestions"
+msgstr "Die Sicherheitsfrage kann nicht verarbeitet werden"
+
+msgid "hms-widget.password.error.answer.IncompleteSecurityQuestions"
+msgstr "unvollständige Sicherheitsfrage"
+
+msgid "hms-widget.password.error.answer.WrongSecurityQuestionsAnswer"
+msgstr "falsche Antwort"
+
+msgid "hms-widget.password.error.token.PasswordRecoveryTokenRequired"
+msgstr "Ein neuer Link muss versendet werden"
+
+msgid "hms-widget.password.flash.error"
+msgstr "Das Passwort konnte nicht gespeichert werden."
+
+msgid "hms-widget.password.intro.text"
+msgstr "Geben Sie hier Ihr neues Passwort ein und bestätigen Sie es mit einem Klick auf &amp;quot;Neues Passwort festlegen&amp;quot;."
+
+msgid "hms-widget.general.button.save"
+msgstr "speichern"
+
+msgid "hms-widget.general.button.close"
+msgstr "schließen"
+
+msgid "hms-widget.general.button.back"
+msgstr "zurück"
+
+msgid "hms-widget.general.forbidden"
+msgstr "nicht erlaubt"
+
+msgid "hms-widget.general.error"
+msgstr "Fehler"

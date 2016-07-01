@@ -5,4 +5,5 @@ usermanager.launcher:
   js:
     js/loginLauncher.js: { }
   dependencies:
+    - core/jquery
     - hms/usermanager.app
