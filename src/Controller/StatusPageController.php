@@ -19,7 +19,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Controller;
+namespace Drupal\harbourmaster\Controller;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
@@ -48,20 +48,20 @@ class StatusPageController extends ControllerBase {
 
   public function status() {
 
-    $hmsConfig = $this->config('hms.settings');
-    $hmsApiUrl = $hmsConfig->get('hms_api_url');
-    $hmsApiVersion = empty($hmsConfig->get('hms_api_version')) ? 'v1' : $hmsConfig->get('hms_api_version');
-    $hmsApiTenant = $hmsConfig->get('hms_api_tenant');
-    $userManagerUrl = $hmsConfig->get('user_manager_url');
+    $harbourmasterConfig = $this->config('harbourmaster.settings');
+    $harbourmasterApiUrl = $harbourmasterConfig->get('harbourmaster_api_url');
+    $harbourmasterApiVersion = empty($harbourmasterConfig->get('harbourmaster_api_version')) ? 'v1' : $harbourmasterConfig->get('harbourmaster_api_version');
+    $harbourmasterApiTenant = $harbourmasterConfig->get('harbourmaster_api_tenant');
+    $userManagerUrl = $harbourmasterConfig->get('user_manager_url');
 
     $messages = [];
 
     // Connect to HMS API Server
-    if (empty($hmsApiUrl)) {
+    if (empty($harbourmasterApiUrl)) {
       $messages['warning'][] = $this->t('HMS API Server: not configured');
     } else {
       try {
-        $response = $this->httpClient->request('get', $hmsApiUrl);
+        $response = $this->httpClient->request('get', $harbourmasterApiUrl);
         if ($response->getBody() != '<h1>Harbourmaster</h1>') {
           $messages['error'][] = $this->t('HMS API Server: connect successful, but received wrong body');
         } else {
@@ -72,12 +72,12 @@ class StatusPageController extends ControllerBase {
       }
 
       // connect to HMS REST endpoint
-      if (empty($hmsApiTenant)) {
+      if (empty($harbourmasterApiTenant)) {
         $messages['warning'][] = $this->t('HMS API REST Endpoint: not configured');
       } else {
         // HMS has no status endpoint, so we use /login and expect the correct error (as we send no credentials)
         try {
-          $response = $this->httpClient->request('post', implode('/', [$hmsApiUrl, $hmsApiVersion, $hmsApiTenant, 'login']));
+          $response = $this->httpClient->request('post', implode('/', [$harbourmasterApiUrl, $harbourmasterApiVersion, $harbourmasterApiTenant, 'login']));
           $messages['warning'][] = $this->t('HMS API REST Endpoint: connect successful, but unexpected status code (:code)', [':code' => $response->getStatusCode()]);
         } catch (HttpClientException $e) {
           if ($e->getCode() === 409) {
@@ -90,11 +90,11 @@ class StatusPageController extends ControllerBase {
     }
 
     // Connect to User Manager Endpoint
-    if (empty($userManagerUrl) || empty($hmsApiTenant)) {
+    if (empty($userManagerUrl) || empty($harbourmasterApiTenant)) {
       $messages['warning'][] = $this->t('HMS User Manager: not configured');
     } else {
       try {
-        $response = $this->httpClient->request('get', $userManagerUrl . '/' . $hmsApiTenant);
+        $response = $this->httpClient->request('get', $userManagerUrl . '/' . $harbourmasterApiTenant);
         if ($response->getStatusCode() !== 200) {
           $messages['error'][] = $this->t('HMS User Manager: connect successful, but unexpected status code (:code)', [':code' => $response->getStatusCode()]);
         } else {

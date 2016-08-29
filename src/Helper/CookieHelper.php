@@ -19,7 +19,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Helper;
+namespace Drupal\harbourmaster\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -62,9 +62,9 @@ class CookieHelper implements EventSubscriberInterface {
    */
   protected $clearTokenTriggered = FALSE;
 
-  public function __construct(Config $hmsSettings) {
-    $this->ssoCookieName = $hmsSettings->get('sso_cookie_name');
-    $this->ssoCookieDomain = $hmsSettings->get('sso_cookie_domain');
+  public function __construct(Config $harbourmasterSettings) {
+    $this->ssoCookieName = $harbourmasterSettings->get('sso_cookie_name');
+    $this->ssoCookieDomain = $harbourmasterSettings->get('sso_cookie_domain');
   }
 
     /**

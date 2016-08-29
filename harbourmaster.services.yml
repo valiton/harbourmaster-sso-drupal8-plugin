@@ -1,0 +1,109 @@
+# TODO mark private services
+
+services:
+  harbourmaster.authentication.token:
+    class: Drupal\harbourmaster\Authentication\Provider\SsoCookie
+    arguments:
+      - @harbourmaster.client
+      - @harbourmaster.settings
+      - @harbourmaster.user_manager
+      - @harbourmaster.cookie_helper
+      - @cache.harbourmaster
+      - @session
+      - @session_configuration
+      - @session_manager
+      - @database
+    calls:
+      - ['setLogger', [%harbourmaster.logger.service%]]
+    tags:
+      - name: authentication_provider
+        provider_id: harbourmaster_token
+        priority: 100
+        global: true
+
+  harbourmaster.user_manager:
+    class: Drupal\harbourmaster\User\Manager
+    arguments:
+      - @user.data
+      - @entity_type.manager
+      - %harbourmaster.adapter.service%
+    calls:
+      - ['setLogger', [%harbourmaster.logger.service%]]
+
+  harbourmaster.client:
+    class: Drupal\harbourmaster\Client\Harbourmaster
+    arguments:
+      - @harbourmaster.http_client
+      - @harbourmaster.settings
+    calls:
+      - ['setLogger', [%harbourmaster.logger.service%]]
+
+  # disable http status exceptions b/c they are expected and handled via status code
+  harbourmaster.http_client:
+    class: GuzzleHttp\ClientInterface
+    factory: http_client_factory:fromOptions
+    arguments:
+      - http_errors: false
+        verify: false
+
+  harbourmaster.logger:
+    parent: logger.channel_base
+    arguments:
+      - harbourmaster
+
+  harbourmaster.logger_null:
+    class: Psr\Log\NullLogger
+
+  harbourmaster.settings:
+    class: Drupal\Core\Config\ImmutableConfig
+    factory: config.factory:get
+    arguments:
+      - harbourmaster.settings
+
+  cache.harbourmaster:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+    - { name: cache.bin }
+    factory: cache_factory:get
+    arguments:
+      - harbourmaster
+
+  harbourmaster.page_cache_request_policy.disallow_token_requests:
+    class: Drupal\harbourmaster\PageCache\DisallowTokenRequests
+    public: false
+    tags:
+      - { name: page_cache_request_policy }
+    arguments:
+      - @harbourmaster.settings
+
+  harbourmaster.default_user_adapter:
+    class: Drupal\harbourmaster\User\DefaultUserAdapter
+    arguments:
+      - @harbourmaster.settings
+      - @entity_type.manager
+    calls:
+      - ['setLogger', [%harbourmaster.logger.service%]]
+
+  harbourmaster.cookie_helper:
+    public: false
+    class: Drupal\harbourmaster\Helper\CookieHelper
+    arguments:
+      - @harbourmaster.settings
+    tags:
+      - { name: 'event_subscriber' }
+
+  harbourmaster.route_subscriber:
+    class: Drupal\harbourmaster\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  access_check.harbourmaster.login_status:
+    class: Drupal\harbourmaster\Access\LoginStatusCheck
+    arguments:
+      - @harbourmaster.user_manager
+    tags:
+      - { name: access_check, applies_to: _harbourmaster_user_is_logged_in }
+
+parameters:
+  harbourmaster.adapter.service: @harbourmaster.default_user_adapter
+  harbourmaster.logger.service: @harbourmaster.logger_null

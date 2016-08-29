@@ -19,12 +19,12 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\User;
+namespace Drupal\harbourmaster\User;
 
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\UserDataInterface;
-use Drupal\hms\User\AdapterInterface as HmsUserAdapter;
+use Drupal\harbourmaster\User\AdapterInterface as HmsUserAdapter;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerAwareTrait;
 
@@ -43,7 +43,7 @@ class Manager {
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\hms\User\AdapterInterface
+   * @var \Drupal\harbourmaster\User\AdapterInterface
    */
   protected $userAdapter;
 
@@ -56,23 +56,23 @@ class Manager {
   /**
    * Creates a Drupal user from HMS data struct.
    *
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    *
    * @return \Drupal\user\UserInterface
    */
-  public function createAndAssociateUser(array $hmsSessionData) {
-    $user = $this->userAdapter->createUser($hmsSessionData);
-    $this->userDataService->set('hms', $user->id(), 'userKey', $hmsSessionData['userKey']);
+  public function createAndAssociateUser(array $harbourmasterSessionData) {
+    $user = $this->userAdapter->createUser($harbourmasterSessionData);
+    $this->userDataService->set('harbourmaster', $user->id(), 'userKey', $harbourmasterSessionData['userKey']);
     return $user;
   }
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    * @param \Drupal\user\UserInterface $user
    * @return \Drupal\user\UserInterface
    */
-  public function updateAssociatedUser(array $hmsSessionData, UserInterface $user) {
-    return $this->userAdapter->updateUser($hmsSessionData, $user);
+  public function updateAssociatedUser(array $harbourmasterSessionData, UserInterface $user) {
+    return $this->userAdapter->updateUser($harbourmasterSessionData, $user);
   }
 
   /**
@@ -84,7 +84,7 @@ class Manager {
    */
   public function findUidForHmsUserKey($userKey) {
     // return an array of the form $uid => $userKey
-    $userKeysByUid = $this->userDataService->get('hms', NULL, 'userKey');
+    $userKeysByUid = $this->userDataService->get('harbourmaster', NULL, 'userKey');
     $uidsByUserKey = array_flip($userKeysByUid);
     return isset($uidsByUserKey[$userKey]) ? $uidsByUserKey[$userKey] : NULL;
   }
@@ -95,7 +95,7 @@ class Manager {
    * @return string|null
    */
   public function findHmsUserKeyForUid($uid) {
-    $userKeysByUid = $this->userDataService->get('hms', NULL, 'userKey');
+    $userKeysByUid = $this->userDataService->get('harbourmaster', NULL, 'userKey');
     return isset($userKeysByUid[$uid]) ? $userKeysByUid[$uid] : NULL;
   }
 

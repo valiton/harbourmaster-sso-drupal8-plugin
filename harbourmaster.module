@@ -17,19 +17,19 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function hms_install() {
-  $link = \Drupal\Core\Link::fromTextAndUrl(t('admin config page'), \Drupal\Core\Url::fromUri('internal:/admin/config/people/hms'));
+function harbourmaster_install() {
+  $link = \Drupal\Core\Link::fromTextAndUrl(t('admin config page'), \Drupal\Core\Url::fromUri('internal:/admin/config/people/harbourmaster'));
   drupal_set_message(
     t(
       'For the HMS module to work properly, you still have to configure the module on the <a href=":link">configuration page</a>',
-      [':link' => '/admin/config/people/hms']
+      [':link' => '/admin/config/people/harbourmaster']
     ),
     'warning'
   );
 }
 
-function hms_library_info_build() {
-  $url = \Drupal::config('hms.settings')->get('user_manager_url');
+function harbourmaster_library_info_build() {
+  $url = \Drupal::config('harbourmaster.settings')->get('user_manager_url');
   $libraries = [];
   $libraries['usermanager.app'] = [
     'dependencies' => [
@@ -54,7 +54,7 @@ function hms_library_info_build() {
   return $libraries;
 }
 
-function hms_theme() {
+function harbourmaster_theme() {
 
   $theme['usermanager'] = [
     'variables' => [],
@@ -105,7 +105,7 @@ function hms_theme() {
     'variables' => [
       'currentUser' => NULL,
       'currentUserRoles' => [],
-      'hmsUserKey' => NULL,
+      'harbourmasterUserKey' => NULL,
     ],
     'template' => 'status',
   ];

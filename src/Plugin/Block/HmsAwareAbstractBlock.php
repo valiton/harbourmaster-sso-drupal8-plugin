@@ -19,21 +19,21 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\harbourmaster\Plugin\Block;
 
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\harbourmaster\User\Manager as HmsUserManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class HmsAwareAbstractBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\hms\User\Manager
+   * @var \Drupal\harbourmaster\User\Manager
    */
-  protected $hmsUserManager;
+  protected $harbourmasterUserManager;
 
   /**
    * @var \Drupal\Core\Session\AccountInterface
@@ -42,9 +42,9 @@ abstract class HmsAwareAbstractBlock extends BlockBase implements ContainerFacto
 
   public function __construct(
     array $configuration, $plugin_id, $plugin_definition,
-    AccountInterface $currentUser, HmsUserManager $hmsUserManager) {
+    AccountInterface $currentUser, HmsUserManager $harbourmasterUserManager) {
 
-    $this->hmsUserManager = $hmsUserManager;
+    $this->harbourmasterUserManager = $harbourmasterUserManager;
     $this->currentUser = $currentUser;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -56,7 +56,7 @@ abstract class HmsAwareAbstractBlock extends BlockBase implements ContainerFacto
       $plugin_id,
       $plugin_definition,
       $container->get('current_user'),
-      $container->get('hms.user_manager')
+      $container->get('harbourmaster.user_manager')
     );
   }
 

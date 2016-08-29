@@ -73,13 +73,13 @@ Installation:
 - configure at least the HMS SSO API und HMS User-Manager server urls
   on the configuration page
 - rebuild the container (see known bugs)
-- go to /hms/login or configure the "HMS Status" block which will
+- go to /harbourmaster/login or configure the "HMS Status" block which will
   provide links for login and logout
 
 Available routes:
 -----------------
-- /hms/login: renders most of the HMS User-Manager widgets
-- /hms/logout: redirects to the logout user manager url which in turn
+- /harbourmaster/login: renders most of the HMS User-Manager widgets
+- /harbourmaster/logout: redirects to the logout user manager url which in turn
   redirects back to the Drupal front page
 
 Available blocks:

@@ -19,14 +19,14 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Form;
+namespace Drupal\harbourmaster\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\user\Form\UserPasswordForm as DrupalUserPasswordForm;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\harbourmaster\User\Manager as HmsUserManager;
 use Drupal\Core\Link;
 
 class UserPasswordForm extends DrupalUserPasswordForm {
@@ -34,10 +34,10 @@ class UserPasswordForm extends DrupalUserPasswordForm {
   /**
    * @var HmsUserManager
    */
-  protected $hmsUserManager;
+  protected $harbourmasterUserManager;
 
-  public function __construct(UserStorageInterface $user_storage, LanguageManagerInterface $language_manager, HmsUserManager $hmsUserManager) {
-    $this->hmsUserManager = $hmsUserManager;
+  public function __construct(UserStorageInterface $user_storage, LanguageManagerInterface $language_manager, HmsUserManager $harbourmasterUserManager) {
+    $this->harbourmasterUserManager = $harbourmasterUserManager;
     parent::__construct($user_storage, $language_manager);
   }
 
@@ -45,15 +45,15 @@ class UserPasswordForm extends DrupalUserPasswordForm {
     return new static(
       $container->get('entity.manager')->getStorage('user'),
       $container->get('language_manager'),
-      $container->get('hms.user_manager')
+      $container->get('harbourmaster.user_manager')
     );
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
     $user = $this->currentUser();
-    if ($user->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($user->id()))) {
+    if ($user->isAuthenticated() && (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($user->id()))) {
       // parent::buildForm would allow for a logged in user to request a pw reset, override for HMS user
-      return $this->redirect('hms.login_page');
+      return $this->redirect('harbourmaster.login_page');
     }
     return parent::buildForm($form, $form_state);
   }
@@ -73,10 +73,10 @@ class UserPasswordForm extends DrupalUserPasswordForm {
     }
     $account = reset($users);
     if ($account && $account->id()) {
-      if (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($account->id())) {
+      if (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($account->id())) {
         $form_state->setErrorByName(
           'name',
-          $this->t('%name is externally registered via HMS. Please use the :link to request your password reset.', array('%name' => $name, ':link' => Link::createFromRoute('appropriate page', 'hms.login_page'))));
+          $this->t('%name is externally registered via HMS. Please use the :link to request your password reset.', array('%name' => $name, ':link' => Link::createFromRoute('appropriate page', 'harbourmaster.login_page'))));
       }
     }
 

@@ -19,7 +19,7 @@
  * along with msg-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Controller;
+namespace Drupal\harbourmaster\Controller;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -28,14 +28,14 @@ use Drupal\user\Controller\UserController as DrupalUserController;
 use Drupal\user\UserDataInterface;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\harbourmaster\User\Manager as HmsUserManager;
 
 class UserController extends DrupalUserController {
 
   /**
    * @var HmsUserManager
    */
-  protected $hmsUserManager;
+  protected $harbourmasterUserManager;
 
 
   /**
@@ -47,10 +47,10 @@ class UserController extends DrupalUserController {
    *   The user storage.
    * @param \Drupal\user\UserDataInterface $user_data
    *   The user data service.
-   * @param \Drupal\hms\User\Manager $hmsUserManager
+   * @param \Drupal\harbourmaster\User\Manager $harbourmasterUserManager
    */
-  public function __construct(DateFormatterInterface $date_formatter, UserStorageInterface $user_storage, UserDataInterface $user_data, HmsUserManager $hmsUserManager) {
-    $this->hmsUserManager = $hmsUserManager;
+  public function __construct(DateFormatterInterface $date_formatter, UserStorageInterface $user_storage, UserDataInterface $user_data, HmsUserManager $harbourmasterUserManager) {
+    $this->harbourmasterUserManager = $harbourmasterUserManager;
     parent::__construct($date_formatter, $user_storage, $user_data);
   }
 
@@ -62,12 +62,12 @@ class UserController extends DrupalUserController {
       $container->get('date.formatter'),
       $container->get('entity.manager')->getStorage('user'),
       $container->get('user.data'),
-      $container->get('hms.user_manager')
+      $container->get('harbourmaster.user_manager')
     );
   }
 
   public function userPage() {
-    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
+    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
       return [
         '#theme' => 'usermanager.profile_page',
       ];
@@ -77,8 +77,8 @@ class UserController extends DrupalUserController {
   }
 
   public function logout() {
-    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
-      $userManagerUrl = $this->config('hms.settings')->get('user_manager_url');
+    if ($this->currentUser()->isAuthenticated() && (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($this->currentUser()->id()))) {
+      $userManagerUrl = $this->config('harbourmaster.settings')->get('user_manager_url');
       // TODO why is this considered a "weak" route?
       $queryString = http_build_query([
         'logout_redirect' => Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(TRUE)->getGeneratedUrl(),
@@ -91,7 +91,7 @@ class UserController extends DrupalUserController {
     return parent::logout();
   }
 
-  public function hmsLoginPage() {
+  public function harbourmasterLoginPage() {
     if ($this->currentUser()->isAuthenticated()) {
 //      drupal_set_message(t('You have been logged in.'));
       return $this->redirect('<front>');

@@ -19,23 +19,23 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\User;
+namespace Drupal\harbourmaster\User;
 
 use Drupal\user\UserInterface;
 
 interface AdapterInterface {
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    * @return UserInterface
    */
-  public function createUser(array $hmsSessionData);
+  public function createUser(array $harbourmasterSessionData);
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    * @param \Drupal\user\UserInterface $user
    * @return bool whether the Drupal user was changed
    */
-  public function updateUser(array $hmsSessionData, UserInterface &$user);
+  public function updateUser(array $harbourmasterSessionData, UserInterface &$user);
 
 }

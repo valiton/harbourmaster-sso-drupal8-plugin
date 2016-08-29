@@ -19,7 +19,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\User;
+namespace Drupal\harbourmaster\User;
 
 
 use Drupal\Core\Config\Config;
@@ -38,15 +38,15 @@ abstract class AbstractHmsUserAdapter implements AdapterInterface {
   /**
    * @var Config
    */
-  protected $hmsSettings;
+  protected $harbourmasterSettings;
 
   /**
    * AbstractHmsUserAdapter constructor.
-   * @param Config $hmsSettings
+   * @param Config $harbourmasterSettings
    * @param EntityTypeManagerInterface $entityTypeManager
    */
-  public function __construct(Config $hmsSettings, EntityTypeManagerInterface $entityTypeManager) {
-    $this->hmsSettings = $hmsSettings;
+  public function __construct(Config $harbourmasterSettings, EntityTypeManagerInterface $entityTypeManager) {
+    $this->harbourmasterSettings = $harbourmasterSettings;
     $this->entityTypeManager = $entityTypeManager;
   }
 

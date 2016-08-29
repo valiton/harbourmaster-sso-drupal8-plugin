@@ -19,7 +19,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\User;
+namespace Drupal\harbourmaster\User;
 
 
 use Drupal\Component\Utility\Random;
@@ -30,21 +30,21 @@ use Drupal\user\UserStorageInterface;
 class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    *    The HMS data struct for the current session
    * @return \Drupal\user\UserInterface
    *    The updated and saved User entity
    */
-  public function createUser(array $hmsSessionData) {
+  public function createUser(array $harbourmasterSessionData) {
     $r = new Random();
 
     /**
      * @var UserStorageInterface
      */
     $userStorage = $this->entityTypeManager->getStorage('user');
-    $users = $userStorage->loadByProperties(['name' => $hmsSessionData['user']['login']]);
+    $users = $userStorage->loadByProperties(['name' => $harbourmasterSessionData['user']['login']]);
     if (count($users) > 0) {
-      $hmsSessionData['user']['login'] = $this->fixUserNameCollision($hmsSessionData['user']['login']);
+      $harbourmasterSessionData['user']['login'] = $this->fixUserNameCollision($harbourmasterSessionData['user']['login']);
     }
 
     /**
@@ -52,7 +52,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
      */
     $user = $userStorage->create();
 
-    $user = $this->setUserData($hmsSessionData, $user);
+    $user = $this->setUserData($harbourmasterSessionData, $user);
 
     // random password so a user can never log in via Drupal
     $user->setPassword($r->string(32));
@@ -64,53 +64,53 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   }
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    *    The HMS data struct for the current session
    * @param \Drupal\user\UserInterface $user
    *    The user associated with the current session userKey
    * @return bool
    *    Whether the user was updated
    */
-  public function updateUser(array $hmsSessionData, UserInterface &$user) {
-    if ($user->getChangedTime() >= intval($hmsSessionData['user']['modifiedAt'] / 1000)) {
+  public function updateUser(array $harbourmasterSessionData, UserInterface &$user) {
+    if ($user->getChangedTime() >= intval($harbourmasterSessionData['user']['modifiedAt'] / 1000)) {
       return FALSE;
     }
 
-    $user = $this->setUserData($hmsSessionData, $user);
+    $user = $this->setUserData($harbourmasterSessionData, $user);
     $user->save();
     return TRUE;
   }
 
   protected function fixUserNameCollision($name) {
-    return 'hms.' . $name;
+    return 'harbourmaster.' . $name;
   }
 
   /**
-   * @param array $hmsSessionData
+   * @param array $harbourmasterSessionData
    * @param \Drupal\user\UserInterface $user
    * @return \Drupal\user\UserInterface
    */
-  protected function setUserData(array $hmsSessionData, UserInterface $user) {
-    $user->setEmail($hmsSessionData['user']['email']);
-    $user->setUsername($hmsSessionData['user']['login']);
+  protected function setUserData(array $harbourmasterSessionData, UserInterface $user) {
+    $user->setEmail($harbourmasterSessionData['user']['email']);
+    $user->setUsername($harbourmasterSessionData['user']['login']);
 
     if (user_picture_enabled()) {
       // TODO this should not be done on every login. maybe.
-      $avatar = isset($hmsSessionData['user']['avatarImage']) ? $hmsSessionData['user']['avatarImage'] : '';
+      $avatar = isset($harbourmasterSessionData['user']['avatarImage']) ? $harbourmasterSessionData['user']['avatarImage'] : '';
       if (!empty($avatar)) {
         // HMS always returns the 75px derivate, we want a bigger one
         $avatar = preg_replace('#/75_75\.jpg$#', '/150_150.jpg', $avatar);
         $this->logger->debug('Settings user data: custom picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       } else {
         // build default URL
-        $avatar = $this->hmsSettings->get('user_manager_url') . '/usermanager/avatar/150_150/' . urlencode($hmsSessionData['user']['login']) . '.jpg';
+        $avatar = $this->harbourmasterSettings->get('user_manager_url') . '/usermanager/avatar/150_150/' . urlencode($harbourmasterSessionData['user']['login']) . '.jpg';
         $this->logger->debug('Settings user data: default picture, trying to retrieve @uri', [ '@uri' => $avatar ]);
       }
 
-      $dir = 'public://hms_pictures';
+      $dir = 'public://harbourmaster_pictures';
 
       if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
-        $path = $dir . '/' . $hmsSessionData['userKey'] . '.jpg';
+        $path = $dir . '/' . $harbourmasterSessionData['userKey'] . '.jpg';
         /**
          * @var FileInterface $file
          */
@@ -125,7 +125,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     }
 
     // TODO find out whether this actually works
-    $user->setChangedTime(intval($hmsSessionData['user']['modifiedAt'] / 1000));
+    $user->setChangedTime(intval($harbourmasterSessionData['user']['modifiedAt'] / 1000));
     return $user;
   }
 

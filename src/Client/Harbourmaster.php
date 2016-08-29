@@ -17,7 +17,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Client;
+namespace Drupal\harbourmaster\Client;
 
 use Drupal\Core\Config\Config;
 use GuzzleHttp\ClientInterface;
@@ -56,8 +56,8 @@ class Harbourmaster {
    * @param Config $config
    */
   public function __construct(ClientInterface $client, Config $config) {
-    $this->apiEndpointUrl = $config->get('hms_api_url');
-    $this->tenant = $config->get('hms_api_tenant');
+    $this->apiEndpointUrl = $config->get('harbourmaster_api_url');
+    $this->tenant = $config->get('harbourmaster_api_tenant');
     $this->client = $client;
   }
 

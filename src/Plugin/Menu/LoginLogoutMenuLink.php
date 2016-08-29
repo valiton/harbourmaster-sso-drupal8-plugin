@@ -19,23 +19,23 @@
  * along with msg-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Menu;
+namespace Drupal\harbourmaster\Plugin\Menu;
 
 use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\user\Plugin\Menu\LoginLogoutMenuLink as DrupalLoginLogoutMenuLink;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\harbourmaster\User\Manager as HmsUserManager;
 
 class LoginLogoutMenuLink extends DrupalLoginLogoutMenuLink {
 
   /**
-   * @var \Drupal\hms\User\Manager
+   * @var \Drupal\harbourmaster\User\Manager
    */
-  protected $hmsUserManager;
+  protected $harbourmasterUserManager;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, AccountInterface $current_user, HmsUserManager $hmsUserManager) {
-    $this->hmsUserManager = $hmsUserManager;
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, AccountInterface $current_user, HmsUserManager $harbourmasterUserManager) {
+    $this->harbourmasterUserManager = $harbourmasterUserManager;
     parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override, $current_user);
   }
 
@@ -46,7 +46,7 @@ class LoginLogoutMenuLink extends DrupalLoginLogoutMenuLink {
       $plugin_definition,
       $container->get('menu_link.static.overrides'),
       $container->get('current_user'),
-      $container->get('hms.user_manager')
+      $container->get('harbourmaster.user_manager')
     );
   }
 
@@ -59,7 +59,7 @@ class LoginLogoutMenuLink extends DrupalLoginLogoutMenuLink {
       return 'user.logout';
     }
     else {
-      return 'hms.login_page';
+      return 'harbourmaster.login_page';
     }
   }
 

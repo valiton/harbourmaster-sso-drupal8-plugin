@@ -19,13 +19,13 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\harbourmaster\Plugin\Block;
 
 /**
  * Provides a 'Profile' block.
  *
  * @Block(
- *   id = "hms_profile_block",
+ *   id = "harbourmaster_profile_block",
  *   admin_label = @Translation("HMS Profile block"),
  * )
  */

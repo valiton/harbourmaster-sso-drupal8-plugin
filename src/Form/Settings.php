@@ -17,7 +17,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Form;
+namespace Drupal\harbourmaster\Form;
 
 
 use Drupal\Component\Utility\UrlHelper;
@@ -55,7 +55,7 @@ class Settings extends ConfigFormBase {
    *   conjunction with the trait's config() method.
    */
   protected function getEditableConfigNames() {
-    return ['hms.settings'];
+    return ['harbourmaster.settings'];
   }
 
   /**
@@ -65,41 +65,41 @@ class Settings extends ConfigFormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'hms.admin_config_page_form';
+    return 'harbourmaster.admin_config_page_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $hmsConfig = $this->config('hms.settings');
+    $harbourmasterConfig = $this->config('harbourmaster.settings');
 
-    $form['hms_endpoint'] = [
+    $form['harbourmaster_endpoint'] = [
       '#type' => 'details',
       '#title' => $this->t('HMS API Configuration'),
       '#open' => TRUE,
     ];
 
-    $form['hms_endpoint']['hms_api_url'] = [
+    $form['harbourmaster_endpoint']['harbourmaster_api_url'] = [
       '#type' => 'url',
       '#title' => $this->t('URL to Harbourmaster endpoint'),
-      '#default_value' => $hmsConfig->get('hms_api_url'),
+      '#default_value' => $harbourmasterConfig->get('harbourmaster_api_url'),
       '#required' => TRUE,
       '#description' => $this->t('This includes protocol and domain (optionally port and/or path prefix).'),
     ];
 
-    $form['hms_endpoint']['hms_api_tenant'] = [
+    $form['harbourmaster_endpoint']['harbourmaster_api_tenant'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Harbourmaster tenant to use'),
-      '#default_value' => $hmsConfig->get('hms_api_tenant'),
+      '#default_value' => $harbourmasterConfig->get('harbourmaster_api_tenant'),
       '#required' => TRUE,
       '#description' => $this->t('May only contain %allowed.', ['%allowed' => 'a-z A-Z 0-9 .-_.']),
     ];
 
-    $form['hms_endpoint']['hms_lookup_ttl'] = [
+    $form['harbourmaster_endpoint']['harbourmaster_lookup_ttl'] = [
       '#type' => 'number',
       '#title' => $this->t('HMS lookup cache TTL'),
-      '#default_value' => $hmsConfig->get('hms_lookup_ttl'),
+      '#default_value' => $harbourmasterConfig->get('harbourmaster_lookup_ttl'),
       '#required' => TRUE,
       '#description' => $this->t('Duration during which the HMS session lookup is cached.'),
     ];
@@ -113,7 +113,7 @@ class Settings extends ConfigFormBase {
     $form['usermanager_url']['user_manager_url'] = [
       '#type' => 'url',
       '#title' => $this->t('URL to Usermanager'),
-      '#default_value' => $hmsConfig->get('user_manager_url'),
+      '#default_value' => $harbourmasterConfig->get('user_manager_url'),
       '#required' => TRUE,
       '#description' => $this->t('This includes protocol and domain (optionally port and/or path prefix).'),
     ];
@@ -127,7 +127,7 @@ class Settings extends ConfigFormBase {
     $form['sso_cookie']['sso_cookie_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('SSO cookie name'),
-      '#default_value' => $hmsConfig->get('sso_cookie_name'),
+      '#default_value' => $harbourmasterConfig->get('sso_cookie_name'),
       '#required' => TRUE,
       '#description' => $this->t('Name of the cookie that contains the HMS token (usually "%default"). May only contain %allowed.', [
         '%default' => 'token',
@@ -138,7 +138,7 @@ class Settings extends ConfigFormBase {
     $form['sso_cookie']['sso_cookie_domain'] = [
       '#type' => 'textfield',
       '#title' => $this->t('SSO cookie domain'),
-      '#default_value' => $hmsConfig->get('sso_cookie_domain'),
+      '#default_value' => $harbourmasterConfig->get('sso_cookie_domain'),
       '#required' => TRUE,
       '#description' => $this->t('Name of the domain which the SSO cookie is set on.'),
     ];
@@ -156,14 +156,14 @@ class Settings extends ConfigFormBase {
       $form_state->setErrorByName('sso_cookie_name', $this->t('SSO cookie name %cookie_name contains invalid characters ', ['%cookie_name' => $value]));
     }
 
-    if (($value = $form_state->getValue('hms_api_tenant')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
-      $form_state->setErrorByName('hms_api_tenant', $this->t('API Tenant %tenant contains invalid characters ', ['%tenant' => $value]));
+    if (($value = $form_state->getValue('harbourmaster_api_tenant')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
+      $form_state->setErrorByName('harbourmaster_api_tenant', $this->t('API Tenant %tenant contains invalid characters ', ['%tenant' => $value]));
     }
 
     // UrlHelper::allowedProtocols seems to depend on some global state? Better use Regex instead of settings that...
-    if (($value = $form_state->getValue('hms_api_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
-      $form_state->setErrorByName('hms_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', [
-        '%endpoint' => $form_state->getValue('hms_api_url'),
+    if (($value = $form_state->getValue('harbourmaster_api_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
+      $form_state->setErrorByName('harbourmaster_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', [
+        '%endpoint' => $form_state->getValue('harbourmaster_api_url'),
         '@protocols' => join(', ', ['http', 'https'])
       ]));
     }
@@ -182,19 +182,19 @@ class Settings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $oldUserManagerUrl = $this->config('hms.settings')->get('user_manager_url');
+    $oldUserManagerUrl = $this->config('harbourmaster.settings')->get('user_manager_url');
 
     // FIXME libraryDiscovery->clearCachedDefinitions() does not work as expected
-    $this->config('hms.settings')
-      ->set('hms_api_url', rtrim($form_state->getValue('hms_api_url'), '/'))
-      ->set('hms_api_tenant', $form_state->getValue('hms_api_tenant'))
-      ->set('hms_lookup_ttl', $form_state->getValue('hms_lookup_ttl'))
+    $this->config('harbourmaster.settings')
+      ->set('harbourmaster_api_url', rtrim($form_state->getValue('harbourmaster_api_url'), '/'))
+      ->set('harbourmaster_api_tenant', $form_state->getValue('harbourmaster_api_tenant'))
+      ->set('harbourmaster_lookup_ttl', $form_state->getValue('harbourmaster_lookup_ttl'))
       ->set('sso_cookie_name', $form_state->getValue('sso_cookie_name'))
       ->set('sso_cookie_domain', $form_state->getValue('sso_cookie_domain'))
       ->set('user_manager_url', rtrim($form_state->getValue('user_manager_url'), '/'))
       ->save();
 
-    if ($this->config('hms.settings')
+    if ($this->config('harbourmaster.settings')
         ->get('user_manager_url') !== $oldUserManagerUrl
     ) {
       $this->libraryDiscovery->clearCachedDefinitions();

@@ -18,7 +18,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Routing;
+namespace Drupal\harbourmaster\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
@@ -36,15 +36,15 @@ class RouteSubscriber extends RouteSubscriberBase {
 
     // form for requesting pw reset
     if ($route = $collection->get('user.pass')) {
-      $route->setDefaults(['_form' => '\Drupal\hms\Form\UserPasswordForm']);
+      $route->setDefaults(['_form' => '\Drupal\harbourmaster\Form\UserPasswordForm']);
     }
     // user profile page
     if ($route = $collection->get('user.page')) {
-      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserController::userPage']);
+      $route->setDefaults(['_controller' => '\Drupal\harbourmaster\Controller\UserController::userPage']);
     }
     // logout
     if ($route = $collection->get('user.logout')) {
-      $route->setDefaults(['_controller' => '\Drupal\hms\Controller\UserController::logout']);
+      $route->setDefaults(['_controller' => '\Drupal\harbourmaster\Controller\UserController::logout']);
       $route->addOptions(['no_cache' => TRUE]);
     }
 
@@ -52,13 +52,13 @@ class RouteSubscriber extends RouteSubscriberBase {
     // These checks deny some standard functionality to HMS users
     // TODO could this be done in a better way? (redirects or similar) - where could the logic be attached to?
     if ($route = $collection->get('entity.user.canonical')) {
-      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+      $route->addRequirements([ '_harbourmaster_user_is_logged_in' => 'false' ]);
     }
     if ($route = $collection->get('entity.user.edit_form')) {
-      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+      $route->addRequirements([ '_harbourmaster_user_is_logged_in' => 'false' ]);
     }
     if ($route = $collection->get('entity.user.cancel_form')) {
-      $route->addRequirements([ '_hms_user_is_logged_in' => 'false' ]);
+      $route->addRequirements([ '_harbourmaster_user_is_logged_in' => 'false' ]);
     }
 
   }

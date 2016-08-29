@@ -19,14 +19,14 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\harbourmaster\Plugin\Block;
 
 
 /**
  * Provides a 'Status' block.
  *
  * @Block(
- *   id = "hms_status_block",
+ *   id = "harbourmaster_status_block",
  *   admin_label = @Translation("HMS Status block"),
  * )
  */
@@ -50,10 +50,10 @@ class Status extends HmsAwareAbstractBlock {
     ];
 
     if ($this->currentUser->isAuthenticated()) {
-      $userKey = $this->hmsUserManager->findHmsUserKeyForUid($this->currentUser->id());
+      $userKey = $this->harbourmasterUserManager->findHmsUserKeyForUid($this->currentUser->id());
       if ($userKey) {
         $render += [
-          '#hmsUserKey' => $userKey,
+          '#harbourmasterUserKey' => $userKey,
         ];
       }
     }

@@ -17,7 +17,7 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\PageCache;
+namespace Drupal\harbourmaster\PageCache;
 
 use Drupal\Core\Config\Config;
 use Drupal\Core\PageCache\RequestPolicyInterface;

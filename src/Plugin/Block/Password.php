@@ -19,14 +19,14 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Plugin\Block;
+namespace Drupal\harbourmaster\Plugin\Block;
 
 
 /**
  * Provides a 'Password' block.
  *
  * @Block(
- *   id = "hms_password_block",
+ *   id = "harbourmaster_password_block",
  *   admin_label = @Translation("HMS Password block"),
  * )
  */

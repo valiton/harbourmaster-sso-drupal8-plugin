@@ -1,4 +1,4 @@
-hms.settings:
+harbourmaster.settings:
   type: config_object
   label: Harbourmaster Configuration
   mapping:
@@ -8,18 +8,18 @@ hms.settings:
     sso_cookie_name:
       type: string
       label: SSO cookie name
-    hms_lookup_ttl:
+    harbourmaster_lookup_ttl:
       type: integer
       label: HMS lookup TTL
-    hms_api_url:
+    harbourmaster_api_url:
       type: uri
       label: HMS URL
-    hms_api_tenant:
+    harbourmaster_api_tenant:
       type: string
       label: HMS Tenant
     user_manager_url:
       type: uri
       label: User manager URL
-    hms_api_version:
+    harbourmaster_api_version:
       type: string
       label: API Version

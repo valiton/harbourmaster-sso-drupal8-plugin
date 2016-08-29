@@ -18,13 +18,13 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Drupal\hms\Access;
+namespace Drupal\harbourmaster\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\Routing\Route;
-use Drupal\hms\User\Manager as HmsUserManager;
+use Drupal\harbourmaster\User\Manager as HmsUserManager;
 
 /**
  * Determines access to routes based on login status of current user.
@@ -32,12 +32,12 @@ use Drupal\hms\User\Manager as HmsUserManager;
 class LoginStatusCheck implements AccessInterface {
 
   /**
-   * @var \Drupal\hms\User\Manager
+   * @var \Drupal\harbourmaster\User\Manager
    */
-  protected $hmsUserManager;
+  protected $harbourmasterUserManager;
 
-  public function __construct(HmsUserManager $hmsUserManager) {
-    $this->hmsUserManager = $hmsUserManager;
+  public function __construct(HmsUserManager $harbourmasterUserManager) {
+    $this->harbourmasterUserManager = $harbourmasterUserManager;
   }
 
   /**
@@ -52,8 +52,8 @@ class LoginStatusCheck implements AccessInterface {
    *   The access result.
    */
   public function access(AccountInterface $account, Route $route) {
-    $required_status = filter_var($route->getRequirement('_hms_user_is_logged_in'), FILTER_VALIDATE_BOOLEAN);
-    $actual_status = $account->isAuthenticated() && (NULL !== $this->hmsUserManager->findHmsUserKeyForUid($account->id()));
+    $required_status = filter_var($route->getRequirement('_harbourmaster_user_is_logged_in'), FILTER_VALIDATE_BOOLEAN);
+    $actual_status = $account->isAuthenticated() && (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($account->id()));
     // TODO maybe add own cache contexts?
     return AccessResult::allowedIf($required_status === $actual_status)->addCacheContexts(['user']);
   }

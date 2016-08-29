@@ -1,0 +1,6 @@
+name: Harbourmaster SSO Module
+description: This is the HMS module.
+package: Custom
+
+type: module
+core: 8.x
