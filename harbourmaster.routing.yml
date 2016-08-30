@@ -23,3 +23,7 @@ harbourmaster.login_page:
     _access: 'TRUE'
   options:
     no_cache: TRUE
+
+# Dynanmically create routes
+route_callbacks:
+  - 'harbourmaster.route_creator:getRoutes'

@@ -48,6 +48,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class CookieHelper implements EventSubscriberInterface {
 
   /**
+   * @var object
+   */
+  protected $harbourmasterSettings;
+
+  /**
+   * @var string
+   */
+  protected $domain;
+
+  /**
    * @var string
    */
   protected $ssoCookieName;
@@ -58,13 +68,30 @@ class CookieHelper implements EventSubscriberInterface {
   protected $ssoCookieDomain;
 
   /**
+   * @var object
+   */
+  protected $logger;
+
+  /**
    * @var bool
    */
   protected $clearTokenTriggered = FALSE;
 
-  public function __construct(Config $harbourmasterSettings) {
-    $this->ssoCookieName = $harbourmasterSettings->get('sso_cookie_name');
-    $this->ssoCookieDomain = $harbourmasterSettings->get('sso_cookie_domain');
+  public function __construct(Config $harbourmasterSettings, $request_stack, $logger) {
+    $this->harbourmasterSettings = $harbourmasterSettings;
+    $this->domain = $request_stack->getCurrentRequest()->getHost();
+    $this->logger = $logger;
+    $this->ssoCookieName = $this->harbourmasterSettings->get('sso_cookie_name');
+    $this->ssoCookieDomain = $this->getCookieDomain();
+  }
+
+  public function getDomain() {
+    return $this->domain;
+  }
+
+  public function getCookieDomain() {
+    return !empty($cookie_domain = $this->harbourmasterSettings->get('sso_cookie_domain'))
+      ? $cookie_domain : '.' . $this->domain;
   }
 
     /**
@@ -119,4 +146,16 @@ class CookieHelper implements EventSubscriberInterface {
     $this->clearTokenTriggered = TRUE;
   }
 
+  public function setCookie($content) {
+    $this->logger->debug("Set cookie " . $this->ssoCookieName . " with content $content on domain $this->ssoCookieDomain");
+    return setcookie(
+      $this->ssoCookieName,
+      $content,
+      !empty($seconds = $this->harbourmasterSettings->get('sso_cookie_lifetime'))
+        ? REQUEST_TIME + $seconds : 0,
+      '/',
+      "$this->ssoCookieDomain"
+    // Domain and path should be set automatically
+    );
+  }
 }

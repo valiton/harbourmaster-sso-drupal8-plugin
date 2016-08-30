@@ -1,7 +1,10 @@
-sso_cookie_domain: .thunder.dev
+sso_cookie_domain: ''
 sso_cookie_name: token
+sso_cookie_lifetime: 2592000 #30 days
 harbourmaster_lookup_ttl: 60
 harbourmaster_api_url: http://192.168.99.100:8080
 harbourmaster_api_tenant: thunder
 harbourmaster_api_version: v1 #read-only
 user_manager_url: http://usermanager.thunder.dev
+cross_domain_login_path: hms_cross_domain_login
+cross_domain_logout_path: hms_cross_domain_logout
