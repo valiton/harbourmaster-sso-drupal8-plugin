@@ -1,5 +1,5 @@
 harbourmaster.admin_config_page:
-  title: harbourmaster
+  title: Harbourmaster
   route_name: harbourmaster.admin_config_page
   parent: user.admin_index
   description: 'Configure Harbourmaster integration.'

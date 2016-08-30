@@ -85,7 +85,7 @@ services:
       - ['setLogger', [%harbourmaster.logger.service%]]
 
   harbourmaster.cookie_helper:
-    public: false
+    public: true
     class: Drupal\harbourmaster\Helper\CookieHelper
     arguments:
       - @harbourmaster.settings
