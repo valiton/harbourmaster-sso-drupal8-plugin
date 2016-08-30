@@ -43,7 +43,7 @@ class CrossDomainAuthController extends ControllerBase {
   protected $sessionToken;
   protected $logger;
 
-  const HARBOURMASTER_SESSION_DATA_PATH = '/msg/session/crossdomain';
+  const HARBOURMASTER_SESSION_DATA_PATH = '/session/crossdomain';
 
   public function __construct(Config $harbourmaster_settings, $cookie_helper) {
     $this->harbourmasterSettings = $harbourmaster_settings;
@@ -80,6 +80,7 @@ class CrossDomainAuthController extends ControllerBase {
   protected function getSessionData($token) {
     $session_data_url = $this->harbourmasterSettings->get('harbourmaster_api_url')
       . '/' . $this->harbourmasterSettings->get('harbourmaster_api_version')
+      . '/' . $this->harbourmasterSettings->get('harbourmaster_api_tenant')
       . self::HARBOURMASTER_SESSION_DATA_PATH
       . '?onetimelogintoken=' . $token
       . '&domain=' . $this->cookieHelper->getDomain();
