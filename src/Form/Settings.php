@@ -79,7 +79,7 @@ class Settings extends ConfigFormBase {
 
     $form['harbourmaster_endpoint'] = [
       '#type' => 'details',
-      '#title' => $this->t('HMS API Configuration'),
+      '#title' => $this->t('Harbourmaster API Configuration'),
       '#open' => TRUE,
     ];
 
@@ -101,10 +101,10 @@ class Settings extends ConfigFormBase {
 
     $form['harbourmaster_endpoint']['harbourmaster_lookup_ttl'] = [
       '#type' => 'number',
-      '#title' => $this->t('HMS lookup cache TTL'),
+      '#title' => $this->t('Harbourmaster lookup cache TTL'),
       '#default_value' => $harbourmasterConfig->get('harbourmaster_lookup_ttl'),
       '#required' => TRUE,
-      '#description' => $this->t('Duration during which the HMS session lookup is cached.'),
+      '#description' => $this->t('Duration during which the Harbourmaster session lookup is cached.'),
     ];
 
     $form['usermanager_url'] = [
@@ -123,7 +123,7 @@ class Settings extends ConfigFormBase {
 
     $form['sso_cookie'] = [
       '#type' => 'details',
-      '#title' => $this->t('HMS Token Configuration'),
+      '#title' => $this->t('Harbourmaster Token Configuration'),
       '#open' => TRUE,
     ];
 
@@ -132,7 +132,7 @@ class Settings extends ConfigFormBase {
       '#title' => $this->t('SSO cookie name'),
       '#default_value' => $harbourmasterConfig->get('sso_cookie_name'),
       '#required' => TRUE,
-      '#description' => $this->t('Name of the cookie that contains the HMS token (usually "%default"). May only contain %allowed.', [
+      '#description' => $this->t('Name of the cookie that contains the Harbourmaster token (usually "%default"). May only contain %allowed.', [
         '%default' => 'token',
         '%allowed' => 'a-z A-Z 0-9 .-_.'
       ]),
@@ -225,7 +225,7 @@ class Settings extends ConfigFormBase {
         }
         // Make sure paths are not taken.
         if ($url_object = $this->pathValidator->getUrlIfValidWithoutAccessCheck($value)) {
-          if ($url_object->getRouteName() != 'hms.cross_domain_login' && $url_object->getRouteName() != 'hms.cross_domain_logout') {
+          if ($url_object->getRouteName() != 'harbourmaster.cross_domain_login' && $url_object->getRouteName() != 'harbourmaster.cross_domain_logout') {
             $form_state->setErrorByName($field, $this->t('The relative path @path already exists.', ['@path' => $value]));
           }
         }
