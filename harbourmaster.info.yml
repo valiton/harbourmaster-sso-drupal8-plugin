@@ -1,6 +1,6 @@
-name: Harbourmaster SSO Module
-description: This is the HMS module.
-package: Custom
-
+name: Harbourmaster SSO
+description: Integrates Harbourmaster providing a single sign-on solution for Drupal.
+package: Harbourmaster
+configure: harbourmaster.admin_config_page
 type: module
 core: 8.x

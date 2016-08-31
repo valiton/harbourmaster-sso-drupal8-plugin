@@ -85,10 +85,12 @@ services:
       - ['setLogger', [%harbourmaster.logger.service%]]
 
   harbourmaster.cookie_helper:
-    public: false
+    public: true
     class: Drupal\harbourmaster\Helper\CookieHelper
     arguments:
       - @harbourmaster.settings
+      - @request_stack
+      - @harbourmaster.logger
     tags:
       - { name: 'event_subscriber' }
 
@@ -96,6 +98,11 @@ services:
     class: Drupal\harbourmaster\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+
+  harbourmaster.route_creator:
+    class: Drupal\harbourmaster\Routing\RouteCreator
+    arguments:
+      - @harbourmaster.settings
 
   access_check.harbourmaster.login_status:
     class: Drupal\harbourmaster\Access\LoginStatusCheck
