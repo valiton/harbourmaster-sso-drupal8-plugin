@@ -21,7 +21,7 @@
 
 namespace Drupal\harbourmaster\Controller;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\Exception\ClientException as HttpClientException;
@@ -33,26 +33,28 @@ class StatusPageController extends ControllerBase {
    * @var HttpClientInterface
    */
   protected $httpClient;
+  
+  protected $harbourmasterSettings;
 
-  public function __construct(ConfigFactoryInterface $config_factory, HttpClientInterface $httpClient) {
+  public function __construct(Config $harbourmaster_settings, HttpClientInterface $httpClient) {
     $this->httpClient = $httpClient;
-    $this->configFactory = $config_factory;
+    $this->harbourmasterSettings = $harbourmaster_settings;
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('http_client'),
-      $container->get('config.factory')
+      $container->get('harbourmaster.settings'),
+      $container->get('http_client')
     );
   }
 
   public function status() {
 
-    $harbourmasterConfig = $this->config('harbourmaster.settings');
-    $harbourmasterApiUrl = $harbourmasterConfig->get('harbourmaster_api_url');
-    $harbourmasterApiVersion = empty($harbourmasterConfig->get('harbourmaster_api_version')) ? 'v1' : $harbourmasterConfig->get('harbourmaster_api_version');
-    $harbourmasterApiTenant = $harbourmasterConfig->get('harbourmaster_api_tenant');
-    $userManagerUrl = $harbourmasterConfig->get('user_manager_url');
+    $harbourmasterApiUrl = $this->harbourmasterSettings->get('harbourmaster_api_url');
+
+    $harbourmasterApiVersion = empty($this->harbourmasterSettings->get('harbourmaster_api_version')) ? 'v1' : $this->harbourmasterSettings->get('harbourmaster_api_version');
+    $harbourmasterApiTenant = $this->harbourmasterSettings->get('harbourmaster_api_tenant');
+    $userManagerUrl = $this->harbourmasterSettings->get('user_manager_url');
 
     $messages = [];
 
