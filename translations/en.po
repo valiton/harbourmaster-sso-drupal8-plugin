@@ -12,791 +12,791 @@
 
 # English translation of Harbourmater SSO Widgets
 
-msgid "hms-widget.confirmation.title.confirmed"
+msgid "harbourmaster.widget.confirmation.title.confirmed"
 msgstr "Your email address has been successfully confirmed. Thank you!"
 
-msgid "hms-widget.confirmation.title.invalidToken"
+msgid "harbourmaster.widget.confirmation.title.invalidToken"
 msgstr "Unfortunately, this link is invalid."
 
-msgid "hms-widget.resetPassword.title.invalidToken"
+msgid "harbourmaster.widget.resetPassword.title.invalidToken"
 msgstr "Unauthorized Access! Please complete the registration again or sign in using your password."
 
-msgid "hms-widget.resetPassword.title.questions"
+msgid "harbourmaster.widget.resetPassword.title.questions"
 msgstr "Please answer the security question"
 
-msgid "hms-widget.resetPassword.title.success"
+msgid "harbourmaster.widget.resetPassword.title.success"
 msgstr "Please check your inbox"
 
-msgid "hms-widget.resetPassword.title.passwordreset"
+msgid "harbourmaster.widget.resetPassword.title.passwordreset"
 msgstr "Forgot your password?"
 
-msgid "hms-widget.resetPassword.label.new_password"
+msgid "harbourmaster.widget.resetPassword.label.new_password"
 msgstr "new password / Repeat new password"
 
-msgid "hms-widget.resetPassword.label.username"
+msgid "harbourmaster.widget.resetPassword.label.username"
 msgstr "Email address"
 
-msgid "hms-widget.resetPassword.placeholder.new_password"
+msgid "harbourmaster.widget.resetPassword.placeholder.new_password"
 msgstr "new password"
 
-msgid "hms-widget.resetPassword.placeholder.validation_password"
+msgid "harbourmaster.widget.resetPassword.placeholder.validation_password"
 msgstr "repeat new password"
 
-msgid "hms-widget.resetPassword.placeholder.username"
+msgid "harbourmaster.widget.resetPassword.placeholder.username"
 msgstr "Email address"
 
-msgid "hms-widget.resetPassword.description.success_message"
+msgid "harbourmaster.widget.resetPassword.description.success_message"
 msgstr "An email containing a link to create a new password has been sent to your inbox."
 
-msgid "hms-widget.resetPassword.description.set_password"
+msgid "harbourmaster.widget.resetPassword.description.set_password"
 msgstr "Please answer the security questions."
 
-msgid "hms-widget.resetPassword.button.passwordreset"
+msgid "harbourmaster.widget.resetPassword.button.passwordreset"
 msgstr "request new password"
 
-msgid "hms-widget.resetPassword.button.set_password"
+msgid "harbourmaster.widget.resetPassword.button.set_password"
 msgstr "save new password"
 
-msgid "hms-widget.resetPassword.error.username.required"
+msgid "harbourmaster.widget.resetPassword.error.username.required"
 msgstr "Required field"
 
-msgid "hms-widget.resetPassword.error.username.string"
+msgid "harbourmaster.widget.resetPassword.error.username.string"
 msgstr "Input error"
 
-msgid "hms-widget.resetPassword.error.username.error"
+msgid "harbourmaster.widget.resetPassword.error.username.error"
 msgstr "Unknown error"
 
-msgid "hms-widget.resetPassword.error.username.credentials"
+msgid "harbourmaster.widget.resetPassword.error.username.credentials"
 msgstr "Faulty login credentials"
 
-msgid "hms-widget.resetPassword.error.username.regex"
+msgid "harbourmaster.widget.resetPassword.error.username.regex"
 msgstr "Invalid structure"
 
-msgid "hms-widget.resetPassword.error.username.AccountHasNoEmailAddress"
+msgid "harbourmaster.widget.resetPassword.error.username.AccountHasNoEmailAddress"
 msgstr "no email address on this account"
 
-msgid "hms-widget.resetPassword.error.username.NoSuchUser"
+msgid "harbourmaster.widget.resetPassword.error.username.NoSuchUser"
 msgstr "unknown user"
 
-msgid "hms-widget.resetPassword.error.username.ConfirmationEmailSent"
+msgid "harbourmaster.widget.resetPassword.error.username.ConfirmationEmailSent"
 msgstr "Your account has not been activated yet. We have re-sent the confirmation link to your inbox. Please check your spam folder in case you haven't received the email."
 
-msgid "hms-widget.resetPassword.flash.success"
+msgid "harbourmaster.widget.resetPassword.flash.success"
 msgstr "The changes have been successfully saved."
 
-msgid "hms-widget.resetPassword.flash.error"
+msgid "harbourmaster.widget.resetPassword.flash.error"
 msgstr "Unfortunately, something went wrong!"
 
-msgid "hms-widget.resetPassword.flash.passwordreset.error"
+msgid "harbourmaster.widget.resetPassword.flash.passwordreset.error"
 msgstr "Unfortunately, something went wrong!"
 
-msgid "hms-widget.resetPassword.intro.text"
+msgid "harbourmaster.widget.resetPassword.intro.text"
 msgstr "Forgot your password? No problem: Simply follow these instructions in order to set a new password."
 
-msgid "hms-widget.profile.title.profile"
+msgid "harbourmaster.widget.profile.title.profile"
 msgstr "Your profile"
 
-msgid "hms-widget.profile.title.member"
+msgid "harbourmaster.widget.profile.title.member"
 msgstr "Username"
 
-msgid "hms-widget.profile.title.password"
+msgid "harbourmaster.widget.profile.title.password"
 msgstr "Password"
 
-msgid "hms-widget.profile.title.securityQuestions"
+msgid "harbourmaster.widget.profile.title.securityQuestions"
 msgstr "Security question"
 
-msgid "hms-widget.profile.title.memberAdvertisement"
+msgid "harbourmaster.widget.profile.title.memberAdvertisement"
 msgstr "Become a member now..."
 
-msgid "hms-widget.profile.label.day"
+msgid "harbourmaster.widget.profile.label.day"
 msgstr "Day"
 
-msgid "hms-widget.profile.label.month"
+msgid "harbourmaster.widget.profile.label.month"
 msgstr "Month"
 
-msgid "hms-widget.profile.label.year"
+msgid "harbourmaster.widget.profile.label.year"
 msgstr "Year"
 
-msgid "hms-widget.profile.label.address"
+msgid "harbourmaster.widget.profile.label.address"
 msgstr "Address / Phone"
 
-msgid "hms-widget.profile.label.oldPassword"
+msgid "harbourmaster.widget.profile.label.oldPassword"
 msgstr "old password *"
 
-msgid "hms-widget.profile.label.password"
+msgid "harbourmaster.widget.profile.label.password"
 msgstr "new password / repeat password *"
 
-msgid "hms-widget.profile.label.protectProfile"
+msgid "harbourmaster.widget.profile.label.protectProfile"
 msgstr "My profile is visible only for registered members"
 
-msgid "hms-widget.profile.label.avatar"
+msgid "harbourmaster.widget.profile.label.avatar"
 msgstr "Profile picture / Username"
 
-msgid "hms-widget.profile.label.avatarEdit"
+msgid "harbourmaster.widget.profile.label.avatarEdit"
 msgstr "Profile picture"
 
-msgid "hms-widget.profile.label.displayName"
+msgid "harbourmaster.widget.profile.label.displayName"
 msgstr "Username *"
 
-msgid "hms-widget.profile.label.name"
+msgid "harbourmaster.widget.profile.label.name"
 msgstr "Salutation / First name / Last name / Birthday"
 
-msgid "hms-widget.profile.label.email"
+msgid "harbourmaster.widget.profile.label.email"
 msgstr "Email address"
 
-msgid "hms-widget.profile.label.securityQuestion"
+msgid "harbourmaster.widget.profile.label.securityQuestion"
 msgstr "Security question *"
 
-msgid "hms-widget.profile.label.answer"
+msgid "harbourmaster.widget.profile.label.answer"
 msgstr "Answer *"
 
-msgid "hms-widget.profile.label.community"
+msgid "harbourmaster.widget.profile.label.community"
 msgstr "Photo Community"
 
-msgid "hms-widget.profile.instruction.avatar"
+msgid "harbourmaster.widget.profile.instruction.avatar"
 msgstr "Upload a profile picture. The picture should ideally be square and have either the PNG, JPEG or GIF format. The size will be adjusted to 75px."
 
-msgid "hms-widget.profile.instruction.displayName"
+msgid "harbourmaster.widget.profile.instruction.displayName"
 msgstr "Instead of your real name, your display name will be shown in the comments."
 
-msgid "hms-widget.profile.placeholder.oldPassword"
+msgid "harbourmaster.widget.profile.placeholder.oldPassword"
 msgstr "old password"
 
-msgid "hms-widget.profile.placeholder.password"
+msgid "harbourmaster.widget.profile.placeholder.password"
 msgstr "new password"
 
-msgid "hms-widget.profile.placeholder.verifyPassword"
+msgid "harbourmaster.widget.profile.placeholder.verifyPassword"
 msgstr "repeat new password"
 
-msgid "hms-widget.profile.placeholder.displayName"
+msgid "harbourmaster.widget.profile.placeholder.displayName"
 msgstr "Username"
 
-msgid "hms-widget.profile.placeholder.firstname"
+msgid "harbourmaster.widget.profile.placeholder.firstname"
 msgstr "First name"
 
-msgid "hms-widget.profile.placeholder.lastname"
+msgid "harbourmaster.widget.profile.placeholder.lastname"
 msgstr "Last name"
 
-msgid "hms-widget.profile.placeholder.email_address"
+msgid "harbourmaster.widget.profile.placeholder.email_address"
 msgstr "Email address"
 
-msgid "hms-widget.profile.placeholder.answer"
+msgid "harbourmaster.widget.profile.placeholder.answer"
 msgstr "Answer"
 
-msgid "hms-widget.profile.placeholder.phone"
+msgid "harbourmaster.widget.profile.placeholder.phone"
 msgstr "Phone number"
 
-msgid "hms-widget.profile.placeholder.address.company"
+msgid "harbourmaster.widget.profile.placeholder.address.company"
 msgstr "Company"
 
-msgid "hms-widget.profile.placeholder.address.street"
+msgid "harbourmaster.widget.profile.placeholder.address.street"
 msgstr "Street"
 
-msgid "hms-widget.profile.placeholder.address.streetNumber"
+msgid "harbourmaster.widget.profile.placeholder.address.streetNumber"
 msgstr "Street number"
 
-msgid "hms-widget.profile.placeholder.address.postcode"
+msgid "harbourmaster.widget.profile.placeholder.address.postcode"
 msgstr "Postal code"
 
-msgid "hms-widget.profile.placeholder.address.city"
+msgid "harbourmaster.widget.profile.placeholder.address.city"
 msgstr "City"
 
-msgid "hms-widget.profile.placeholder.address.country"
+msgid "harbourmaster.widget.profile.placeholder.address.country"
 msgstr "Country"
 
-msgid "hms-widget.profile.select.salutation.mr"
+msgid "harbourmaster.widget.profile.select.salutation.mr"
 msgstr "Mr"
 
-msgid "hms-widget.profile.select.salutation.mrs"
+msgid "harbourmaster.widget.profile.select.salutation.mrs"
 msgstr "Mrs"
 
-msgid "hms-widget.profile.select.salutation.none"
+msgid "harbourmaster.widget.profile.select.salutation.none"
 msgstr ""
 
-msgid "hms-widget.profile.checkbox.subscription.advertising"
+msgid "harbourmaster.widget.profile.checkbox.subscription.advertising"
 msgstr "Yes, I agree that MSG may email me about news and offers from MSG Germany. I can, at any time, revoke this agreement and object to the usage or processing of my data for the use of advertising, market research or opinion survey at MSG."
 
-msgid "hms-widget.profile.checkbox.subscription.newsletter"
+msgid "harbourmaster.widget.profile.checkbox.subscription.newsletter"
 msgstr "Yes, I would like to subscribe to the free MSG newsletter Daily Bits: News about technology, culture, science, business and design, every morning."
 
-msgid "hms-widget.profile.tab.profile"
+msgid "harbourmaster.widget.profile.tab.profile"
 msgstr "Profile"
 
-msgid "hms-widget.profile.tab.entitlements"
+msgid "harbourmaster.widget.profile.tab.entitlements"
 msgstr "Member"
 
-msgid "hms-widget.profile.button.upload"
+msgid "harbourmaster.widget.profile.button.upload"
 msgstr "Upload profile picture"
 
-msgid "hms-widget.profile.button.change_password"
+msgid "harbourmaster.widget.profile.button.change_password"
 msgstr "Change password"
 
-msgid "hms-widget.profile.button.security_question"
+msgid "harbourmaster.widget.profile.button.security_question"
 msgstr "Change security question"
 
-msgid "hms-widget.profile.button.memberAdvertisement"
+msgid "harbourmaster.widget.profile.button.memberAdvertisement"
 msgstr "Become a member now!"
 
-msgid "hms-widget.profile.button.post_entitlement"
+msgid "harbourmaster.widget.profile.button.post_entitlement"
 msgstr "Aready a member? Enter your customer number here."
 
-msgid "hms-widget.profile.button.entitelement_post_entitlement"
+msgid "harbourmaster.widget.profile.button.entitelement_post_entitlement"
 msgstr "Enter additional customer numbers"
 
-msgid "hms-widget.profile.error.displayName.string"
+msgid "harbourmaster.widget.profile.error.displayName.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.displayName.maxLength"
+msgid "harbourmaster.widget.profile.error.displayName.maxLength"
 msgstr "enter a maximum of 18 characters"
 
-msgid "hms-widget.profile.error.displayName.minLength"
+msgid "harbourmaster.widget.profile.error.displayName.minLength"
 msgstr "enter a minimum of 3 characters"
 
-msgid "hms-widget.profile.error.displayName.DisplayNameAlreadyExists"
+msgid "harbourmaster.widget.profile.error.displayName.DisplayNameAlreadyExists"
 msgstr "The username is already in use"
 
-msgid "hms-widget.profile.error.displayName.DisplayNameIsRequired"
+msgid "harbourmaster.widget.profile.error.displayName.DisplayNameIsRequired"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.displayName.regex"
+msgid "harbourmaster.widget.profile.error.displayName.regex"
 msgstr "Your username may only contain the following characters: Upper-case letters, lower-case letters, numbers, underscores, dashes and spaces"
 
-msgid "hms-widget.profile.error.displayName.required"
+msgid "harbourmaster.widget.profile.error.displayName.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.email.string"
+msgid "harbourmaster.widget.profile.error.email.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.email.regex"
+msgid "harbourmaster.widget.profile.error.email.regex"
 msgstr "Invalid email address"
 
-msgid "hms-widget.profile.error.email.fakeemail"
+msgid "harbourmaster.widget.profile.error.email.fakeemail"
 msgstr "bitte eine andere E-Mail-Adresse verwenden!"
 
-msgid "hms-widget.profile.error.email.required"
+msgid "harbourmaster.widget.profile.error.email.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.email.LoginAlreadyExists"
+msgid "harbourmaster.widget.profile.error.email.LoginAlreadyExists"
 msgstr "Dieser Nutzername ist bereits registriert"
 
-msgid "hms-widget.profile.error.email.EmailAlreadyExists"
+msgid "harbourmaster.widget.profile.error.email.EmailAlreadyExists"
 msgstr "Diese E-Mail-Adresse ist bereits registriert"
 
-msgid "hms-widget.profile.error.email.ArgLoginIsRequired"
+msgid "harbourmaster.widget.profile.error.email.ArgLoginIsRequired"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.email.LoginCannotBeEmpty"
+msgid "harbourmaster.widget.profile.error.email.LoginCannotBeEmpty"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.oldPassword.string"
+msgid "harbourmaster.widget.profile.error.oldPassword.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.oldPassword.required"
+msgid "harbourmaster.widget.profile.error.oldPassword.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.oldPassword.IncorrectOldPassword"
+msgid "harbourmaster.widget.profile.error.oldPassword.IncorrectOldPassword"
 msgstr "Invalid old password"
 
-msgid "hms-widget.profile.error.password.string"
+msgid "harbourmaster.widget.profile.error.password.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.password.minLength"
+msgid "harbourmaster.widget.profile.error.password.minLength"
 msgstr "enter at least 8 characters"
 
-msgid "hms-widget.profile.error.password.regex"
+msgid "harbourmaster.widget.profile.error.password.regex"
 msgstr "Invalid password: please use numbers as well as upper- and lower-case letters."
 
-msgid "hms-widget.profile.error.password.required"
+msgid "harbourmaster.widget.profile.error.password.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.password.ArgPasswordIsInvalid"
+msgid "harbourmaster.widget.profile.error.password.ArgPasswordIsInvalid"
 msgstr "invalid password"
 
-msgid "hms-widget.profile.error.password.NoNumbers"
+msgid "harbourmaster.widget.profile.error.password.NoNumbers"
 msgstr "The password has to contain numbers"
 
-msgid "hms-widget.profile.error.password.NoLowerCaseLetters"
+msgid "harbourmaster.widget.profile.error.password.NoLowerCaseLetters"
 msgstr "The password has to contain lower-case letters"
 
-msgid "hms-widget.profile.error.password.NoUpperCaseLetters"
+msgid "harbourmaster.widget.profile.error.password.NoUpperCaseLetters"
 msgstr "The password has to contain upper-case letters"
 
-msgid "hms-widget.profile.error.password.NotMinEigth"
+msgid "harbourmaster.widget.profile.error.password.NotMinEigth"
 msgstr "The password must be at least 8 characters long"
 
-msgid "hms-widget.profile.error.verifyPassword.string"
+msgid "harbourmaster.widget.profile.error.verifyPassword.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.verifyPassword.passwordEqual"
+msgid "harbourmaster.widget.profile.error.verifyPassword.passwordEqual"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.profile.error.verifyPassword.required"
+msgid "harbourmaster.widget.profile.error.verifyPassword.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.verifyPassword.PasswordsDoNotMatch"
+msgid "harbourmaster.widget.profile.error.verifyPassword.PasswordsDoNotMatch"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.profile.error.salutation.string"
+msgid "harbourmaster.widget.profile.error.salutation.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.salutation.in"
+msgid "harbourmaster.widget.profile.error.salutation.in"
 msgstr "Please choose"
 
-msgid "hms-widget.profile.error.salutation.required"
+msgid "harbourmaster.widget.profile.error.salutation.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.firstname.string"
+msgid "harbourmaster.widget.profile.error.firstname.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.firstname.required"
+msgid "harbourmaster.widget.profile.error.firstname.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.lastname.string"
+msgid "harbourmaster.widget.profile.error.lastname.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.lastname.required"
+msgid "harbourmaster.widget.profile.error.lastname.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.error.securityQuestions.string"
+msgid "harbourmaster.widget.profile.error.securityQuestions.string"
 msgstr "Input error"
 
-msgid "hms-widget.profile.error.securityQuestions.required"
+msgid "harbourmaster.widget.profile.error.securityQuestions.required"
 msgstr "Required field"
 
-msgid "hms-widget.profile.info.password"
+msgid "harbourmaster.widget.profile.info.password"
 msgstr "The password must be at least 8 characters long and contain numbers, upper- and lower-case letters."
 
-msgid "hms-widget.profile.flash.success"
+msgid "harbourmaster.widget.profile.flash.success"
 msgstr "Changes successully saved"
 
-msgid "hms-widget.profile.flash.error"
+msgid "harbourmaster.widget.profile.flash.error"
 msgstr "Unfortunately, an error has occured!"
 
-msgid "hms-widget.signup.title.signup"
+msgid "harbourmaster.widget.signup.title.signup"
 msgstr "Become a member!"
 
-msgid "hms-widget.signup.title.error"
+msgid "harbourmaster.widget.signup.title.error"
 msgstr "Unfortunately, an error has occured."
 
-msgid "hms-widget.signup.title.success"
+msgid "harbourmaster.widget.signup.title.success"
 msgstr "Welcome!"
 
-msgid "hms-widget.signup.label.displayName"
+msgid "harbourmaster.widget.signup.label.displayName"
 msgstr "Username *"
 
-msgid "hms-widget.signup.label.email"
+msgid "harbourmaster.widget.signup.label.email"
 msgstr "Email address *"
 
-msgid "hms-widget.signup.label.password"
+msgid "harbourmaster.widget.signup.label.password"
 msgstr "Password / Repeat password *"
 
-msgid "hms-widget.signup.label.name"
+msgid "harbourmaster.widget.signup.label.name"
 msgstr "Salutation / First name / Last name *"
 
-msgid "hms-widget.signup.label.error"
+msgid "harbourmaster.widget.signup.label.error"
 msgstr "Unfortunately, this didn't work."
 
-msgid "hms-widget.signup.label.firstname"
+msgid "harbourmaster.widget.signup.label.firstname"
 msgstr "First name *"
 
-msgid "hms-widget.signup.label.lastname"
+msgid "harbourmaster.widget.signup.label.lastname"
 msgstr "Last name *"
 
-msgid "hms-widget.signup.placeholder.displayName"
+msgid "harbourmaster.widget.signup.placeholder.displayName"
 msgstr "Username *"
 
-msgid "hms-widget.signup.placeholder.email"
+msgid "harbourmaster.widget.signup.placeholder.email"
 msgstr "Email address *"
 
-msgid "hms-widget.signup.placeholder.password"
+msgid "harbourmaster.widget.signup.placeholder.password"
 msgstr "New password *"
 
-msgid "hms-widget.signup.placeholder.verifyPassword"
+msgid "harbourmaster.widget.signup.placeholder.verifyPassword"
 msgstr "Repeast new password *"
 
-msgid "hms-widget.signup.placeholder.firstname"
+msgid "harbourmaster.widget.signup.placeholder.firstname"
 msgstr "First name *"
 
-msgid "hms-widget.signup.placeholder.lastname"
+msgid "harbourmaster.widget.signup.placeholder.lastname"
 msgstr "Last name *"
 
-msgid "hms-widget.signup.select.salutation.none"
+msgid "harbourmaster.widget.signup.select.salutation.none"
 msgstr "please select"
 
-msgid "hms-widget.signup.select.salutation.mr"
+msgid "harbourmaster.widget.signup.select.salutation.mr"
 msgstr "Mr"
 
-msgid "hms-widget.signup.select.salutation.mrs"
+msgid "harbourmaster.widget.signup.select.salutation.mrs"
 msgstr "Mrs"
 
-msgid "hms-widget.signup.checkbox.terms_and_policy"
+msgid "harbourmaster.widget.signup.checkbox.terms_and_policy"
 msgstr "I agree with the terms of use *"
 
-msgid "hms-widget.signup.checkbox.subscription.advertising"
+msgid "harbourmaster.widget.signup.checkbox.subscription.advertising"
 msgstr "Yes, I agree that MSG may email me about news and offers from MSG Germany. I can, at any time, revoke this agreement and object to the usage or processing of my data for the use of advertising, market research or opinion survey at MSG."
 
-msgid "hms-widget.signup.checkbox.subscription.newsletter"
+msgid "harbourmaster.widget.signup.checkbox.subscription.newsletter"
 msgstr "Yes, I would like to subscribe to the free MSG newsletter Daily Bits: News about technology, culture, science, business and design, every morning."
 
-msgid "hms-widget.signup.button.signup"
+msgid "harbourmaster.widget.signup.button.signup"
 msgstr "register for free"
 
-msgid "hms-widget.signup.button.signin"
+msgid "harbourmaster.widget.signup.button.signin"
 msgstr "sign in"
 
-msgid "hms-widget.signup.error.displayName.string"
+msgid "harbourmaster.widget.signup.error.displayName.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.displayName.maxLength"
+msgid "harbourmaster.widget.signup.error.displayName.maxLength"
 msgstr "enter a maximum of 18 characters"
 
-msgid "hms-widget.signup.error.displayName.minLength"
+msgid "harbourmaster.widget.signup.error.displayName.minLength"
 msgstr "enter a minimum of 3 characters"
 
-msgid "hms-widget.signup.error.displayName.required"
+msgid "harbourmaster.widget.signup.error.displayName.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.displayName.LoginAlreadyExists"
+msgid "harbourmaster.widget.signup.error.displayName.LoginAlreadyExists"
 msgstr "The requested username is already in use"
 
-msgid "hms-widget.signup.error.displayName.DisplayNameAlreadyExists"
+msgid "harbourmaster.widget.signup.error.displayName.DisplayNameAlreadyExists"
 msgstr "The requested username is already in use"
 
-msgid "hms-widget.signup.error.displayName.DisplayNameIsRequired"
+msgid "harbourmaster.widget.signup.error.displayName.DisplayNameIsRequired"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.displayName.regex"
+msgid "harbourmaster.widget.signup.error.displayName.regex"
 msgstr "Your username may only contain the following characters: Upper-case letters, lower-case letters, numbers, underscores, dashes and spaces"
 
-msgid "hms-widget.signup.error.email.string"
+msgid "harbourmaster.widget.signup.error.email.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.email.regex"
+msgid "harbourmaster.widget.signup.error.email.regex"
 msgstr "invalid email address"
 
-msgid "hms-widget.signup.error.email.fakeemail"
+msgid "harbourmaster.widget.signup.error.email.fakeemail"
 msgstr "please use a different email address!"
 
-msgid "hms-widget.signup.error.email.required"
+msgid "harbourmaster.widget.signup.error.email.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.email.LoginAlreadyExists"
+msgid "harbourmaster.widget.signup.error.email.LoginAlreadyExists"
 msgstr "This username is already in use"
 
-msgid "hms-widget.signup.error.email.EmailAlreadyExists"
+msgid "harbourmaster.widget.signup.error.email.EmailAlreadyExists"
 msgstr "This email address is already in use"
 
-msgid "hms-widget.signup.error.email.ArgLoginIsRequired"
+msgid "harbourmaster.widget.signup.error.email.ArgLoginIsRequired"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.email.LoginCannotBeEmpty"
+msgid "harbourmaster.widget.signup.error.email.LoginCannotBeEmpty"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.password.string"
+msgid "harbourmaster.widget.signup.error.password.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.password.minLength"
+msgid "harbourmaster.widget.signup.error.password.minLength"
 msgstr "enter at least 8 characters"
 
-msgid "hms-widget.signup.error.password.regex"
+msgid "harbourmaster.widget.signup.error.password.regex"
 msgstr "Invalid password: please use numbers as well as upper- and lower-case letters"
 
-msgid "hms-widget.signup.error.password.required"
+msgid "harbourmaster.widget.signup.error.password.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.password.ArgPasswordIsInvalid"
+msgid "harbourmaster.widget.signup.error.password.ArgPasswordIsInvalid"
 msgstr "invalid password"
 
-msgid "hms-widget.signup.error.password.NoNumbers"
+msgid "harbourmaster.widget.signup.error.password.NoNumbers"
 msgstr "The password has to contain numbers"
 
-msgid "hms-widget.signup.error.password.NoLowerCaseLetters"
+msgid "harbourmaster.widget.signup.error.password.NoLowerCaseLetters"
 msgstr "The password has to contain lower-case letters"
 
-msgid "hms-widget.signup.error.password.NoUpperCaseLetters"
+msgid "harbourmaster.widget.signup.error.password.NoUpperCaseLetters"
 msgstr "The password has to contain upper-case letters"
 
-msgid "hms-widget.signup.error.password.NotMinEigth"
+msgid "harbourmaster.widget.signup.error.password.NotMinEigth"
 msgstr "The password must be at least 8 characters long"
 
-msgid "hms-widget.signup.error.verifyPassword.string"
+msgid "harbourmaster.widget.signup.error.verifyPassword.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.verifyPassword.passwordEqual"
+msgid "harbourmaster.widget.signup.error.verifyPassword.passwordEqual"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.signup.error.verifyPassword.required"
+msgid "harbourmaster.widget.signup.error.verifyPassword.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.verifyPassword.PasswordsDoNotMatch"
+msgid "harbourmaster.widget.signup.error.verifyPassword.PasswordsDoNotMatch"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.signup.error.salutation.string"
+msgid "harbourmaster.widget.signup.error.salutation.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.salutation.in"
+msgid "harbourmaster.widget.signup.error.salutation.in"
 msgstr "please choose"
 
-msgid "hms-widget.signup.error.salutation.required"
+msgid "harbourmaster.widget.signup.error.salutation.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.firstname.string"
+msgid "harbourmaster.widget.signup.error.firstname.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.firstname.required"
+msgid "harbourmaster.widget.signup.error.firstname.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.lastname.string"
+msgid "harbourmaster.widget.signup.error.lastname.string"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.lastname.required"
+msgid "harbourmaster.widget.signup.error.lastname.required"
 msgstr "Required field"
 
-msgid "hms-widget.signup.error.terms.boolean"
+msgid "harbourmaster.widget.signup.error.terms.boolean"
 msgstr "Input error"
 
-msgid "hms-widget.signup.error.terms.truthy"
+msgid "harbourmaster.widget.signup.error.terms.truthy"
 msgstr "Required field"
 
-msgid "hms-widget.signup.intro.teaser"
+msgid "harbourmaster.widget.signup.intro.teaser"
 msgstr "it's simple"
 
-msgid "hms-widget.signup.intro.text"
+msgid "harbourmaster.widget.signup.intro.text"
 msgstr "Your own individual profile in only 2 minutes"
 
-msgid "hms-widget.signup.info.password"
+msgid "harbourmaster.widget.signup.info.password"
 msgstr "The password must be at least 8 characters long and contain numbers, upper- and lower-case letters."
 
-msgid "hms-widget.signup.flash.error"
+msgid "harbourmaster.widget.signup.flash.error"
 msgstr "Unfortunately, an error has occured."
 
-msgid "hms-widget.signup.flash.success"
+msgid "harbourmaster.widget.signup.flash.success"
 msgstr "Thank you for registering, please check your inbox and confirm your email address"
 
-msgid "hms-widget.signin.title.signin"
+msgid "harbourmaster.widget.signin.title.signin"
 msgstr "sign in"
 
-msgid "hms-widget.signin.title.success"
+msgid "harbourmaster.widget.signin.title.success"
 msgstr "Login successful!"
 
-msgid "hms-widget.signin.title.passwordreset"
+msgid "harbourmaster.widget.signin.title.passwordreset"
 msgstr "Forgot your password?"
 
-msgid "hms-widget.signin.title.passwordresetinit"
+msgid "harbourmaster.widget.signin.title.passwordresetinit"
 msgstr "An email to reset your password has been sent."
 
-msgid "hms-widget.signin.title.unconfirmed"
+msgid "harbourmaster.widget.signin.title.unconfirmed"
 msgstr "Your email address hasn't been confirmed yet"
 
-msgid "hms-widget.signin.label.username"
+msgid "harbourmaster.widget.signin.label.username"
 msgstr "Username / Email address"
 
-msgid "hms-widget.signin.label.password"
+msgid "harbourmaster.widget.signin.label.password"
 msgstr "Password"
 
-msgid "hms-widget.signin.placeholder.username"
+msgid "harbourmaster.widget.signin.placeholder.username"
 msgstr "Username / Email address"
 
-msgid "hms-widget.signin.placeholder.password"
+msgid "harbourmaster.widget.signin.placeholder.password"
 msgstr "Password"
 
-msgid "hms-widget.signin.button.signin"
+msgid "harbourmaster.widget.signin.button.signin"
 msgstr "Sign in"
 
-msgid "hms-widget.signin.button.signup"
+msgid "harbourmaster.widget.signin.button.signup"
 msgstr "Become a member!"
 
-msgid "hms-widget.signin.button.passwordreset"
+msgid "harbourmaster.widget.signin.button.passwordreset"
 msgstr "Request new password"
 
-msgid "hms-widget.signin.button.unconfirmed"
+msgid "harbourmaster.widget.signin.button.unconfirmed"
 msgstr "Re-send email"
 
-msgid "hms-widget.signin.error.username.required"
+msgid "harbourmaster.widget.signin.error.username.required"
 msgstr "Required field"
 
-msgid "hms-widget.signin.error.username.string"
+msgid "harbourmaster.widget.signin.error.username.string"
 msgstr "Input error"
 
-msgid "hms-widget.signin.error.username.error"
+msgid "harbourmaster.widget.signin.error.username.error"
 msgstr "unknown error"
 
-msgid "hms-widget.signin.error.username.credentials"
+msgid "harbourmaster.widget.signin.error.username.credentials"
 msgstr "Faulty login credentials"
 
-msgid "hms-widget.signin.error.username.regex"
+msgid "harbourmaster.widget.signin.error.username.regex"
 msgstr "invalid structure"
 
-msgid "hms-widget.signin.error.username.AccountHasNoEmailAddress"
+msgid "harbourmaster.widget.signin.error.username.AccountHasNoEmailAddress"
 msgstr "no email address on this account"
 
-msgid "hms-widget.signin.error.username.NoSuchUser"
+msgid "harbourmaster.widget.signin.error.username.NoSuchUser"
 msgstr "unknown user"
 
-msgid "hms-widget.signin.error.username.UserNotConfirmed"
+msgid "harbourmaster.widget.signin.error.username.UserNotConfirmed"
 msgstr "Your account hasn't been activated yet"
 
-msgid "hms-widget.signin.error.password.required"
+msgid "harbourmaster.widget.signin.error.password.required"
 msgstr "Required field"
 
-msgid "hms-widget.signin.error.password.error"
+msgid "harbourmaster.widget.signin.error.password.error"
 msgstr "unknown error"
 
-msgid "hms-widget.signin.error.password.credentials"
+msgid "harbourmaster.widget.signin.error.password.credentials"
 msgstr "Faulty login credentials"
 
-msgid "hms-widget.signin.error.requesttoken.LoginIsRequired"
+msgid "harbourmaster.widget.signin.error.requesttoken.LoginIsRequired"
 msgstr "Required field"
 
-msgid "hms-widget.signin.error.requesttoken.AccountHasNoEmailAddress"
+msgid "harbourmaster.widget.signin.error.requesttoken.AccountHasNoEmailAddress"
 msgstr "falsche E-Mail-Adresse"
 
-msgid "hms-widget.signin.error.requesttoken.NoSuchUser"
+msgid "harbourmaster.widget.signin.error.requesttoken.NoSuchUser"
 msgstr "falsche E-Mail-Adresse"
 
-msgid "hms-widget.signin.message.unconfirmed"
+msgid "harbourmaster.widget.signin.message.unconfirmed"
 msgstr "Your account has not been activated yet. We have re-sent the confirmation link to your inbox. Please check your spam folder in case you haven't received the email."
 
-msgid "hms-widget.signin.message.unconfirmedresend"
+msgid "harbourmaster.widget.signin.message.unconfirmedresend"
 msgstr "We have re-sent the confirmation link to your inbox."
 
-msgid "hms-widget.signin.message.passwordreset.email_sent"
+msgid "harbourmaster.widget.signin.message.passwordreset.email_sent"
 msgstr "The email for resetting your password has been sent."
 
-msgid "hms-widget.signin.link.passwordreset"
+msgid "harbourmaster.widget.signin.link.passwordreset"
 msgstr "Do you need help with the registration?"
 
-msgid "hms-widget.signin.link.activate"
+msgid "harbourmaster.widget.signin.link.activate"
 msgstr "Activate user profile"
 
-msgid "hms-widget.signin.tooltip.twitter"
+msgid "harbourmaster.widget.signin.tooltip.twitter"
 msgstr "TWITTER"
 
-msgid "hms-widget.signin.tooltip.facebook"
+msgid "harbourmaster.widget.signin.tooltip.facebook"
 msgstr "FACEBOOK"
 
-msgid "hms-widget.signin.tooltip.google"
+msgid "harbourmaster.widget.signin.tooltip.google"
 msgstr "GOOGLE"
 
-msgid "hms-widget.signin.tooltip.linkedin"
+msgid "harbourmaster.widget.signin.tooltip.linkedin"
 msgstr "LINKEDIN"
 
-msgid "hms-widget.signin.tooltip.github"
+msgid "harbourmaster.widget.signin.tooltip.github"
 msgstr "GITHUB"
 
-msgid "hms-widget.signin.flash.passwordreset.error"
+msgid "harbourmaster.widget.signin.flash.passwordreset.error"
 msgstr "Unfortunately, an error has occured."
 
-msgid "hms-widget.signin.flash.error"
+msgid "harbourmaster.widget.signin.flash.error"
 msgstr "Unfortunately, an error has occured."
 
-msgid "hms-widget.signin.alternate_login_methods"
+msgid "harbourmaster.widget.signin.alternate_login_methods"
 msgstr "You can sign in using the following:"
 
-msgid "hms-widget.password.title.invalidToken"
+msgid "harbourmaster.widget.password.title.invalidToken"
 msgstr "Unfortunately, this link is invalid"
 
-msgid "hms-widget.password.title.reset"
+msgid "harbourmaster.widget.password.title.reset"
 msgstr "Please input a new password."
 
-msgid "hms-widget.password.title.securityQuestions"
+msgid "harbourmaster.widget.password.title.securityQuestions"
 msgstr "Pleast answer the security question"
 
-msgid "hms-widget.password.title.success"
+msgid "harbourmaster.widget.password.title.success"
 msgstr "Your password has been changed successully."
 
-msgid "hms-widget.password.label.password"
+msgid "harbourmaster.widget.password.label.password"
 msgstr "New password / Repeat new password"
 
-msgid "hms-widget.password.placeholder.answer"
+msgid "harbourmaster.widget.password.placeholder.answer"
 msgstr "Security answer"
 
-msgid "hms-widget.password.placeholder.password"
+msgid "harbourmaster.widget.password.placeholder.password"
 msgstr "new password"
 
-msgid "hms-widget.password.placeholder.verifyPassword"
+msgid "harbourmaster.widget.password.placeholder.verifyPassword"
 msgstr "repeat new password"
 
-msgid "hms-widget.password.button.changePassword"
+msgid "harbourmaster.widget.password.button.changePassword"
 msgstr "set a new password"
 
-msgid "hms-widget.password.error.password.string"
+msgid "harbourmaster.widget.password.error.password.string"
 msgstr "Input error"
 
-msgid "hms-widget.password.error.password.minLength"
+msgid "harbourmaster.widget.password.error.password.minLength"
 msgstr "enter at least 8 characters"
 
-msgid "hms-widget.password.error.password.regex"
+msgid "harbourmaster.widget.password.error.password.regex"
 msgstr "Invalid password: please use numbers as well as upper- and lower-case letters."
 
-msgid "hms-widget.password.error.password.required"
+msgid "harbourmaster.widget.password.error.password.required"
 msgstr "Required field"
 
-msgid "hms-widget.password.error.password.ArgPasswordIsInvalid"
+msgid "harbourmaster.widget.password.error.password.ArgPasswordIsInvalid"
 msgstr "invalid password"
 
-msgid "hms-widget.password.error.password.NewPasswordRequired"
+msgid "harbourmaster.widget.password.error.password.NewPasswordRequired"
 msgstr "Required field"
 
-msgid "hms-widget.password.error.password.NoNumbers"
+msgid "harbourmaster.widget.password.error.password.NoNumbers"
 msgstr "The password has to contain numbers"
 
-msgid "hms-widget.password.error.password.NoLowerCaseLetters"
+msgid "harbourmaster.widget.password.error.password.NoLowerCaseLetters"
 msgstr "The password has to contain lower-case letters"
 
-msgid "hms-widget.password.error.password.NoUpperCaseLetters"
+msgid "harbourmaster.widget.password.error.password.NoUpperCaseLetters"
 msgstr "The password has to contain upper-case letters"
 
-msgid "hms-widget.password.error.password.NotMinEigth"
+msgid "harbourmaster.widget.password.error.password.NotMinEigth"
 msgstr "The password must be at least 8 characters long"
 
-msgid "hms-widget.password.error.verifyPassword.string"
+msgid "harbourmaster.widget.password.error.verifyPassword.string"
 msgstr "Input error"
 
-msgid "hms-widget.password.error.verifyPassword.passwordEqual"
+msgid "harbourmaster.widget.password.error.verifyPassword.passwordEqual"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.password.error.verifyPassword.required"
+msgid "harbourmaster.widget.password.error.verifyPassword.required"
 msgstr "Required field"
 
-msgid "hms-widget.password.error.verifyPassword.PasswordsDoNotMatch"
+msgid "harbourmaster.widget.password.error.verifyPassword.PasswordsDoNotMatch"
 msgstr "The passwords do not match"
 
-msgid "hms-widget.password.error.answer.string"
+msgid "harbourmaster.widget.password.error.answer.string"
 msgstr "Input error"
 
-msgid "hms-widget.password.error.answer.required"
+msgid "harbourmaster.widget.password.error.answer.required"
 msgstr "Required field"
 
-msgid "hms-widget.password.error.answer.CannotParseSecurityQuestions"
+msgid "harbourmaster.widget.password.error.answer.CannotParseSecurityQuestions"
 msgstr "The security question cannot be parsed"
 
-msgid "hms-widget.password.error.answer.IncompleteSecurityQuestions"
+msgid "harbourmaster.widget.password.error.answer.IncompleteSecurityQuestions"
 msgstr "incomplete security question"
 
-msgid "hms-widget.password.error.answer.WrongSecurityQuestionsAnswer"
+msgid "harbourmaster.widget.password.error.answer.WrongSecurityQuestionsAnswer"
 msgstr "wrong answer"
 
-msgid "hms-widget.password.error.token.PasswordRecoveryTokenRequired"
+msgid "harbourmaster.widget.password.error.token.PasswordRecoveryTokenRequired"
 msgstr "A new link has to be sent"
 
-msgid "hms-widget.password.flash.error"
+msgid "harbourmaster.widget.password.flash.error"
 msgstr "The password could not be saved."
 
-msgid "hms-widget.password.intro.text"
+msgid "harbourmaster.widget.password.intro.text"
 msgstr "Please enter your new password here and confirm it by clicking &quot;Set a new password&quot;."
 
-msgid "hms-widget.general.button.save"
+msgid "harbourmaster.widget.general.button.save"
 msgstr "save"
 
-msgid "hms-widget.general.button.close"
+msgid "harbourmaster.widget.general.button.close"
 msgstr "close"
 
-msgid "hms-widget.general.button.back"
+msgid "harbourmaster.widget.general.button.back"
 msgstr "back"
 
-msgid "hms-widget.general.forbidden"
+msgid "harbourmaster.widget.general.forbidden"
 msgstr "forbidden"
 
-msgid "hms-widget.general.error"
+msgid "harbourmaster.widget.general.error"
 msgstr "error"
