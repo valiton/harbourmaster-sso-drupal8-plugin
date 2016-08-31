@@ -1,0 +1,13 @@
+{
+  "name": "drupal/harbourmaster",
+  "description": "The harbourmaster sso drupal module",
+  "type": "drupal-module",
+  "authors": [
+    {
+      "name": "Benedikt Weiner",
+      "email": "benedikt.weiner@valiton.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
