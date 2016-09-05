@@ -90,15 +90,16 @@ class CrossDomainAuthController extends ControllerBase {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $session_data_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $session_data_string = curl_exec($ch);
+    if (($session_data_string = curl_exec($ch)) === FALSE) {
+      $this->logger->debug("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
+    }
     $this->logger->debug("Login: Session data: $session_data_string");
     $this->sessionData = json_decode($session_data_string);
-    //todo exception handling
   }
 
   protected function validSession() {
-    return !empty($this->sessionData->status
-      && !empty($this->sessionData->data->token));
+    return !empty($this->sessionData->status)
+    && !empty($this->sessionData->data->token);
   }
 
   protected function setSessionToken() {
