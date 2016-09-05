@@ -81,8 +81,7 @@ services:
     arguments:
       - '@harbourmaster.settings'
       - '@entity_type.manager'
-    calls:
-      - ['setLogger', ['%harbourmaster.logger.service%']]
+      - '@harbourmaster.logger'
 
   harbourmaster.cookie_helper:
     public: true

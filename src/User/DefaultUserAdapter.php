@@ -10,6 +10,17 @@ use Drupal\user\UserInterface;
  */
 class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
+  protected $logger;
+
+  public function __construct(
+    \Drupal\Core\Config\Config $harbourmasterSettings,
+    \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager,
+    $logger
+  ) {
+    $this->logger = $logger;
+    parent::__construct($harbourmasterSettings, $entityTypeManager);
+  }
+
   /**
    * @param array $harbourmasterSessionData
    *    The HMS data struct for the current session.
