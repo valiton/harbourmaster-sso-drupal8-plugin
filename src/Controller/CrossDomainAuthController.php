@@ -85,7 +85,7 @@ class CrossDomainAuthController extends ControllerBase {
     curl_setopt($ch, CURLOPT_URL, $session_data_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     if (($session_data_string = curl_exec($ch)) === FALSE) {
-      $this->logger->debug("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
+      $this->logger->error("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
     }
     $this->logger->debug("Login: Session data: $session_data_string");
     $this->sessionData = json_decode($session_data_string);
@@ -95,8 +95,12 @@ class CrossDomainAuthController extends ControllerBase {
    *
    */
   protected function validSession() {
-    return !empty($this->sessionData->status)
-    && !empty($this->sessionData->data->token);
+    if (!isset($this->sessionData->status)
+      || !isset($this->sessionData->data->token)) {
+      $this->logger->error("The session data retrieved from Usermanager has an unexpected format.");
+      return FALSE;
+    }
+    return !empty($this->sessionData->status);
   }
 
   /**
