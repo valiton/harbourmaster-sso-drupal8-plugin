@@ -86,6 +86,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    * @return \Drupal\user\UserInterface
    */
   protected function setUserData(array $harbourmasterSessionData, UserInterface $user) {
+
     $user->setEmail($harbourmasterSessionData['user']['email']);
     $user->setUsername($harbourmasterSessionData['user']['login']);
 

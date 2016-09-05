@@ -9,12 +9,12 @@ use Drupal\harbourmaster\Responses\TransparentPixelResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Config\Config;
 
+use Drupal\harbourmaster\User\DefaultUserAdapter;
+
 /**
  * Class CrossDomainAuthController.
  *
  * @package Drupal\harbourmaster\Controller
- *
- * @todo Move all cookie code to own class.
  */
 class CrossDomainAuthController extends ControllerBase {
 
@@ -50,6 +50,7 @@ class CrossDomainAuthController extends ControllerBase {
    *
    */
   public function login(Request $request) {
+
     $parameters = $request->query;
     if (empty($token = $parameters->get('onetimelogintoken'))) {
       $this->logger->debug('Login: No token found in URL');
@@ -87,6 +88,7 @@ class CrossDomainAuthController extends ControllerBase {
     if (($session_data_string = curl_exec($ch)) === FALSE) {
       $this->logger->error("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
     }
+    curl_close($ch);
     $this->logger->debug("Login: Session data: $session_data_string");
     $this->sessionData = json_decode($session_data_string);
   }
