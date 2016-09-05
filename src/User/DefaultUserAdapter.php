@@ -28,21 +28,24 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    *    The updated and saved User entity
    */
   public function createUser(array $harbourmasterSessionData) {
+
     $r = new Random();
 
-    /**
-     * @var UserStorageInterface
-     */
-    $userStorage = $this->entityTypeManager->getStorage('user');
-    $users = $userStorage->loadByProperties(['name' => $harbourmasterSessionData['user']['login']]);
+    $username = &$harbourmasterSessionData['user']['login'];
+    $user_email = &$harbourmasterSessionData['user']['email'];
+
+    $users = $this->userStorage->loadByProperties(['mail' => $user_email]);
     if (count($users) > 0) {
-      $harbourmasterSessionData['user']['login'] = $this->fixUserNameCollision($harbourmasterSessionData['user']['login']);
+      $this->logger->warning("Creating user @name from Usermanager without saving their email address @email, as there already is a user with the email address @email.", ['@name' => $username, '@email' => $user_email]);
+      $user_email = '';
     }
+
+    $username = $this->usernameRemoveCollisions($username);
 
     /**
      * @var $user UserInterface
      */
-    $user = $userStorage->create();
+    $user = $this->userStorage->create();
 
     $user = $this->setUserData($harbourmasterSessionData, $user);
 
@@ -74,10 +77,20 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   }
 
   /**
-   *
+   * @param $desired_name
+   * @return string
    */
-  protected function fixUserNameCollision($name) {
-    return 'harbourmaster.' . $name;
+  protected function usernameRemoveCollisions($desired_name) {
+    $name = $desired_name;
+    $i = 1;
+    while(!empty($this->userStorage->loadByProperties(['name' => $name]))) {
+      //todo: Check USERNAME_MAX_LENGTH before adding suffix.
+      $name = $desired_name . '_hms_' . $i++;
+    }
+    if ($name != $desired_name) {
+      $this->logger->warning("Creating user @old_name from Usermanager but changing their username to @name, as there already is a user named @old_name.", ['@name' => $name, '@old_name' => $desired_name]);
+    }
+    return $name;
   }
 
   /**
