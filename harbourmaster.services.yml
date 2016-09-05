@@ -4,15 +4,15 @@ services:
   harbourmaster.authentication.token:
     class: Drupal\harbourmaster\Authentication\Provider\SsoCookie
     arguments:
-      - @harbourmaster.client
-      - @harbourmaster.settings
-      - @harbourmaster.user_manager
-      - @harbourmaster.cookie_helper
-      - @cache.harbourmaster
-      - @session
-      - @session_configuration
-      - @session_manager
-      - @database
+      - '@harbourmaster.client'
+      - '@harbourmaster.settings'
+      - '@harbourmaster.user_manager'
+      - '@harbourmaster.cookie_helper'
+      - '@cache.harbourmaster'
+      - '@session'
+      - '@session_configuration'
+      - '@session_manager'
+      - '@database'
     calls:
       - ['setLogger', [%harbourmaster.logger.service%]]
     tags:
@@ -24,19 +24,19 @@ services:
   harbourmaster.user_manager:
     class: Drupal\harbourmaster\User\Manager
     arguments:
-      - @user.data
-      - @entity_type.manager
-      - %harbourmaster.adapter.service%
+      - '@user.data'
+      - '@entity_type.manager'
+      - '%harbourmaster.adapter.service%'
     calls:
       - ['setLogger', [%harbourmaster.logger.service%]]
 
   harbourmaster.client:
     class: Drupal\harbourmaster\Client\Harbourmaster
     arguments:
-      - @harbourmaster.http_client
-      - @harbourmaster.settings
+      - '@harbourmaster.http_client'
+      - '@harbourmaster.settings'
     calls:
-      - ['setLogger', [%harbourmaster.logger.service%]]
+      - ['setLogger', ['%harbourmaster.logger.service%']]
 
   # disable http status exceptions b/c they are expected and handled via status code
   harbourmaster.http_client:
@@ -74,23 +74,23 @@ services:
     tags:
       - { name: page_cache_request_policy }
     arguments:
-      - @harbourmaster.settings
+      - '@harbourmaster.settings'
 
   harbourmaster.default_user_adapter:
     class: Drupal\harbourmaster\User\DefaultUserAdapter
     arguments:
-      - @harbourmaster.settings
-      - @entity_type.manager
+      - '@harbourmaster.settings'
+      - '@entity_type.manager'
     calls:
-      - ['setLogger', [%harbourmaster.logger.service%]]
+      - ['setLogger', ['%harbourmaster.logger.service%]']
 
   harbourmaster.cookie_helper:
     public: true
     class: Drupal\harbourmaster\Helper\CookieHelper
     arguments:
-      - @harbourmaster.settings
-      - @request_stack
-      - @harbourmaster.logger
+      - '@harbourmaster.settings'
+      - '@request_stack'
+      - '@harbourmaster.logger'
     tags:
       - { name: 'event_subscriber' }
 
@@ -102,15 +102,15 @@ services:
   harbourmaster.route_creator:
     class: Drupal\harbourmaster\Routing\RouteCreator
     arguments:
-      - @harbourmaster.settings
+      - '@harbourmaster.settings'
 
   access_check.harbourmaster.login_status:
     class: Drupal\harbourmaster\Access\LoginStatusCheck
     arguments:
-      - @harbourmaster.user_manager
+      - '@harbourmaster.user_manager'
     tags:
       - { name: access_check, applies_to: _harbourmaster_user_is_logged_in }
 
 parameters:
-  harbourmaster.adapter.service: @harbourmaster.default_user_adapter
-  harbourmaster.logger.service: @harbourmaster.logger_null
+  harbourmaster.adapter.service: '@harbourmaster.default_user_adapter'
+  harbourmaster.logger.service: '@harbourmaster.logger_null'

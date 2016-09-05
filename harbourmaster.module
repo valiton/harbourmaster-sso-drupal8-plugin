@@ -48,6 +48,11 @@ function harbourmaster_library_info_build() {
   return $libraries;
 }
 
+/**
+ * Implements hook_theme().
+ *
+ * @return array
+ */
 function harbourmaster_theme() {
 
   $theme['usermanager'] = [
