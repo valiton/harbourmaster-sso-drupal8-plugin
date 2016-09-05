@@ -1,24 +1,6 @@
 <?php
 
-/**
- * Copyright © 2016 Valiton GmbH
- *
- * This file is part of Harbourmaster Drupal Plugin.
- *
- * Harbourmaster Drupal Plugin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * Harbourmaster Drupal Plugin is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 namespace Drupal\harbourmaster\Form;
-
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Asset\LibraryDiscoveryInterface;
@@ -27,7 +9,9 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
+/**
+ *
+ */
 class Settings extends ConfigFormBase {
 
   /**
@@ -36,12 +20,18 @@ class Settings extends ConfigFormBase {
   protected $libraryDiscovery;
   protected $pathValidator;
 
+  /**
+   *
+   */
   public function __construct(ConfigFactoryInterface $config_factory, LibraryDiscoveryInterface $libraryDiscovery, $path_validator) {
     $this->libraryDiscovery = $libraryDiscovery;
     $this->pathValidator = $path_validator;
     parent::__construct($config_factory);
   }
 
+  /**
+   *
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
@@ -134,7 +124,7 @@ class Settings extends ConfigFormBase {
       '#required' => TRUE,
       '#description' => $this->t('Name of the cookie that contains the Harbourmaster token (usually "%default"). May only contain %allowed.', [
         '%default' => 'token',
-        '%allowed' => 'a-z A-Z 0-9 .-_.'
+        '%allowed' => 'a-z A-Z 0-9 .-_.',
       ]),
     ];
 
@@ -186,7 +176,6 @@ class Settings extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
 
-
     if (($value = $form_state->getValue('sso_cookie_name')) && !preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
       $form_state->setErrorByName('sso_cookie_name', $this->t('SSO cookie name %cookie_name contains invalid characters ', ['%cookie_name' => $value]));
     }
@@ -199,14 +188,14 @@ class Settings extends ConfigFormBase {
     if (($value = $form_state->getValue('harbourmaster_api_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
       $form_state->setErrorByName('harbourmaster_api_url', $this->t('API Endpoint %endpoint must be an absolute URL (allowed protocols: @protocols)', [
         '%endpoint' => $form_state->getValue('harbourmaster_api_url'),
-        '@protocols' => join(', ', ['http', 'https'])
+        '@protocols' => join(', ', ['http', 'https']),
       ]));
     }
 
     if (($value = $form_state->getValue('user_manager_url')) && !(UrlHelper::isValid($value, TRUE) && preg_match('#^https?://#', $value))) {
       $form_state->setErrorByName('user_manager_url', $this->t('Usermanager URL %endpoint must be an absolute URL (allowed protocols: @protocols)', [
         '%endpoint' => $form_state->getValue('user_manager_url'),
-        '@protocols' => join(', ', ['http', 'https'])
+        '@protocols' => join(', ', ['http', 'https']),
       ]));
     }
 
@@ -214,9 +203,10 @@ class Settings extends ConfigFormBase {
       $form_state->setErrorByName('sso_cookie_name', $this->t('SSO cookie name %cookie_name contains invalid characters ', ['%cookie_name' => $value]));
     }
 
-    foreach(['cross_domain_login_path', 'cross_domain_logout_path'] as $field) {
+    foreach (['cross_domain_login_path', 'cross_domain_logout_path'] as $field) {
       if (($value = $form_state->getValue($field))) {
-        if (!preg_match('/[a-zA-Z0-9-_.]+/', $value)) {//todo Adjust regex to what relative paths can have
+        // Todo Adjust regex to what relative paths can have.
+        if (!preg_match('/[a-zA-Z0-9-_.]+/', $value)) {
           $form_state->setErrorByName($field, $this->t('The relative path @path contains invalid characters.', ['@path' => $value]));
         }
         // Make sure paths start with a slash.
@@ -248,7 +238,7 @@ class Settings extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $oldUserManagerUrl = $this->config('harbourmaster.settings')->get('user_manager_url');
 
-    // FIXME libraryDiscovery->clearCachedDefinitions() does not work as expected
+    // FIXME libraryDiscovery->clearCachedDefinitions() does not work as expected.
     $this->config('harbourmaster.settings')
       ->set('harbourmaster_api_url', rtrim($form_state->getValue('harbourmaster_api_url'), '/'))
       ->set('harbourmaster_api_tenant', $form_state->getValue('harbourmaster_api_tenant'))
@@ -267,4 +257,5 @@ class Settings extends ConfigFormBase {
 
     parent::submitForm($form, $form_state);
   }
+
 }
