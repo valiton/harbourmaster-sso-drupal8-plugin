@@ -14,7 +14,7 @@ services:
       - '@session_manager'
       - '@database'
     calls:
-      - ['setLogger', [%harbourmaster.logger.service%]]
+      - ['setLogger', ['%harbourmaster.logger.service%']]
     tags:
       - name: authentication_provider
         provider_id: harbourmaster_token
@@ -28,7 +28,7 @@ services:
       - '@entity_type.manager'
       - '%harbourmaster.adapter.service%'
     calls:
-      - ['setLogger', [%harbourmaster.logger.service%]]
+      - ['setLogger', ['%harbourmaster.logger.service%']]
 
   harbourmaster.client:
     class: Drupal\harbourmaster\Client\Harbourmaster
@@ -82,7 +82,7 @@ services:
       - '@harbourmaster.settings'
       - '@entity_type.manager'
     calls:
-      - ['setLogger', ['%harbourmaster.logger.service%]']
+      - ['setLogger', ['%harbourmaster.logger.service%']]
 
   harbourmaster.cookie_helper:
     public: true
