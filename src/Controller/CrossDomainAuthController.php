@@ -34,6 +34,17 @@ class CrossDomainAuthController extends ControllerBase {
     $this->harbourmasterSettings = $harbourmaster_settings;
     $this->logger = $this->getLogger('harbourmaster');
     $this->cookieHelper = $cookie_helper;
+
+
+//    \Drupal::service('harbourmaster.default_user_adapter')
+//      ->createUser([
+//        'user' => [
+//          'login' => 'admintest',
+//          'email' => 'redthd@gmail.com',
+//          'modifiedAt' => '1232132143',
+//          'userKey' => '1232132143',
+//        ]
+//      ]);
   }
 
   /**

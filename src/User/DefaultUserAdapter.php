@@ -31,18 +31,6 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
     $r = new Random();
 
-    $username = &$harbourmasterSessionData['user']['login'];
-    $user_email = &$harbourmasterSessionData['user']['email'];
-
-    $users = $this->userStorage->loadByProperties(['mail' => $user_email]);
-    if (count($users) > 0) {
-      $this->logger->warning("Creating user @name from Usermanager without saving their email address @email, as there already is a user with the email address @email.", ['@name' => $username, '@email' => $user_email]);
-      $user_email = '';
-    }
-
-    $username = $this->usernameRemoveCollisions($username);
-    $this->logger->debug("New username: " . $harbourmasterSessionData['user']['login']);
-
     /**
      * @var $user UserInterface
      */
@@ -101,14 +89,24 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    */
   protected function setUserData(array $harbourmasterSessionData, UserInterface $user) {
 
+    // Add harbourmaster role.
     if (isset(user_roles()['harbourmaster'])) {
       $user->addRole('harbourmaster');
     }
 
-    $user->setEmail($harbourmasterSessionData['user']['email']);
+    // Update email.
+    $users = $this->userStorage->loadByProperties(['mail' => $harbourmasterSessionData['user']['email']]);
+    if (($user->isNew() && empty($users)) || (!$user->isNew() && (empty($users) || isset($users[$user->getOriginalId()])))) {
+      $user->setEmail($harbourmasterSessionData['user']['email']);
+    }
+    else {
+      $this->logger->warning("Creating or updating user @name from Usermanager without saving their email address @email, as there already is a user with the email address @email.", ['@name' => $harbourmasterSessionData['user']['login'], '@email' => $harbourmasterSessionData['user']['email']]);
+    }
 
-    $this->logger->debug("Updating user with name " . $harbourmasterSessionData['user']['login']);
-    $user->setUsername($harbourmasterSessionData['user']['login']);
+    // Update username only when new account is being created.
+    if ($user->isNew()) {
+      $user->setUsername($this->usernameRemoveCollisions($harbourmasterSessionData['user']['login']));
+    }
 
     if (user_picture_enabled()) {
       // TODO this should not be done on every login. maybe.
