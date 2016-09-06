@@ -41,6 +41,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     }
 
     $username = $this->usernameRemoveCollisions($username);
+    $this->logger->debug("New username: " . $harbourmasterSessionData['user']['login']);
 
     /**
      * @var $user UserInterface
@@ -99,6 +100,10 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
    * @return \Drupal\user\UserInterface
    */
   protected function setUserData(array $harbourmasterSessionData, UserInterface $user) {
+
+    if (isset(user_roles()['harbourmaster'])) {
+      $user->addRole('harbourmaster');
+    }
 
     $user->setEmail($harbourmasterSessionData['user']['email']);
     $user->setUsername($harbourmasterSessionData['user']['login']);
