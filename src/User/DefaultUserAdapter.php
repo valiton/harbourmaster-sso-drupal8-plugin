@@ -106,6 +106,8 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
     }
 
     $user->setEmail($harbourmasterSessionData['user']['email']);
+
+    $this->logger->debug("Updating user with name " . $harbourmasterSessionData['user']['login']);
     $user->setUsername($harbourmasterSessionData['user']['login']);
 
     if (user_picture_enabled()) {
