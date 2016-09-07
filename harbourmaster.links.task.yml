@@ -1,9 +1,8 @@
-hms_commerce.settings:
+harbourmaster.admin_config_page:
   title: 'Configure'
-  route_name: hms_commerce.settings
-  base_route: hms_commerce.settings
-
-hms_commerce.newsletter:
-  title: 'Newsletter'
-  route_name: hms_commerce.newsletter
-  base_route: hms_commerce.settings
+  route_name: harbourmaster.admin_config_page
+  base_route: harbourmaster.admin_config_page
+harbourmaster.admin_status_page:
+  title: 'Status'
+  route_name: harbourmaster.admin_status_page
+  base_route: harbourmaster.admin_config_page
