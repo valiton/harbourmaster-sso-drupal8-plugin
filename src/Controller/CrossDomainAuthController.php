@@ -9,8 +9,6 @@ use Drupal\harbourmaster\Responses\TransparentPixelResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Config\Config;
 
-use Drupal\harbourmaster\User\DefaultUserAdapter;
-
 /**
  * Class CrossDomainAuthController.
  *
@@ -28,7 +26,10 @@ class CrossDomainAuthController extends ControllerBase {
   const HARBOURMASTER_SESSION_DATA_PATH = '/session/crossdomain';
 
   /**
+   * CrossDomainAuthController constructor.
    *
+   * @param \Drupal\Core\Config\Config $harbourmaster_settings
+   * @param $cookie_helper
    */
   public function __construct(Config $harbourmaster_settings, $cookie_helper) {
     $this->harbourmasterSettings = $harbourmaster_settings;

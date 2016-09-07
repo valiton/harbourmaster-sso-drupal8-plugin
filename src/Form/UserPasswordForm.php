@@ -8,7 +8,6 @@ use Drupal\user\Form\UserPasswordForm as DrupalUserPasswordForm;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\harbourmaster\User\Manager as HmsUserManager;
-use Drupal\Core\Link;
 
 /**
  *
