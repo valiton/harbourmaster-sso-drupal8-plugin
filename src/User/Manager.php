@@ -1,26 +1,6 @@
 <?php
 
-/**
- * Copyright © 2016 Valiton GmbH.
- *
- * This file is part of Harbourmaster Drupal Plugin.
- *
- * Harbourmaster Drupal Plugin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Harbourmaster Drupal Plugin is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 namespace Drupal\harbourmaster\User;
-
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\UserDataInterface;
@@ -28,6 +8,9 @@ use Drupal\harbourmaster\User\AdapterInterface as HmsUserAdapter;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerAwareTrait;
 
+/**
+ *
+ */
 class Manager {
 
   use LoggerAwareTrait;
@@ -47,6 +30,9 @@ class Manager {
    */
   protected $userAdapter;
 
+  /**
+   *
+   */
   public function __construct(UserDataInterface $userDataService, EntityTypeManagerInterface $entityTypeManager, HmsUserAdapter $userAdapter) {
     $this->userDataService = $userDataService;
     $this->entityTypeManager = $entityTypeManager;
@@ -78,12 +64,13 @@ class Manager {
   /**
    * Fetches a Drupal uid for a given HMS userKey.
    *
-   * @param string $userKey HMS userKey
+   * @param string $userKey
+   *   HMS userKey.
    *
    * @return int|null
    */
   public function findUidForHmsUserKey($userKey) {
-    // return an array of the form $uid => $userKey
+    // Return an array of the form $uid => $userKey.
     $userKeysByUid = $this->userDataService->get('harbourmaster', NULL, 'userKey');
     $uidsByUserKey = array_flip($userKeysByUid);
     return isset($uidsByUserKey[$userKey]) ? $uidsByUserKey[$userKey] : NULL;
@@ -104,6 +91,7 @@ class Manager {
    *
    * @return UserInterface|null
    */
+
   /**
    * @param $userKey
    * @return \Drupal\user\UserInterface

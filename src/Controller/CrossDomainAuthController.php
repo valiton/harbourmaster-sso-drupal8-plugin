@@ -1,24 +1,5 @@
 <?php
 
-/**
- * Copyright © 2016 Valiton GmbH.
- *
- * This file is part of Harbourmaster Drupal Plugin.
- *
- * Harbourmaster Drupal Plugin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Harbourmaster Drupal Plugin is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 namespace Drupal\harbourmaster\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -28,29 +9,47 @@ use Drupal\harbourmaster\Responses\TransparentPixelResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Config\Config;
 
+use Drupal\harbourmaster\User\DefaultUserAdapter;
+
 /**
- * Class CrossDomainAuthController
- * @package Drupal\harbourmaster\Controller
+ * Class CrossDomainAuthController.
  *
- * @todo Move all cookie code to own class.
+ * @package Drupal\harbourmaster\Controller
  */
 class CrossDomainAuthController extends ControllerBase {
 
   protected $harbourmasterSettings;
   protected $cookieHelper;
-  
+
   protected $sessionData;
   protected $sessionToken;
   protected $logger;
 
   const HARBOURMASTER_SESSION_DATA_PATH = '/session/crossdomain';
 
+  /**
+   *
+   */
   public function __construct(Config $harbourmaster_settings, $cookie_helper) {
     $this->harbourmasterSettings = $harbourmaster_settings;
     $this->logger = $this->getLogger('harbourmaster');
     $this->cookieHelper = $cookie_helper;
+
+
+//    \Drupal::service('harbourmaster.default_user_adapter')
+//      ->createUser([
+//        'user' => [
+//          'login' => 'admintest',
+//          'email' => 'redthd@gmail.com',
+//          'modifiedAt' => '1232132143',
+//          'userKey' => '1232132143',
+//        ]
+//      ]);
   }
 
+  /**
+   *
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('harbourmaster.settings'),
@@ -58,7 +57,11 @@ class CrossDomainAuthController extends ControllerBase {
     );
   }
 
+  /**
+   *
+   */
   public function login(Request $request) {
+
     $parameters = $request->query;
     if (empty($token = $parameters->get('onetimelogintoken'))) {
       $this->logger->debug('Login: No token found in URL');
@@ -77,6 +80,9 @@ class CrossDomainAuthController extends ControllerBase {
     return new TransparentPixelResponse();
   }
 
+  /**
+   *
+   */
   protected function getSessionData($token) {
     $session_data_url = $this->harbourmasterSettings->get('harbourmaster_api_url')
       . '/' . $this->harbourmasterSettings->get('harbourmaster_api_version')
@@ -90,31 +96,53 @@ class CrossDomainAuthController extends ControllerBase {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $session_data_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $session_data_string = curl_exec($ch);
+    if (($session_data_string = curl_exec($ch)) === FALSE) {
+      $this->logger->error("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
+    }
+    curl_close($ch);
     $this->logger->debug("Login: Session data: $session_data_string");
     $this->sessionData = json_decode($session_data_string);
-    //todo exception handling
   }
 
+  /**
+   *
+   */
   protected function validSession() {
-    return !empty($this->sessionData->status
-      && !empty($this->sessionData->data->token));
+    if (!isset($this->sessionData->status)
+      || !isset($this->sessionData->data->token)) {
+      $this->logger->error("The session data retrieved from Usermanager has an unexpected format.");
+      return FALSE;
+    }
+    return !empty($this->sessionData->status);
   }
 
+  /**
+   *
+   */
   protected function setSessionToken() {
     $this->sessionToken = $this->sessionData->data->token;
   }
 
+  /**
+   *
+   */
   protected function startSession() {
     return $this->cookieHelper->setCookie($this->sessionToken);
   }
 
+  /**
+   *
+   */
   protected function invalidateSession() {
     return $this->cookieHelper->setCookie('deleted');
   }
 
+  /**
+   *
+   */
   public function logout() {
     $this->invalidateSession();
     return new TransparentPixelResponse();
   }
+
 }

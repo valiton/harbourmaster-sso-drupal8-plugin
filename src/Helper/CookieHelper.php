@@ -1,24 +1,5 @@
 <?php
 
-/**
- * Copyright © 2016 Valiton GmbH.
- *
- * This file is part of Harbourmaster Drupal Plugin.
- *
- * Harbourmaster Drupal Plugin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Harbourmaster Drupal Plugin is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 namespace Drupal\harbourmaster\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +58,9 @@ class CookieHelper implements EventSubscriberInterface {
    */
   protected $clearTokenTriggered = FALSE;
 
+  /**
+   *
+   */
   public function __construct(Config $harbourmasterSettings, $request_stack, $logger) {
     $this->harbourmasterSettings = $harbourmasterSettings;
     $this->domain = $request_stack->getCurrentRequest()->getHost();
@@ -85,16 +69,22 @@ class CookieHelper implements EventSubscriberInterface {
     $this->ssoCookieDomain = $this->getCookieDomain();
   }
 
+  /**
+   *
+   */
   public function getDomain() {
     return $this->domain;
   }
 
+  /**
+   *
+   */
   public function getCookieDomain() {
     return !empty($cookie_domain = $this->harbourmasterSettings->get('sso_cookie_domain'))
       ? $cookie_domain : '.' . $this->domain;
   }
 
-    /**
+  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
@@ -109,23 +99,27 @@ class CookieHelper implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
    */
   public function onResponse(FilterResponseEvent $event) {
-    // TODO test this in conjunction with Drupal's own login
+    // TODO test this in conjunction with Drupal's own login.
     if ($this->clearTokenTriggered && $event->getRequest()->cookies->has($this->ssoCookieName)) {
 
       $event->getResponse()->headers->clearCookie($this->ssoCookieName, '/', $this->ssoCookieDomain);
     }
   }
 
+  /**
+   *
+   */
   public function hasValidSsoCookie($request) {
     return (NULL !== $this->getValidSsoCookie($request));
   }
 
   /**
-   * Extracts a "valid" SSO cookie
+   * Extracts a "valid" SSO cookie.
    *
-   * valid <=> exists ∧ ¬anonymous
+   * Valid <=> exists ∧ ¬anonymous.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
+   *
    * @return string|null
    */
   public function getValidSsoCookie(Request $request) {
@@ -142,10 +136,16 @@ class CookieHelper implements EventSubscriberInterface {
     return preg_match('/^(?:err|a[0-9a-f]{64}$)/', $cookie) ? NULL : $cookie;
   }
 
+  /**
+   *
+   */
   public function triggerClearSsoCookie() {
     $this->clearTokenTriggered = TRUE;
   }
 
+  /**
+   *
+   */
   public function setCookie($content) {
     $this->logger->debug("Set cookie " . $this->ssoCookieName . " with content $content on domain $this->ssoCookieDomain");
     return setcookie(
@@ -155,7 +155,8 @@ class CookieHelper implements EventSubscriberInterface {
         ? REQUEST_TIME + $seconds : 0,
       '/',
       "$this->ssoCookieDomain"
-    // Domain and path should be set automatically
+    // Domain and path should be set automatically.
     );
   }
+
 }

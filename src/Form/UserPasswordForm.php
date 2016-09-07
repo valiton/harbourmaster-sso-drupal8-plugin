@@ -1,24 +1,5 @@
 <?php
 
-/**
- * Copyright © 2016 Valiton GmbH.
- *
- * This file is part of Harbourmaster Drupal Plugin.
- *
- * Harbourmaster Drupal Plugin is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Harbourmaster Drupal Plugin is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 namespace Drupal\harbourmaster\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -29,6 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\harbourmaster\User\Manager as HmsUserManager;
 use Drupal\Core\Link;
 
+/**
+ *
+ */
 class UserPasswordForm extends DrupalUserPasswordForm {
 
   /**
@@ -36,11 +20,17 @@ class UserPasswordForm extends DrupalUserPasswordForm {
    */
   protected $harbourmasterUserManager;
 
+  /**
+   *
+   */
   public function __construct(UserStorageInterface $user_storage, LanguageManagerInterface $language_manager, HmsUserManager $harbourmasterUserManager) {
     $this->harbourmasterUserManager = $harbourmasterUserManager;
     parent::__construct($user_storage, $language_manager);
   }
 
+  /**
+   *
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity.manager')->getStorage('user'),
@@ -49,19 +39,25 @@ class UserPasswordForm extends DrupalUserPasswordForm {
     );
   }
 
+  /**
+   *
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $user = $this->currentUser();
     if ($user->isAuthenticated() && (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($user->id()))) {
-      // parent::buildForm would allow for a logged in user to request a pw reset, override for HMS user
+      // parent::buildForm would allow for a logged in user to request a pw reset, override for HMS user.
       return $this->redirect('harbourmaster.login_page');
     }
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   *
+   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
     if ($form_state->hasAnyErrors()) {
-      // don't waste time if there's errors anyway
+      // don't waste time if there's errors anyway.
       return;
     }
     $name = trim($form_state->getValue('name'));

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Harbourmaster.
+ */
+
+/**
+ *
+ */
+function harbourmaster_install() {
+  drupal_set_message(
+    t("For the Harbourmaster SSO module to work properly, you have to configure the module on the <a href='@link'>configuration page</a>.",
+      ['@link' => $GLOBALS['base_url'] . '/admin/config/people/harbourmaster']), 'warning');
+}

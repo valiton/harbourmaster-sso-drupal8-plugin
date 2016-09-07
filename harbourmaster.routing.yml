@@ -2,17 +2,17 @@ harbourmaster.admin_config_page:
   path: admin/config/people/harbourmaster
   defaults:
     _form: Drupal\harbourmaster\Form\Settings
-    _title: Harbourmaster settings
+    _title: 'Harbourmaster settings'
   requirements:
-    _permission: administer harbourmaster settings
+    _permission: 'administer harbourmaster settings'
 
 harbourmaster.admin_status_page:
   path: admin/config/people/harbourmaster/status
   defaults:
     _controller: \Drupal\harbourmaster\Controller\StatusPageController::status
-    _title: Harbourmaster status
+    _title: 'Harbourmaster status'
   requirements:
-    _permission: administer harbourmaster settings
+    _permission: 'administer harbourmaster settings'
 
 harbourmaster.login_page:
   path: harbourmaster/login
