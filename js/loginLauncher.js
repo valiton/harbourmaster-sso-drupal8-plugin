@@ -1,4 +1,5 @@
-/*
+/**
+ * @file
  * Copyright © 2016 Valiton GmbH.
  *
  * This file is part of Harbourmaster Drupal Plugin.
@@ -17,12 +18,11 @@
  * along with Harbourmaster Drupal Plugin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
   "use strict";
 
-  //Include all Drupal Translation String in a Drupal.t() funktion call in this file.
-  //This is need for make drupal load the translation into javascript.
+  // Include all Drupal Translation String in a Drupal.t() funktion call in this file.
+  // This is need for make drupal load the translation into javascript.
   var translationsLoader = [
     Drupal.t('harbourmaster.widget.confirmation.title.confirmed'),
     Drupal.t('harbourmaster.widget.confirmation.title.invalidToken'),
@@ -289,8 +289,8 @@ jQuery(document).ready(function() {
     Drupal.t('harbourmaster.widget.general.error')
   ];
 
-  //recursive walk through the Ember.I18n.translations Object and replace translations with translations given by drupal.
-  var loadDrupalTranslation = function(data) {
+  // Recursive walk through the Ember.I18n.translations Object and replace translations with translations given by drupal.
+  var loadDrupalTranslation = function (data) {
 
     function recurse(cur, prop) {
       for (var p in cur) {
@@ -302,10 +302,11 @@ jQuery(document).ready(function() {
             var drupalTranslation = Drupal.t(drupalTranslationKey);
 
             if (drupalTranslationKey !== drupalTranslation) {
-              // only overwrite  Ember.I18n.translations when drupal give a translation
+              // Only overwrite  Ember.I18n.translations when drupal give a translation.
               cur[p] = drupalTranslation;
             }
-          } else {
+          }
+          else {
             recurse(cur[p], longp);
           }
         }
