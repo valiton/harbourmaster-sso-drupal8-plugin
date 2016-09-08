@@ -1,8 +1,16 @@
 {
-  "name": "drupal/harbourmaster",
+  "name": "valiton/harbourmaster",
   "description": "The harbourmaster sso drupal module",
   "type": "drupal-module",
   "authors": [
+    {
+      "name": "Patrick Durold",
+      "email": "patrick.durold@valiton.com"
+    },
+    {
+      "name": "Pawel Ginalski",
+      "email": "pg@gbyte.co"
+    },
     {
       "name": "Benedikt Weiner",
       "email": "benedikt.weiner@valiton.com"
