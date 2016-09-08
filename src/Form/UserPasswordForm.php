@@ -8,7 +8,6 @@ use Drupal\user\Form\UserPasswordForm as DrupalUserPasswordForm;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\harbourmaster\User\Manager as HmsUserManager;
-use Drupal\Core\Link;
 
 /**
  *
@@ -72,7 +71,7 @@ class UserPasswordForm extends DrupalUserPasswordForm {
       if (NULL !== $this->harbourmasterUserManager->findHmsUserKeyForUid($account->id())) {
         $form_state->setErrorByName(
           'name',
-          $this->t('%name is externally registered via HMS. Please use the :link to request your password reset.', array('%name' => $name, ':link' => Link::createFromRoute('appropriate page', 'harbourmaster.login_page'))));
+          $this->t("@name is externally registered via Harbourmaster. Please use the <a href='@link'>appropriate page</a> to request your password reset.", ['@link' => $GLOBALS['base_url'] . '/harbourmaster/login', '@name' => $name]));
       }
     }
 

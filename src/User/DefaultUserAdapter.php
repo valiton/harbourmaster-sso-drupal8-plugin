@@ -2,6 +2,8 @@
 
 namespace Drupal\harbourmaster\User;
 
+use \Drupal\Core\Entity\EntityTypeManagerInterface;
+use \Drupal\Core\Config\Config;
 use Drupal\Component\Utility\Random;
 use Drupal\user\UserInterface;
 
@@ -12,9 +14,12 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
   protected $logger;
 
+  /**
+   *
+   */
   public function __construct(
-    \Drupal\Core\Config\Config $harbourmasterSettings,
-    \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager,
+    Config $harbourmasterSettings,
+    EntityTypeManagerInterface $entityTypeManager,
     $logger
   ) {
     $this->logger = $logger;
@@ -72,8 +77,8 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   protected function usernameRemoveCollisions($desired_name) {
     $name = $desired_name;
     $i = 1;
-    while(!empty($this->userStorage->loadByProperties(['name' => $name]))) {
-      //todo: Check USERNAME_MAX_LENGTH before adding suffix.
+    while (!empty($this->userStorage->loadByProperties(['name' => $name]))) {
+      // todo: Check USERNAME_MAX_LENGTH before adding suffix.
       $name = $desired_name . '_hms_' . $i++;
     }
     if ($name != $desired_name) {
