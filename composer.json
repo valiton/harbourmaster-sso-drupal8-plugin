@@ -1,21 +1,25 @@
 {
   "name": "valiton/harbourmaster",
-  "description": "The harbourmaster sso drupal module",
+  "description": "Integrates Harbourmaster providing a single sign-on solution for Drupal.",
   "type": "drupal-module",
   "authors": [
     {
-      "name": "Patrick Durold",
-      "email": "patrick.durold@valiton.com"
+      "name": "Patrick Durold (patrick_durold)",
+      "email": "patrick.durold@valiton.com",
+      "homepage": "https://www.drupal.org/u/patrick_durold"
     },
     {
-      "name": "Pawel Ginalski",
-      "email": "pg@gbyte.co"
+      "name": "Pawel Ginalski (gbyte.co)",
+      "email": "contact@gbyte.co",
+      "homepage": "https://www.drupal.org/u/gbyte.co"
     },
     {
       "name": "Benedikt Weiner",
       "email": "benedikt.weiner@valiton.com"
     }
   ],
+  "license": "GPL-2.0+",
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require": { }
 }
