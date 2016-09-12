@@ -10,6 +10,7 @@ use Drupal\user\UserDataInterface;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\harbourmaster\User\Manager as HmsUserManager;
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -32,9 +33,15 @@ class UserController extends DrupalUserController {
    *   The user data service.
    * @param \Drupal\harbourmaster\User\Manager $harbourmasterUserManager
    */
-  public function __construct(DateFormatterInterface $date_formatter, UserStorageInterface $user_storage, UserDataInterface $user_data, HmsUserManager $harbourmasterUserManager) {
+  public function __construct(
+    DateFormatterInterface $date_formatter,
+    UserStorageInterface $user_storage,
+    UserDataInterface $user_data,
+    LoggerInterface $logger,
+    HmsUserManager $harbourmasterUserManager)
+  {
     $this->harbourmasterUserManager = $harbourmasterUserManager;
-    parent::__construct($date_formatter, $user_storage, $user_data);
+    parent::__construct($date_formatter, $user_storage, $user_data, $logger);
   }
 
   /**
@@ -45,6 +52,7 @@ class UserController extends DrupalUserController {
       $container->get('date.formatter'),
       $container->get('entity.manager')->getStorage('user'),
       $container->get('user.data'),
+      $container->get('logger.factory')->get('user'),
       $container->get('harbourmaster.user_manager')
     );
   }
