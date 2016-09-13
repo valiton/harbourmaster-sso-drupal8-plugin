@@ -54,18 +54,12 @@ class CrossDomainAuthController extends ControllerBase {
 
     $parameters = $request->query;
     if (empty($token = $parameters->get('onetimelogintoken'))) {
-      $this->logger->debug('Login: No token found in URL');
       throw new NotFoundHttpException();
     }
-    $this->logger->debug("Login: Token found in URL: $token");
     $this->getSessionData($token);
     if ($this->validSession()) {
       $this->setSessionToken();
-      $this->logger->debug("Login: Session data token: $this->sessionToken");
       $this->startSession();
-    }
-    else {
-      $this->logger->debug('Login: No session found');
     }
     return new TransparentPixelResponse();
   }
@@ -81,8 +75,6 @@ class CrossDomainAuthController extends ControllerBase {
       . '?onetimelogintoken=' . $token
       . '&domain=' . $this->cookieHelper->getDomain();
 
-    $this->logger->debug("Login: Curl request: $session_data_url");
-
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $session_data_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -90,7 +82,6 @@ class CrossDomainAuthController extends ControllerBase {
       $this->logger->error("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
     }
     curl_close($ch);
-    $this->logger->debug("Login: Session data: $session_data_string");
     $this->sessionData = json_decode($session_data_string);
   }
 
