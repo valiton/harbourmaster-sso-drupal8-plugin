@@ -5,7 +5,7 @@ namespace Drupal\harbourmaster\Controller;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use GuzzleHttp\Exception\ClientException as HttpClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 
 /**
@@ -59,32 +59,32 @@ class StatusPageController extends ControllerBase {
       try {
         $response = $this->httpClient->request('get', $harbourmasterApiUrl);
         if ($response->getBody() != '<h1>Harbourmaster</h1>') {
-          $messages['error'][] = $this->t('HMS API Server: connect successful, but received wrong body');
+          $messages['error'][] = $this->t('HMS API Server: Connect successful, but received wrong body.');
         }
         else {
-          $messages['status'][] = $this->t('HMS API Server: connect successful');
+          $messages['status'][] = $this->t('HMS API Server: Connect successful.');
         }
       }
-      catch (HttpClientException $e) {
-        $messages['error'][] = $this->t('HMS API Server: could not connect (:message)', [':message' => $e->getMessage()]);
+      catch (RequestException $e) {
+        $messages['error'][] = $this->t('HMS API Server: Could not connect: @message', ['@message' => $e->getMessage()]);
       }
 
       // Connect to HMS REST endpoint.
       if (empty($harbourmasterApiTenant)) {
-        $messages['warning'][] = $this->t('HMS API REST Endpoint: not configured');
+        $messages['warning'][] = $this->t('HMS API REST Endpoint: Not configured.');
       }
       else {
         // HMS has no status endpoint, so we use /login and expect the correct error (as we send no credentials)
         try {
           $response = $this->httpClient->request('post', implode('/', [$harbourmasterApiUrl, $harbourmasterApiVersion, $harbourmasterApiTenant, 'login']));
-          $messages['warning'][] = $this->t('HMS API REST Endpoint: connect successful, but unexpected status code (:code)', [':code' => $response->getStatusCode()]);
+          $messages['warning'][] = $this->t('HMS API REST Endpoint: Connect successful, but unexpected status code: @code', ['@code' => $response->getStatusCode()]);
         }
-        catch (HttpClientException $e) {
+        catch (RequestException $e) {
           if ($e->getCode() === 409) {
             $messages['status'][] = $this->t('HMS API REST Endpoint: connect successful');
           }
           else {
-            $messages['error'][] = $this->t('HMS API REST Endpoint: could not connect (:message)', [':message' => $e->getMessage()]);
+            $messages['error'][] = $this->t('HMS API REST Endpoint: Could not connect: @message', ['@message' => $e->getMessage()]);
           }
         }
       }
@@ -98,14 +98,14 @@ class StatusPageController extends ControllerBase {
       try {
         $response = $this->httpClient->request('get', $userManagerUrl . '/usermanager/prod/js/app.js' );
         if ($response->getStatusCode() !== 200) {
-          $messages['error'][] = $this->t('HMS User Manager: connect successful, but unexpected status code (:code)', [':code' => $response->getStatusCode()]);
+          $messages['error'][] = $this->t('HMS User Manager: Connect successful, but unexpected status code: @code', [':code' => $response->getStatusCode()]);
         }
         else {
-          $messages['status'][] = $this->t('HMS User Manager: connect successful');
+          $messages['status'][] = $this->t('HMS User Manager: Connect successful.');
         }
       }
-      catch (HttpClientException $e) {
-        $messages['error'][] = $this->t('HMS User Manager: could not connect (:message)', [':message' => $e->getMessage()]);
+      catch (RequestException $e) {
+        $messages['error'][] = $this->t('HMS User Manager: Could not connect @message', ['@message' => $e->getMessage()]);
       }
     }
 
@@ -119,7 +119,5 @@ class StatusPageController extends ControllerBase {
         'warning' => t('Warning message'),
       ],
     ];
-
   }
-
 }
