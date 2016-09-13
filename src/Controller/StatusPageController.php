@@ -96,7 +96,7 @@ class StatusPageController extends ControllerBase {
     }
     else {
       try {
-        $response = $this->httpClient->request('get', $userManagerUrl . '/' . $harbourmasterApiTenant);
+        $response = $this->httpClient->request('get', $userManagerUrl . '/usermanager/prod/js/app.js' );
         if ($response->getStatusCode() !== 200) {
           $messages['error'][] = $this->t('HMS User Manager: connect successful, but unexpected status code (:code)', [':code' => $response->getStatusCode()]);
         }
