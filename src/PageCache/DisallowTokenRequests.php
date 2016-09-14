@@ -20,7 +20,7 @@ class DisallowTokenRequests implements RequestPolicyInterface {
    *
    */
   public function __construct(Config $config) {
-    $this->tokenName = $config->get('token_name');
+    $this->tokenName = $config->get('sso_cookie_name');
   }
 
   /**
