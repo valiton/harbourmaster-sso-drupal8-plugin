@@ -51,40 +51,40 @@ class StatusPageController extends ControllerBase {
 
     $messages = [];
 
-    // Connect to HMS API Server.
+    // Connect to Harbourmaster API Server.
     if (empty($harbourmasterApiUrl)) {
-      $messages['warning'][] = $this->t('HMS API Server: not configured');
+      $messages['warning'][] = $this->t('Harbourmaster API Server: not configured');
     }
     else {
       try {
         $response = $this->httpClient->request('get', $harbourmasterApiUrl);
         if ($response->getBody() != '<h1>Harbourmaster</h1>') {
-          $messages['error'][] = $this->t('HMS API Server: Connect successful, but received wrong body.');
+          $messages['error'][] = $this->t('Harbourmaster API Server: Connect successful, but received wrong body.');
         }
         else {
-          $messages['status'][] = $this->t('HMS API Server: Connect successful.');
+          $messages['status'][] = $this->t('Harbourmaster API Server: Connect successful.');
         }
       }
       catch (RequestException $e) {
-        $messages['error'][] = $this->t('HMS API Server: Could not connect: @message', ['@message' => $e->getMessage()]);
+        $messages['error'][] = $this->t('Harbourmaster API Server: Could not connect: @message', ['@message' => $e->getMessage()]);
       }
 
-      // Connect to HMS REST endpoint.
+      // Connect to Harbourmaster REST endpoint.
       if (empty($harbourmasterApiTenant)) {
-        $messages['warning'][] = $this->t('HMS API REST Endpoint: Not configured.');
+        $messages['warning'][] = $this->t('Harbourmaster API REST Endpoint: Not configured.');
       }
       else {
-        // HMS has no status endpoint, so we use /login and expect the correct error (as we send no credentials)
+        // Harbourmaster has no status endpoint, so we use /login and expect the correct error (as we send no credentials)
         try {
           $response = $this->httpClient->request('post', implode('/', [$harbourmasterApiUrl, $harbourmasterApiVersion, $harbourmasterApiTenant, 'login']));
-          $messages['warning'][] = $this->t('HMS API REST Endpoint: Connect successful, but unexpected status code: @code', ['@code' => $response->getStatusCode()]);
+          $messages['warning'][] = $this->t('Harbourmaster API REST Endpoint: Connect successful, but unexpected status code: @code', ['@code' => $response->getStatusCode()]);
         }
         catch (RequestException $e) {
           if ($e->getCode() === 409) {
-            $messages['status'][] = $this->t('HMS API REST Endpoint: connect successful');
+            $messages['status'][] = $this->t('Harbourmaster API REST Endpoint: Connect successful.');
           }
           else {
-            $messages['error'][] = $this->t('HMS API REST Endpoint: Could not connect: @message', ['@message' => $e->getMessage()]);
+            $messages['error'][] = $this->t('Harbourmaster API REST Endpoint: Could not connect: @message', ['@message' => $e->getMessage()]);
           }
         }
       }
@@ -92,24 +92,24 @@ class StatusPageController extends ControllerBase {
 
     // Connect to User Manager Endpoint.
     if (empty($userManagerUrl) || empty($harbourmasterApiTenant)) {
-      $messages['warning'][] = $this->t('HMS User Manager: not configured');
+      $messages['warning'][] = $this->t('Harbourmaster User Manager: not configured');
     }
     else {
       try {
         $response = $this->httpClient->request('get', $userManagerUrl . '/usermanager/prod/js/app.js' );
         if ($response->getStatusCode() !== 200) {
-          $messages['error'][] = $this->t('HMS User Manager: Connect successful, but unexpected status code: @code', [':code' => $response->getStatusCode()]);
+          $messages['error'][] = $this->t('Harbourmaster User Manager: Connect successful, but unexpected status code: @code', [':code' => $response->getStatusCode()]);
         }
         else {
-          $messages['status'][] = $this->t('HMS User Manager: Connect successful.');
+          $messages['status'][] = $this->t('Harbourmaster User Manager: Connect successful.');
         }
       }
       catch (RequestException $e) {
-        $messages['error'][] = $this->t('HMS User Manager: Could not connect @message', ['@message' => $e->getMessage()]);
+        $messages['error'][] = $this->t('Harbourmaster User Manager: Could not connect @message', ['@message' => $e->getMessage()]);
       }
     }
 
-    // TODO check plausibility of HMS / User Manager / Cookie domains.
+    // TODO check plausibility of Harbourmaster / User Manager / Cookie domains.
     return [
       '#theme' => 'status_messages',
       '#message_list' => $messages,
