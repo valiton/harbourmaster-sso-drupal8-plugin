@@ -79,7 +79,10 @@ class CrossDomainAuthController extends ControllerBase {
     curl_setopt($ch, CURLOPT_URL, $session_data_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     if (($session_data_string = curl_exec($ch)) === FALSE) {
-      $this->logger->error("cURL failed with error @code: @message", ['@code' => curl_errno($ch), '@message' => curl_error($ch)]);
+      $this->logger->error("cURL failed with error @code: @message", [
+        '@code' => curl_errno($ch),
+        '@message' => curl_error($ch)
+      ]);
     }
     curl_close($ch);
     $this->sessionData = json_decode($session_data_string);

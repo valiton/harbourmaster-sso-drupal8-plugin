@@ -8,7 +8,7 @@ harbourmaster.settings:
     sso_cookie_name:
       type: string
       label: SSO cookie name
-    sso_cookie_lifeime:
+    sso_cookie_lifetime:
       type: integer
       label: SSO cookie lifetime
     harbourmaster_lookup_ttl:
