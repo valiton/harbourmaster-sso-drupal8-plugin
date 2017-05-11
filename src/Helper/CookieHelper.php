@@ -147,7 +147,7 @@ class CookieHelper implements EventSubscriberInterface {
    *
    */
   public function setCookie($content) {
-    $this->logger->debug("Set cookie " . $this->ssoCookieName . " with content $content on domain $this->ssoCookieDomain");
+    $this->logger->info("Set cookie " . $this->ssoCookieName . " with content $content on domain $this->ssoCookieDomain");
     return setcookie(
       $this->ssoCookieName,
       $content,

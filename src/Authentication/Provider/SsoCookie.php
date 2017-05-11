@@ -176,10 +176,10 @@ class SsoCookie extends Cookie {
 
     // A session is already running.
     if (parent::applies($request)) {
-      $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token', $context);
+      $this->logger->info('Authenticating request on @uri for existing session with token @cookie_token', $context);
       if (!$request->getSession()->has('sso_token')) {
         // A running session without token can be handled by Drupal's Cookie auth.
-        $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: session has no associated SSO token, handing over to Drupal', $context);
+        $this->logger->info('Authenticating request on @uri for existing session with token @cookie_token: session has no associated SSO token, handing over to Drupal', $context);
         return parent::authenticate($request);
       }
       $currentSessionUid = $request->getSession()->get('uid');
@@ -191,14 +191,14 @@ class SsoCookie extends Cookie {
       if ($token != $currentSessionSsoToken) {
         // We COULD migrate the session to another token, but for now,
         // this is more secure.
-        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: session token @session_token mismatched, logging out user @uid', $context);
+        $this->logger->info('Failed authenticating request on @uri for existing session with token @cookie_token: session token @session_token mismatched, logging out user @uid', $context);
         // TODO is sso_token migration a use case to be handled?
         return $this->logout();
       }
       $harbourmasterSessionData = $this->lookupHmsUser($token);
       if (!$harbourmasterSessionData) {
         // If the user is logged out via sso, logout here too.
-        $this->logger->debug('Failed authenticating request on @uri for existing session with token @cookie_token: session expired, logging out user @uid', $context);
+        $this->logger->info('Failed authenticating request on @uri for existing session with token @cookie_token: session expired, logging out user @uid', $context);
         return $this->logout();
       }
       if (NULL === ($user = $this->harbourmasterUserHelper->loadUserByHmsUserKey($harbourmasterSessionData['userKey'])) || $user->id() != $currentSessionUid) {
@@ -209,10 +209,10 @@ class SsoCookie extends Cookie {
         return $this->logout();
       }
 
-      $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: success for user @uid', $context);
+      $this->logger->info('Authenticating request on @uri for existing session with token @cookie_token: success for user @uid', $context);
       $changed = $this->harbourmasterUserHelper->updateAssociatedUser($harbourmasterSessionData, $user);
       if ($changed) {
-        $this->logger->debug('Authenticating request on @uri for existing session with token @cookie_token: updated user @uid', $context);
+        $this->logger->info('Authenticating request on @uri for existing session with token @cookie_token: updated user @uid', $context);
       }
 
       // Special role similar to "authenticated".
@@ -223,12 +223,12 @@ class SsoCookie extends Cookie {
     // No session running, need to "login" user.
     if ($harbourmasterSessionData = $this->lookupHmsUser($token)) {
       $context += ['@user_key' => $harbourmasterSessionData['userKey']];
-      $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: HMS session found with userKey @user_key', $context);
+      $this->logger->info('Authenticating request on @uri for new session with token @cookie_token: HMS session found with userKey @user_key', $context);
       // Look for a user that is associated with the HMS user key, create if needed.
       if (NULL === ($user = $this->harbourmasterUserHelper->loadUserByHmsUserKey($harbourmasterSessionData['userKey']))) {
         $user = $this->harbourmasterUserHelper->createAndAssociateUser($harbourmasterSessionData);
         $context += ['@uid' => $user->id()];
-        $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: Created new Drupal user @uid for userKey @user_key', $context);
+        $this->logger->info('Authenticating request on @uri for new session with token @cookie_token: Created new Drupal user @uid for userKey @user_key', $context);
       }
       else {
         $changed = $this->harbourmasterUserHelper->updateAssociatedUser($harbourmasterSessionData, $user);
@@ -236,7 +236,7 @@ class SsoCookie extends Cookie {
           '@uid' => $user->id(),
           '@changes' => $changed ? 'update' : 'no update',
         ];
-        $this->logger->debug('Authenticating request on @uri for new session with token @cookie_token: Found existing Drupal user for userKey @user_key, @changes required', $context);
+        $this->logger->info('Authenticating request on @uri for new session with token @cookie_token: Found existing Drupal user for userKey @user_key, @changes required', $context);
       }
       $this->logger->info('Authenticating request on @uri for new session with token @cookie_token: session opened for @uid', $context);
       $this->session->migrate();
@@ -246,7 +246,7 @@ class SsoCookie extends Cookie {
       return $user;
     }
 
-    $this->logger->debug('Authenticating request on @uri with token @cookie_token: no Drupal session, valid token or HMS session found', $context);
+    $this->logger->info('Authenticating request on @uri with token @cookie_token: no Drupal session, valid token or HMS session found', $context);
 
     return NULL;
   }
@@ -268,19 +268,19 @@ class SsoCookie extends Cookie {
     $cid = 'harbourmasterdata:' . $token;
 
     if ($this->cacheActive && ($cached = $this->cache->get($cid))) {
-      $this->logger->debug('HMS session lookup: cache HIT for token @token', ['@token' => $token]);
+      $this->logger->info('HMS session lookup: cache HIT for token @token', ['@token' => $token]);
       return $cached->data;
     }
 
     if ($harbourmasterSessionData = $this->harbourmasterClient->setToken($token)->getSession()) {
-      $this->logger->debug('HMS session lookup: HMS lookup succeeded for token @token', ['@token' => $token]);
+      $this->logger->info('HMS session lookup: HMS lookup succeeded for token @token', ['@token' => $token]);
       if ($this->cacheActive) {
         $this->cache->set($cid, $harbourmasterSessionData, time() + $this->cacheTtl);
       }
       return $harbourmasterSessionData;
     }
 
-    $this->logger->debug('HMS session lookup: failed for token @token, triggered cookie deletion', ['@token' => $token]);
+    $this->logger->info('HMS session lookup: failed for token @token, triggered cookie deletion', ['@token' => $token]);
     $this->cookieHelper->triggerClearSsoCookie();
     return NULL;
 

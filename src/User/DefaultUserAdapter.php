@@ -119,12 +119,12 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
       if (!empty($avatar)) {
         // HMS always returns the 75px derivate, we want a bigger one.
         $avatar = preg_replace('#/75_75\.jpg$#', '/150_150.jpg', $avatar);
-        $this->logger->debug('Settings user data: custom picture, trying to retrieve @uri', ['@uri' => $avatar]);
+        $this->logger->info('Settings user data: custom picture, trying to retrieve @uri', ['@uri' => $avatar]);
       }
       else {
         // Build default URL.
         $avatar = $this->harbourmasterSettings->get('user_manager_url') . '/usermanager/avatar/150_150/' . urlencode($harbourmasterSessionData['user']['login']) . '.jpg';
-        $this->logger->debug('Settings user data: default picture, trying to retrieve @uri', ['@uri' => $avatar]);
+        $this->logger->info('Settings user data: default picture, trying to retrieve @uri', ['@uri' => $avatar]);
       }
 
       $dir = 'public://harbourmaster_pictures';
@@ -135,7 +135,7 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
          * @var FileInterface $file
          */
         if ($file = system_retrieve_file($avatar, $path, TRUE, FILE_EXISTS_REPLACE)) {
-          $this->logger->debug('Settings user data: retrieved @uri', ['@uri' => $avatar]);
+          $this->logger->info('Settings user data: retrieved @uri', ['@uri' => $avatar]);
           $user->set('user_picture', $file->id());
           image_path_flush($path);
         }

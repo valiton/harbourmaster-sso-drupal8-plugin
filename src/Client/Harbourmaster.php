@@ -74,7 +74,7 @@ class Harbourmaster {
    */
   public function getSession() {
 
-    $this->logger->debug('HMS API call: looking up session for token @token', ['@token' => $this->token]);
+    $this->logger->info('HMS API call: looking up session for token @token', ['@token' => $this->token]);
 
     try {
       $response = $this->client->request(
@@ -93,11 +93,11 @@ class Harbourmaster {
     switch ($response->getStatusCode()) {
       case 401:
       case 409:
-        $this->logger->debug('HMS API call: session lookup denied with status code @code for token @token', ['@token' => $this->token, '@code' => $response->getStatusCode()]);
+        $this->logger->info('HMS API call: session lookup denied with status code @code for token @token', ['@token' => $this->token, '@code' => $response->getStatusCode()]);
         return NULL;
     }
 
-    $this->logger->debug('HMS API call: session lookup success with status code @code for token @token', ['@token' => $this->token, '@code' => $response->getStatusCode()]);
+    $this->logger->info('HMS API call: session lookup success with status code @code for token @token', ['@token' => $this->token, '@code' => $response->getStatusCode()]);
 
     return json_decode($response->getBody(), TRUE)['data'];
 
