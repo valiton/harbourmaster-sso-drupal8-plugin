@@ -112,4 +112,4 @@ services:
 
 parameters:
   harbourmaster.adapter.service: '@harbourmaster.default_user_adapter'
-  harbourmaster.logger.service: '@harbourmaster.logger_null'
+  harbourmaster.logger.service: '@harbourmaster.logger'
