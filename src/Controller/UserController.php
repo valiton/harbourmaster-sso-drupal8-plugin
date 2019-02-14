@@ -93,7 +93,8 @@ class UserController extends DrupalUserController {
    *
    */
   public function harbourmasterLoginPage() {
-    if ($this->currentUser()->isAuthenticated()) {
+    $ember = \Drupal::request()->query->get('ember') ?: 'default';
+    if ($this->currentUser()->isAuthenticated() && $ember != 'confirmation') {
       // drupal_set_message(t('You have been logged in.'));.
       return $this->redirect('<front>');
     }
