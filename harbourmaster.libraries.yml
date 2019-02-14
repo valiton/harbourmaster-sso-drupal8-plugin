@@ -6,5 +6,4 @@ usermanager.launcher:
     js/loginLauncher.js: { }
   dependencies:
     - core/jquery
-    - core/drupal
     - harbourmaster/usermanager.app
