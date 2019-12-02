@@ -82,6 +82,7 @@ services:
       - '@harbourmaster.settings'
       - '@entity_type.manager'
       - '@harbourmaster.logger'
+      - '@file_system'
 
   harbourmaster.cookie_helper:
     public: true
@@ -90,6 +91,7 @@ services:
       - '@harbourmaster.settings'
       - '@request_stack'
       - '@harbourmaster.logger'
+      - '@datetime.time'
     tags:
       - { name: 'event_subscriber' }
 
