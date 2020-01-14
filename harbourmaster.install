@@ -9,7 +9,7 @@
  *
  */
 function harbourmaster_install() {
-  \Drupal::messenger()->addMessage(
+  \Drupal::messenger()->addWarning(
     t("For the Harbourmaster SSO module to work properly, you have to configure the module on the <a href='@link'>configuration page</a>.",
-      ['@link' => $GLOBALS['base_url'] . '/admin/config/people/harbourmaster']), 'warning');
+      ['@link' => $GLOBALS['base_url'] . '/admin/config/people/harbourmaster']));
 }
