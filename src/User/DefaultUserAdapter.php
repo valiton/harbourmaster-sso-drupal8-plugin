@@ -5,6 +5,7 @@ namespace Drupal\harbourmaster\User;
 use \Drupal\Core\Entity\EntityTypeManagerInterface;
 use \Drupal\Core\Config\Config;
 use Drupal\Component\Utility\Random;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -15,14 +16,23 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
   protected $logger;
 
   /**
+   * The filesystem system.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
    *
    */
   public function __construct(
     Config $harbourmasterSettings,
     EntityTypeManagerInterface $entityTypeManager,
-    $logger
+    $logger,
+    FileSystemInterface $file_system
   ) {
     $this->logger = $logger;
+    $this->fileSystem = $file_system;
     parent::__construct($harbourmasterSettings, $entityTypeManager);
   }
 
@@ -129,12 +139,12 @@ class DefaultUserAdapter extends AbstractHmsUserAdapter {
 
       $dir = 'public://harbourmaster_pictures';
 
-      if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+      if ($this->fileSystem->prepareDirectory($dir, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
         $path = $dir . '/' . $harbourmasterSessionData['userKey'] . '.jpg';
         /**
          * @var FileInterface $file
          */
-        if ($file = system_retrieve_file($avatar, $path, TRUE, FILE_EXISTS_REPLACE)) {
+        if ($file = system_retrieve_file($avatar, $path, TRUE, FileSystemInterface::EXISTS_REPLACE)) {
           $this->logger->info('Settings user data: retrieved @uri', ['@uri' => $avatar]);
           $user->set('user_picture', $file->id());
           image_path_flush($path);

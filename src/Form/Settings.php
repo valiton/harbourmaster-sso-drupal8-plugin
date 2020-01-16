@@ -255,7 +255,7 @@ class Settings extends ConfigFormBase {
       $this->libraryDiscovery->clearCachedDefinitions();
     }
 
-    drupal_set_message($this->t("Some settings on this page can be validated on the <a href='@url'>status page</a>.", ['@url' => $GLOBALS['base_url'] . "/admin/config/people/harbourmaster/status"]));
+    $this->messenger()->addMessage($this->t("Some settings on this page can be validated on the <a href='@url'>status page</a>.", ['@url' => $GLOBALS['base_url'] . "/admin/config/people/harbourmaster/status"]));
 
     parent::submitForm($form, $form_state);
   }

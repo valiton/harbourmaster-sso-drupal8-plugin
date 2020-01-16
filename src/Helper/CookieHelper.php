@@ -2,6 +2,7 @@
 
 namespace Drupal\harbourmaster\Helper;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Drupal\Core\Config\Config;
@@ -59,14 +60,22 @@ class CookieHelper implements EventSubscriberInterface {
   protected $clearTokenTriggered = FALSE;
 
   /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    *
    */
-  public function __construct(Config $harbourmasterSettings, $request_stack, $logger) {
+  public function __construct(Config $harbourmasterSettings, $request_stack, $logger, TimeInterface $time) {
     $this->harbourmasterSettings = $harbourmasterSettings;
     $this->domain = $request_stack->getCurrentRequest()->getHost();
     $this->logger = $logger;
     $this->ssoCookieName = $this->harbourmasterSettings->get('sso_cookie_name');
     $this->ssoCookieDomain = $this->getCookieDomain();
+    $this->time = $time;
   }
 
   /**
@@ -152,7 +161,7 @@ class CookieHelper implements EventSubscriberInterface {
       $this->ssoCookieName,
       $content,
       !empty($seconds = $this->harbourmasterSettings->get('sso_cookie_lifetime'))
-        ? REQUEST_TIME + $seconds : 0,
+        ? $this->time->getRequestTime() + $seconds : 0,
       '/',
       "$this->ssoCookieDomain"
     // Domain and path should be set automatically.
